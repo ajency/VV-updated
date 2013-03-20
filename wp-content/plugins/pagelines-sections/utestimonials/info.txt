@@ -1,0 +1,46 @@
+== Description ==
+
+uTestimonials is a great & simple way to show Testimonials, Comments or Information from people, staff, team and clients. Best suited for showing client testimonials and team member information.
+
+Updated -  Version 1.1.1 : 
+- All bugs fixed, no more issues with testimonial options. 
+- Added one more option for website Link
+- Fixed some styling issues that occurred after PageLines 2.2 update
+
+![Website Link Option Screenshot](http://api.pagelines.com/files/sections/screenshots/utestimonials/screenshot-16.png "Website Link Option Screenshot")
+
+
+More useful sections by [Urbanimatic](http://www.urbanimatic.com/ "Urbanimatic") are coming very soon, keep an eye on the store.
+
+== Features ==
+* Testimonials Slider
+* Static Testimonials
+* Pagination
+* Categories
+* Show or hide avatars
+* Display avatar at the left of the testimonial or at the bottom
+* Show or hide the name and the info(position, company, etc.)
+* Show or hide website URL but keep a website link
+* Square or Rounded frame/border
+* Show specific testimonials using IDs
+* Show testimonials from specific categories
+* Cloning support
+* Custom Class
+* Select font & color options for testimonials’ text
+
+== Changelog ==
+
+= 1.1.1 =
+* Fixed some styling issues that occurred after PageLines 2.2 update 
+* Refinements for store
+
+= 1.1.0 =
+* Refinements for store
+* All known bugs fixed - Testimonial Options Bug Fixed
+* Added new option for website link
+
+= 1.0.1 =
+* Refinements for store
+
+= 1.0.0 =
+* First Release

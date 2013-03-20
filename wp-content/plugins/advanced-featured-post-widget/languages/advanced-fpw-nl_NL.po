@@ -1,0 +1,287 @@
+# Copyright (C) 2012 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Advanced-Featured-Post-Widget\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/advanced-featured-post\n"
+"POT-Creation-Date: 2011-03-02 08:11:18+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2013-02-05 22:50+0200\n"
+"Last-Translator: Waldemar Stoffel <stoffel@atelier-fuenf.de>\n"
+"Language-Team: Waldemar Stoffel <info@waldemarstoffel.com>\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"Language: nl_NL\n"
+"X-Generator: Poedit 1.5.5\n"
+
+#: advanced-fpw.php:53
+msgid "FAQ"
+msgstr "FAQ"
+
+#: advanced-fpw.php:54
+msgid "Donate"
+msgstr "Donatie"
+
+#: advanced-fpw.php:67
+msgid "Settings"
+msgstr "Instellingen"
+
+#: advanced-fpw.php:95
+msgid "Styling of the links"
+msgstr "Styling van de links"
+
+#: advanced-fpw.php:97
+msgid "Link style:"
+msgstr "Link stijl:"
+
+#: advanced-fpw.php:99
+msgid "Hover style:"
+msgstr "Hover stijl:"
+
+#: advanced-fpw.php:107
+msgid "Just put some css code here."
+msgstr "Vul hier jouw css code in."
+
+#: advanced-fpw.php:149
+msgid "Advanced FP Settings"
+msgstr "Advanced FP Instellingen"
+
+#: advanced-fpw.php:164
+msgid "Advanced Featured Post Widget Settings"
+msgstr "Advanced Feaured Post Widget Instellingen"
+
+#: advanced-fpw.php:166
+msgid ""
+"Style the links of the widget. If you leave this empty, your theme will "
+"style the hyperlinks."
+msgstr ""
+"Stijl de links van de widget. Als dit leeg blijft, zal je theme de styling "
+"van de hyperlinks overnemen."
+
+#: advanced-fpw.php:167
+msgid "Just input something like,"
+msgstr "Geef gewoon iets als,"
+
+#: advanced-fpw.php:172
+msgid "to get fat, blue, underlined links."
+msgstr "aan, om vette, blauwe, onderstrepen links te krijgen."
+
+#: advanced-fpw.php:173
+msgid ""
+"You most probably have to use &#34;!important&#34; at the end of each line, "
+"to make it work."
+msgstr ""
+"Waarschijnlijk moet je &#34;!important&#34; op het eind van de lijn "
+"gebruiken, om de styling aan het werk te zetten."
+
+#: advanced-fpw.php:184
+msgid "Save Changes"
+msgstr "Veranderingen Opslaan"
+
+#: class-lib/A5_ImageClasses.php:28
+msgid "Permalink to"
+msgstr "Link naar:"
+
+#: class-lib/AFPW_WidgetClass.php:18
+msgid ""
+"You can feature a certain post in this widget and display it, where and "
+"however you want, in your widget areas. A backup post can be given to avoid "
+"dubble content. Define, on what pages the widget will show."
+msgstr ""
+"Met deze widget kun je een bepaalde post, waar en hoe dan ook, in je widget "
+"areas in de kijker zetten. Er kan een backup-post worden opgegeven, om "
+"dubbele inhoud te voorkomen. Bepaal, op welke pagina&#34;s de widget getoond "
+"zal worden."
+
+#: class-lib/AFPW_WidgetClass.php:69
+msgid "Title:"
+msgstr "Titel:"
+
+#: class-lib/AFPW_WidgetClass.php:74
+msgid "Choose here the post, you want to appear in the widget."
+msgstr "Kies hier de post, die je in de widget wilt laten zien."
+
+#: class-lib/AFPW_WidgetClass.php:77 class-lib/AFPW_WidgetClass.php:93
+msgid "Take a random post"
+msgstr "Neem een toevallige post"
+
+#: class-lib/AFPW_WidgetClass.php:90
+msgid ""
+"Choose here the backup post. It will appear, when a single post page shows "
+"the featured article."
+msgstr ""
+"Kies hier de post, die als backup in de widget zal verschijnen, waneer de "
+"featured post op de site getoond wordt."
+
+#: class-lib/AFPW_WidgetClass.php:107
+msgid "Check to get the first image of the post as thumbnail."
+msgstr "Klik hier, om de eerste foto van de post als thumbnail te hebben."
+
+#: class-lib/AFPW_WidgetClass.php:80
+msgid "Width of the thumbnail (in px):"
+msgstr "Breedte van de thumbnail (in px):"
+
+#: class-lib/AFPW_WidgetClass.php:118
+msgid "Check to %snot%s display the thumbnail of the post."
+msgstr "Klik hier, om %sgeen%s thumbnail van de post te hebben."
+
+#: class-lib/AFPW_WidgetClass.php:122
+msgid ""
+"Choose, whether or not to display the title and whether it comes above or "
+"under the thumbnail."
+msgstr ""
+"Kies, of je de titel wilt laten zien en of die over of onder de thumbnail "
+"zal komen te staan."
+
+#: class-lib/AFPW_WidgetClass.php:125
+msgid "Above thumbnail"
+msgstr "Boven de thumbnail"
+
+#: class-lib/AFPW_WidgetClass.php:125
+msgid "Under thumbnail"
+msgstr "Onder de thumbnail"
+
+#: class-lib/AFPW_WidgetClass.php:125
+msgid "Don&#39;t show title"
+msgstr "Geen titel laten zien"
+
+#: class-lib/AFPW_WidgetClass.php:138
+msgid ""
+"If the excerpt of the post is not defined, by default the first 3 sentences "
+"of the post are showed. You can enter your own excerpt here, if you want."
+msgstr ""
+"Als er geen excerpt gedefiniëerd is, worden de eerste drie zinnen van de "
+"post getoond. Je kunt hier immers je eigen excerpt schrijven, als je wilt."
+
+#: class-lib/AFPW_WidgetClass.php:144
+msgid "Check to have each sentence in a new line."
+msgstr "Klik hier, om elke zin in een nieuwe lijn te hebben."
+
+#: class-lib/AFPW_WidgetClass.php:149
+msgid "Check to %snot%s display the excerpt."
+msgstr "Klik hier, om %sgeen%s excerpt te laten zien."
+
+#: class-lib/AFPW_WidgetClass.php:154
+msgid ""
+"Check to suppress shortcodes in the widget (in case the content is showing)."
+msgstr ""
+"Klik hier, om shortcode in de widget te onderdrucken (wanneer de artikel "
+"getoond wordt)."
+
+#: class-lib/AFPW_WidgetClass.php:81
+msgid ""
+"Check to return the excerpt unfiltered (might avoid interferences with other "
+"plugins)."
+msgstr ""
+"Aanvinken, om de excerpt ongefilterd te verkrijgen (dat zou interferenties "
+"met andere plugins kunnen vermeiden)."
+
+#: class-lib/AFPW_WidgetClass.php:159
+msgid ""
+"Check to have an additional &#39;read more&#39; link at the end of the "
+"excerpt."
+msgstr ""
+"Klik hier, om een &#39;meer lezen&#39; link op het einde van de excerpt te "
+"hebben."
+
+#: class-lib/AFPW_WidgetClass.php:164
+msgid ""
+"Write here some text for the &#39;read more&#39; link. By default, it is %s:"
+msgstr ""
+"Schrijf hier je eigen tekst voor de &#39;meer lezen&#39; link. Standaard is "
+"%s:"
+
+#: class-lib/AFPW_WidgetClass.php:173
+msgid ""
+"Check if you want to invert the Google AdSense Tags that are defined with "
+"the Ads Easy Plugin. E.g. when they are turned off for the sidebar, they "
+"will appear in the widget."
+msgstr ""
+"Klik, als de Google AdSense Tags wilt omkeren, die je in de Ads Easy Plugin "
+"gedefinieerd hebt. B.v. als ze voor de sidebar inactief zijn, zullen ze in "
+"de widget verschijnen."
+
+#: class-lib/AFPW_WidgetClass.php:180
+msgid ""
+"Check, where you want to show the widget. By default, it is showing on the "
+"homepage and the category pages:"
+msgstr ""
+"Klik, waar je de widget wilt laten zien. Als standaard wordt de widget op de "
+"homepage en in de categorieën getoond."
+
+#: class-lib/AFPW_WidgetClass.php:185
+msgid "Homepage"
+msgstr "Homepage"
+
+#: class-lib/AFPW_WidgetClass.php:188
+msgid "Frontpage (e.g. a static page as homepage)"
+msgstr "Frontpage (bijv. een statische pagina als homepage)"
+
+#: class-lib/AFPW_WidgetClass.php:191
+msgid "&#34;Page&#34; pages"
+msgstr "&#34;Page&#34; pagina&#39s"
+
+#: class-lib/AFPW_WidgetClass.php:194
+msgid "Category pages"
+msgstr "Categorieën"
+
+#: class-lib/AFPW_WidgetClass.php:197
+msgid "Single post pages"
+msgstr "Single post pagina&#39s"
+
+#: class-lib/AFPW_WidgetClass.php:200
+msgid "Archive pages"
+msgstr "Archief pagina&#39s"
+
+#: class-lib/AFPW_WidgetClass.php:203
+msgid "Tag pages"
+msgstr "Tag pagina&#39s"
+
+#: class-lib/AFPW_WidgetClass.php:206
+msgid "Attachments"
+msgstr "Attachments"
+
+#: class-lib/AFPW_WidgetClass.php:209
+msgid "Custom Taxonomy pages (only available, if having a plugin)"
+msgstr "Custom Taxonomy pagina's (alleen als er een voor plugin is)"
+
+#: class-lib/AFPW_WidgetClass.php:212
+msgid "Author pages"
+msgstr "Auteurs pagina&#39;s"
+
+#: class-lib/AFPW_WidgetClass.php:215
+msgid "Search Results"
+msgstr "Zoekresultaten"
+
+#: class-lib/AFPW_WidgetClass.php:218
+msgid "&#34;Not Found&#34;"
+msgstr "&#34;Niet gevonden&#34;"
+
+#: class-lib/AFPW_WidgetClass.php:223
+msgid "Check all"
+msgstr "Alles aanvinken"
+
+#: class-lib/AFPW_WidgetClass.php:83
+msgid "Weight of the Post Title:"
+msgstr "Gewicht van Hoofdlijn:"
+
+#: class-lib/AFPW_WidgetClass.php:83
+msgid ""
+"If you want to style the &#39;read more&#39; link, you can enter a class "
+"here."
+msgstr ""
+"Als je de &#39;meer lezen&#39; link wilt stylen, kun je hier en classe "
+"invullen."
+
+#: class-lib/AFPW_WidgetClass.php:229
+msgid ""
+"Here you can finally style the widget. Simply type something like%1$s"
+"%2$sborder: 2px solid;%2$sborder-color: #cccccc;%2$spadding: 10px;%3$s%2$sto "
+"get just a gray outline and a padding of 10 px. If you leave that section "
+"empty, your theme will style the widget."
+msgstr ""
+"Hier kun je de widget stijlen. Schrijf gewoon iets als%1$s%2$sborder: 2px "
+"solid;%2$sborder-color: #cccccc;%2$spadding: 10px;%3$s%2$som een grijze kast "
+"met een afstand van 10 px naar binnen toe e verkrijgen. Als je dit veld leeg "
+"laat, zal je theme de stijl van je widget bepalen."

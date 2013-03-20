@@ -1,0 +1,204 @@
+/**
+ * uTestimonials Section Section by Urbanimatic
+ */
+
+.testimonials-clr{clear:both;}
+.testimonials-clear{clear:both; height:1px !important; line-height:1px !important; float:none!important}
+.testimonials-hidden{
+	display:none;
+}
+.testimonials-quote{
+	border:1px solid #e7e7e7;
+	padding:15px 18px;
+	line-height:18px;
+	position:relative;
+	background-color:#FFFFFF;
+}
+.testimonials-thumb{
+	padding:3px;
+	border:1px solid #cacaca;
+	float:left;
+	margin-right:28px;
+}
+
+.testimonial-name {
+	font-weight: bold;
+}
+
+a.testimonials-slider-thumbslide{
+	border:1px solid #CACACA;
+	display:block;
+	float:left;
+	margin-right:5px;
+	padding:3px;
+}
+a.testimonials-slider-thumbslide:hover{
+	border:1px solid #999997 !important;
+}
+a.tscurrentpointer{
+	border:1px solid #999997 !important;
+}
+.testimonials-slider-quotecontainer{
+	width:100%;
+	border:1px solid #e4e4e4;
+	background-color:#ffffff;
+}
+
+/* Testimonials*/
+/*-----------Testimonials Slider------------*/
+.testimonials-slider-cont{
+	position:relative;
+	padding-bottom:20px;
+}
+.testimonials-slider-quote{ margin:0px!important;}
+.testimonials-slider-name{ 
+	font-weight:bold;
+}
+.testimonials-slider-info{ 
+	font-weight:normal;
+	font-size: 11px;
+}
+.testimonials-slider-quotecontent{
+	padding: 31px 25px 31px 25px;
+}
+.testimonials-slider-quotecontent .header{
+	font-family:"Times New Roman", Times, serif;
+	font-weight:bold;
+	font-size:14px;
+}
+.testimonials-slider-quotecontent img{
+	float:left;
+	margin-right:27px;
+}
+.testimonials-slider-textinfo{
+	font-size:14px; 
+	line-height:normal;
+	margin:20px 0px 0px 0px;
+}
+div.testimonials-slider-pointer{
+	height:20px;
+	width:100%;	
+	background-image:url(images/pointer.png);
+	background-repeat:no-repeat;
+	background-position:0px 0px;
+	position:absolute;
+	bottom:1px;
+	left:0px;
+	z-index:999;
+}
+
+.testimonials-slider-textinfo div.testimonial-url {
+	font-size: 11px;
+	margin-top: 1px;
+}
+
+.testimonials-slider-textinfo a {
+	font-size: 11px;
+	margin-top: 1px;
+}
+
+/*-----------Testimonials Plain------------*/
+/* TYPE 1 */
+.testimonials-list{
+	padding-left:0px;
+	margin-left:0px;
+	clear:both;
+}
+.testimonials-list li{
+	list-style-type:none;
+	list-style-position:outside;
+	margin-bottom:20px;
+	margin-right:2%;
+	float:left;
+}
+.testimonials-list li.nomargin{
+	margin-right:0px;
+}
+.testimonials-leftpointer{
+	background-image:url(images/leftpointer.png);
+	background-repeat:no-repeat;
+	background-position:0px 0px;
+	width:13px;
+	height:23px;
+	position:absolute;
+	left:-12px;
+	top:20px;
+	z-index:200;	
+}
+.testimonials-textinfo{
+	font-size:14px;
+	margin:0px 0px 13px 0px;
+}
+.testimonials-name{
+	font-weight:bold;
+	margin-right:10px;
+}
+.testimonials-info{ 
+	font-weight:normal;
+	margin-right:10px;
+	font-size:11px;
+}
+.testimonials-quote .header{
+	margin-bottom:10px;
+	display:block;
+	font-family:"Times New Roman", Times, serif;
+	font-weight:bold;
+	font-size:14px;
+}
+.testimonials-quote a.header:hover{
+	text-decoration:none;
+}
+.testimonials-quote blockquote{
+	margin:0px 0px 0px 0px;
+	padding:0px;
+	background-color:transparent;
+	background-image:none !important;
+	line-height:20px;
+	clear:none;
+	font-size:12px;
+	font-weight:normal;
+	font-style:normal;
+}
+.testimonials-quote div.testimonials-textinfo div.testimonial-url {
+	font-size: 11px;
+}
+.testimonials-quote div.testimonials-textinfo a {
+	font-size: 11px;
+}
+.testimonials-square{
+
+}
+.testimonials-rounded{
+	-moz-border-radius: 6px; /* Firefox */
+	-webkit-border-radius: 6px; /* Safari, Chrome */
+	border-radius: 6px; /* CSS3 */
+}
+
+/* TYPE 2 */
+.testimonials-bottompointer{
+	background-image:url(images/bottompointer.png);
+	background-repeat:no-repeat;
+	background-position:0px 0px;
+	width:46px;
+	height:25px;
+	position:absolute;
+	left:35px;
+	bottom:-25px;
+	z-index:200;	
+}
+ul.testimonials-2 .testimonials-thumb{
+	margin-right:15px;
+}
+ul.testimonials-2 .testimonials-quote blockquote{
+	margin: 0px 0px 0px 0px;
+}
+ul.testimonials-list li .testimonials-textinfo .testimonial-url {
+	font-size: 11px;
+}
+ul.testimonials-list li .testimonials-textinfo a {
+	font-size: 11px;
+}
+
+.testimonials-quote blockquote {
+border:none;
+}
