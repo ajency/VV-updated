@@ -128,3 +128,166 @@ function insertSocial($content) {
    }
    return $content;
 }
+
+/**
+ * Function to get youtube video ID from URL
+ *
+ * @param string $url
+ * @return string Youtube video id or FALSE if none found. 
+ */
+function youtube_id_from_url($link){
+
+	$regexstr = '~
+		# Match Youtube link and embed code
+		(?:                             # Group to match embed codes
+			(?:<iframe [^>]*src=")?       # If iframe match up to first quote of src
+			|(?:                        # Group to match if older embed
+				(?:<object .*>)?      # Match opening Object tag
+				(?:<param .*</param>)*  # Match all param tags
+				(?:<embed [^>]*src=")?  # Match embed tag to the first quote of src
+			)?                          # End older embed code group
+		)?                              # End embed code groups
+		(?:                             # Group youtube url
+			https?:\/\/                 # Either http or https
+			(?:[\w]+\.)*                # Optional subdomains
+			(?:                         # Group host alternatives.
+			youtu\.be/                  # Either youtu.be,
+			| youtube\.com              # or youtube.com
+			| youtube-nocookie\.com     # or youtube-nocookie.com
+			)                           # End Host Group
+			(?:\S*[^\w\-\s])?           # Extra stuff up to VIDEO_ID
+			([\w\-]{11})                # $1: VIDEO_ID is numeric
+			[^\s]*                      # Not a space
+		)                               # End group
+		"?                              # Match end quote if part of src
+		(?:[^>]*>)?                       # Match any extra stuff up to close brace
+		(?:                             # Group to match last embed code
+			</iframe>                 # Match the end of the iframe
+			|</embed></object>          # or Match the end of the older embed
+		)?                              # End Group of last bit of embed code
+		~ix';
+
+	preg_match($regexstr, $link, $matches);
+
+	return $matches[1];
+
+}
+
+/****Output Single Video Posts****/
+function output_single_video() {
+	if ( is_single() )
+	{
+	$video = get_post_meta(get_the_ID(), 'Video', true); 
+	if($video !== '') 
+	//loop here
+		{ 
+		?>
+			<style>
+				section.post-meta {display: none;}
+			</style>
+			<div class="single-vid-container">
+				<div class="row-fluid">
+					<div class="span8">
+						<div class="single-vid">
+							<div class="single-vid-title-bar">
+								<div class="meta">
+									<?php echo get_the_category_list( __( ' | ' ) ); ?>
+								</div>
+								<h1 class="title"><?php the_title(); ?></h1>
+							</div>
+							<div class="vid-con">
+								<?php echo do_shortcode('[pl_video type="youtube" id="'.youtube_id_from_url($video).'"] '); ?>
+							</div>
+						</div>
+					</div>
+					<div class="span4">
+						<div class="single-vid-info">
+							<div class="action-box-arrow"></div>
+							<div class="action-box">
+								<h2 class="views">500<small>Views</small></h2>
+								<h2 class="shares">50<small>Shares</small></h2>
+								<a class="more-link" href="#"><i class="icon-plus"></i>&nbsp;Facebook Like/Share</a>
+								<a class="more-link" href="#"><i class="icon-plus"></i>&nbsp;Tweet This</a>
+								<a class="more-link" href="#"><i class="icon-plus"></i>&nbsp;Email This</a>
+							</div>
+							<div class="info-box-arrow"></div>
+							<div class="info-box">
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu facilisis arcu. Vestibulum a massa nulla, in fermentum augue. Curabitur mattis eleifend aliquam. Phasellus at nunc nisl. Praesent venenatis enim id dui porta sit amet bibendum quam hendrerit. </p>
+								<a class="more-link"><i class="icon-plus"></i> More</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<?php
+		}
+	//end loop here
+	}
+}
+
+add_action('pagelines_content_before_columns', 'output_single_video',1);
+
+/****Output Single Video Author Meta****/
+function output_single_video_author() {
+	if ( is_single() )
+	{
+	$video = get_post_meta(get_the_ID(), 'Video', true); 
+	if($video !== '') 
+	//loop here
+		{ 
+		?>
+			<style>
+				.entry_content {padding: 0 1em;}
+				.entry_content p, .entry_content div {font-size: 0.9em;} 
+			</style>
+			<div class="about-vid">
+				<div class="author-info">
+					<h3>Video By Community Correspondent</h3>
+					<div class="row-fluid">
+						<div class="avatar span1">
+							<?php echo get_avatar( get_the_author_meta('ID'), 150 ); ?>
+						</div>
+						<div class="details span11">
+							<h4><?php the_author_posts_link(); ?></h4>
+							<span>Connect with him<a href="#"><img src="http://www.vv.ajency.in/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a><a href="#"><img src="http://www.vv.ajency.in/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a><a href="#"><img src="http://www.vv.ajency.in/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		<?php
+		}
+	//end loop here
+	}
+}
+
+add_action('pagelines_loop_before_post_content', 'output_single_video_author',1);
+
+/****Output Single Author Bio****/
+function output_single_author_bio() {
+	if ( is_author() )
+	{
+	$curauth = (get_query_var('author_name')) ? get_user_by('slug', get_query_var('author_name')) : get_userdata(get_query_var('author'));
+	?>
+		<div class="author-section">
+			<h1>Community Correspondent</h1>
+			<div class="row-fluid">
+				<div class="span3">
+					<?php echo get_avatar( $curauth, 512 ); ?>
+				</div>
+				<div class="span9">
+					<div class="details">
+						<h3><?php echo $curauth->nickname; ?></h3>
+						<div class="bio">
+							<h4>Bio:</h4>
+							<p><?php echo $curauth->description; ?></p>
+						</div>
+						<span>Connect with him &nbsp;<a href="#"><img src="http://www.vv.ajency.in/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a><a href="#"><img src="http://www.vv.ajency.in/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a><a href="#"><img src="http://www.vv.ajency.in/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	<?php
+	}
+}
+
+add_action('pagelines_before_postloop', 'output_single_author_bio',1);

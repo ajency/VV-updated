@@ -1141,17 +1141,18 @@ width:100% !important;
 }
 
 /****Single Video Page Styles****/
+.single-vid-container {
+	padding: 0 15px;
+}
+
 .single-vid {
-	padding: 0.5em;
-	background: #000000;
 	.single-vid-title-bar {
 		.meta {
 			margin: 0 0 0.5em;
-			.vid-category {
+			color: lighten(@grey-regular, 20%);
+			a {
 				display: inline-block;
 				color: @orange;
-				padding: 0 10px 0 0;
-				border-right: 1px solid @orange;
 				text-transform: uppercase;
 			}
 			.vid-location {
@@ -1168,6 +1169,10 @@ width:100% !important;
 			color: @logo-color;
 		}
 	}
+	.vid-con {
+		padding: 0.5em;
+		background: #000000;
+	}
 }
 
 .single-vid-info {
@@ -1176,7 +1181,7 @@ width:100% !important;
 		width: 20px;
 		height: 53px;
 		position: relative;
-		top: 32px;
+		top: 113px;
 		right: 10px;
 		background: url('@{plChildRoot}/images/action-box-arrow.png') no-repeat right top;
 		z-index: 1;
@@ -1214,7 +1219,7 @@ width:100% !important;
 		width: 20px;
 		height: 53px;
 		position: relative;
-		top: 52px;
+		top: 133px;
 		right: 10px;
 		background: url('@{plChildRoot}/images/info-box-arrow.png') no-repeat right top;
 		z-index: 1;
@@ -1250,13 +1255,13 @@ width:100% !important;
 }
 
 .about-vid {
-	padding: 0 1em 20px;
+	padding: 0;
 	.author-info {
 		h3 {
 			color: @logo-color;
 			text-transform: uppercase;
 			margin: 10px 0;
-			font-size: 1.1em;
+			font-size: 1.3em;
 			font-family: 'TeXGyreHerosBold' !important;
 		}
 		.avatar {
@@ -1265,12 +1270,14 @@ width:100% !important;
 		.details {
 			margin: 0 0 5px !important;
 			h4 {
-				color: @orange;
-				font-family: 'TeXGyreHerosBold' !important;
 				margin: 0 0 5px;
+				a {
+					color: @orange;
+					font-family: 'TeXGyreHerosBold' !important;
+				}
 			}
 			span {
-				font-size: 0.8em;
+				font-size: 1.2em;
 				color: @grey-regular;
 				a {
 					img {
@@ -1280,11 +1287,6 @@ width:100% !important;
 				}
 			}
 		}
-	}
-	p {
-		font-size: 0.9em;
-		color: darken(@grey-regular, 20%);
-		margin: 0 0 1.6em !important;
 	}
 }
 
@@ -2030,8 +2032,6 @@ font-size: 43px!important;
 					}
 				}
 				.metabar {
-					
-				
 					em {
 						font-style: italic;
 						time {
@@ -2284,8 +2284,9 @@ font-size: 43px!important;
 		}
 	}
 	.entry_content {
-		p {
-			color: darken(@grey-regular, 10%);
+		p, div {
+			color: darken(@grey-regular, 20%);
+			margin: 0 0 1.6em;
 		}
 		.img {
 			margin: 0 0 5px 5px;

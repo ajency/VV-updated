@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: shortcode,widget,twitter,rotating,rotate,rotator,tweet,tweets,animation,jquery,jquery cycle,cycle,multilingual
 Requires at least: 2.6
 Tested up to: 3.5
-Stable tag: 1.3.13
+Stable tag: 1.3.17
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,8 +73,9 @@ Possible variables for the shortcode include:
 * `get_favorites` = `'0'` or `'1'` - show someone's favorites rather than their timeline - default is `'0'`
 * `url_length` = sets the length that the URL should be trimmed to...
 * `url` = Twitter user URL. If `screen_name` is empty and this link is valid, `screen_name` will be set to the user name included in `url`
+* `search` = a term to search for
 
-although the only one you *have* to have is `screen_name`.
+although, unless you are using `search`, the only one you *have* to have is `screen_name`.
 
 == Credits ==
 Most of this is my own work, but special thanks are owed to:
@@ -117,10 +118,22 @@ If there is only one copy of `jquery` and of `jquery.cycle` on your page, the be
 1. Read the diagnostics and look for any problems that relate to JavaScript. This will normally tell you which JavaScript (if any) is having problems.
 
 == Upgrade notice ==
-= 1.3.13 =
-Includes an important upgrade needed for Rotating Tweets to keep working after March 2013. Supports version 1.1 of the Twitter API. Fixed problem with hashtags.
+= 1.3.17 =
+Includes an important upgrade needed for Rotating Tweets to keep working after March 2013. Fixed problem display in Chrome.
 
 == Changelog ==
+= 1.3.17 =
+Adds the opportunity to show lists. Tackles a very odd box height problem that has just appeared in Chrome (but not Firefox or IE).
+
+= 1.3.16 =
+Making sure hashtags have a space or the start of a line before them. Tidying up errors found when running plug-in with `wp_debug` set to `true`
+
+= 1.3.15 =
+Minor correction to hashtag code
+
+= 1.3.14 =
+Fixes accents in hashtags (hopefully). Adds beta of search to the API. Adds new format of Tweet display.
+
 = 1.3.13 =
 Strips `@` from screen names to avoid API problems.
 
