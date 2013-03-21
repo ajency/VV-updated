@@ -16,16 +16,16 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', 'videovolunteersajency');
+define('DB_NAME', 'vv_updated');
 
 /** MySQL database username */
-define('DB_USER', 'jessicavv');
+define('DB_USER', 'root');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'mayberry@1');
+define('DB_PASSWORD', '');
 
 /** MySQL hostname */
-define('DB_HOST', 'mysql.vv.ajency.in');
+define('DB_HOST', 'localhost');
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
