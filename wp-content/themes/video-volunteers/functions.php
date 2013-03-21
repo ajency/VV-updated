@@ -129,6 +129,89 @@ function insertSocial($content) {
    return $content;
 }
 
+/*appending a list of child pages*/
+function append_child_pages() {
+global $wpdb;
+    global $post;
+ 
+    /*
+     * create a query that will locate all children of THIS page keeping
+     * the ORDER in specified in this page.
+     */
+    $sql = "SELECT * FROM $wpdb->posts WHERE post_parent = " .
+        $post->ID . " AND post_type = 'page' ORDER BY menu_order";
+ 
+    // do the query
+    $child_pages = $wpdb->get_results( $sql, 'OBJECT' );
+   
+    $html = "<hr />";
+
+    // walk the pages we have found
+	$html .= "<div class='row-fluid'>";
+    if ( $child_pages ) {
+
+        /*
+         * The $first variable is used to select the div elements that start
+         * a new row, this is strictly for styling (.css) purposes.
+         *
+         * this is all within the context of the 'columns' .css selectors provided
+         * by StudioPress.  You can roll your own, it's simple.  Ask me if you like.
+         */
+        $first = true;
+ 
+        /*
+         * every child page we have we are going to create a grid element (is that
+         * the right word?)
+         */  
+        foreach ( $child_pages as $cp ) {
+
+            setup_postdata( $cp );
+ 
+            // Get a 'medium' size featured image
+            $th = get_the_post_thumbnail( $cp->ID, 'medium' );
+            $permalink = get_permalink( $cp->ID );
+ 
+            /*
+             * This is where we create an alternating selector by turning the
+             * 'first' class on and off to create a two column grid.
+             */
+			
+            $class = 'span6';
+            if ( $first ) {
+                $class .= ' first';
+            }
+
+            // set the column selector
+            $html .= "<div class='" . $class . "'>\n";
+
+            // Link the thumbnail image to the child page.
+            $html .=
+                "<a href='" . $permalink . "' rel='bookmark' title='" . $cp->post_title . "'>" .
+                $th .
+                "</a><br/>\n";
+ 
+            // Might as well link the page title to the page as well.
+            $html .= "<h5 class='child_entry-title'>" .
+                "<a href='" . $permalink . "' rel='bookmark' title='" . $cp->post_title . "'>" .
+                $cp->post_title .
+            "</a></h5>\n";
+  $html .= "<div class='page_excerpt'><span> ".$cp->post_content."</span> </div>\n";
+           $html .="<a class='continue_reading_link' href='". $permalink ."' >Read More -></a>"; 
+			$html .= "
+			</div>\n";
+
+            // Toggle between being first and not first
+            $first = ! $first;
+       
+	   }
+   
+	}
+     $html .= "</div>";
+    // spit it out
+    echo $html . "<br class='clear' />";
+}
+add_action('pagelines_inside_bottom_postloop','append_child_pages',10);
+
 /**
  * Function to get youtube video ID from URL
  *
