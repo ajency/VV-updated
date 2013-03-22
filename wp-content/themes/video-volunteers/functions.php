@@ -92,13 +92,13 @@ add_filter ('the_content', 'insertSocial');
 function insertSocial($content) {
    if(is_single()) {
 	  $content = trim($content);
-      $content_array = explode("</p>",$content);
-	  $content_new = '<p><div class="social-bar">';
+      $content_array = explode(">",$content);
+	  $content_new = '<div class="social-bar">';
       $content_new.= '<h4>Think this issue needs more voices? <small>Help spread the word, Share this story.</small></h4>';
       
 	  $content_new.= '<div class="social-buttons"><div class="social-button"><iframe scrolling="no" frameborder="0" allowtransparency="true" src="http://platform.twitter.com/widgets/tweet_button.1362636220.html#_=1363001285231&amp;count=vertical&amp;id=twitter-widget-1&amp;lang=en&amp;original_referer=http%3A%2F%2Fwww.vv.ajency.in%2Ftest-sticky-post%2F&amp;size=m&amp;text=Test%20Sticky%20Post&amp;url=http%3A%2F%2Fwww.vv.ajency.in%2Ftest-sticky-post%2F&amp;via=socializeWP" class="twitter-share-button twitter-count-vertical" style="width: 58px; height: 62px;" title="Twitter Tweet Button" data-twttr-rendered="true"></iframe></div><div class="social-button"><iframe scrolling="no" frameborder="0" allowtransparency="true" style="border:none; overflow:hidden; width:45px; height:65px;" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.vv.ajency.in%2Ftest-sticky-post%2F&amp;send=false&amp;layout=box_count&amp;width=45&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=arial&amp;height=65"></iframe></div><div class="social-button"><div style="height: 60px; width: 50px; display: inline-block; text-indent: 0px; margin: 0px; padding: 0px; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline;" id="___plusone_1"><iframe width="100%" scrolling="no" frameborder="0" hspace="0" marginheight="0" marginwidth="0" style="position: static; top: 0px; width: 50px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 60px;" tabindex="0" vspace="0" id="I1_1363001287924" name="I1_1363001287924" src="https://plusone.google.com/_/+1/fastbutton?bsv&amp;size=tall&amp;hl=en-US&amp;origin=http%3A%2F%2Fwww.vv.ajency.in&amp;url=http%3A%2F%2Fwww.vv.ajency.in%2Ftest-sticky-post%2F&amp;jsh=m%3B%2F_%2Fscs%2Fapps-static%2F_%2Fjs%2Fk%3Doz.gapi.en.IOaFQMAHVRI.O%2Fm%3D__features__%2Fam%3DUQE%2Frt%3Dj%2Fd%3D1%2Frs%3DAItRSTNYuZ6HDkdZho3xDZgOVYkx4qGWPQ#_methods=onPlusOne%2C_ready%2C_close%2C_open%2C_resizeMe%2C_renderstart%2Concircled&amp;id=I1_1363001287924&amp;parent=http%3A%2F%2Fwww.vv.ajency.in&amp;rpctoken=22999206" allowtransparency="true" data-gapiattached="true" title="+1"></iframe></div></div></div>';
 	  
-	  $content_new.= '</div>';
+	  $content_new.= '</div';
 	  
 	  $temp_content_array = array();
 	  $content_para_count = count($content_array );	
@@ -106,7 +106,7 @@ function insertSocial($content) {
 		if($content_para_count<=2)
 		{
 			if($content_para_count===0)
-				$content_new .= '</p>';
+				$content_new .= '>';
 				
 			$content_array[] = $content_new;
 		}
@@ -115,15 +115,15 @@ function insertSocial($content) {
 			for($i=0;$i<$content_para_count;$i++)
 				{	
 					$temp_content_array[]  = $content_array[$i];
-					if($i==2)
+					if($i==9)
 					{
 						$temp_content_array[] = $content_new;
 					}	
 				}
 				
 				$content_array = $temp_content_array;
-			}
-		$content = implode("</p>",$content_array);	
+		}
+		$content = implode(">",$content_array);	
 	  
    }
    return $content;
@@ -315,6 +315,7 @@ function output_single_video_author() {
 	if ( is_single() )
 	{
 	$video = get_post_meta(get_the_ID(), 'Video', true); 
+	$thumb_img = get_post_meta(get_the_ID(), 'Thumbnail', true);
 	if($video !== '') 
 	//loop here
 		{ 
@@ -332,10 +333,17 @@ function output_single_video_author() {
 						</div>
 						<div class="details span11">
 							<h4><?php the_author_posts_link(); ?></h4>
-							<span>Connect with him<a href="#"><img src="http://www.vv.ajency.in/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a><a href="#"><img src="http://www.vv.ajency.in/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a><a href="#"><img src="http://www.vv.ajency.in/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a></span>
+							<span>Connect with him&nbsp;
+								<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a>
+								<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a>
+								<a href="mailto:<?php echo get_the_author_meta('email'); ?>"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
+							</span>
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="thumb-image">
+				<img src="http://indiaunheard.videovolunteers.org<?php echo $thumb_img; ?>" alt="<?php the_title_attribute(); ?>" />
 			</div>
 		<?php
 		}
@@ -364,7 +372,11 @@ function output_single_author_bio() {
 							<h4>Bio:</h4>
 							<p><?php echo $curauth->description; ?></p>
 						</div>
-						<span>Connect with him &nbsp;<a href="#"><img src="http://www.vv.ajency.in/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a><a href="#"><img src="http://www.vv.ajency.in/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a><a href="#"><img src="http://www.vv.ajency.in/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a></span>
+						<span>Connect with him&nbsp;
+								<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a>
+								<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a>
+								<a href="mailto:<?php echo get_the_author_meta('email'); ?>"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
+							</span>
 					</div>
 				</div>
 			</div>
@@ -373,4 +385,16 @@ function output_single_author_bio() {
 	}
 }
 
-add_action('pagelines_before_postloop', 'output_single_author_bio',1);
+add_action('pagelines_before_videoloop', 'output_single_author_bio',1);
+
+/****Register Author Sidebar****/
+register_sidebar(array(
+	'name'          => __( 'Author Sidebar' ),
+	'id'            => 'author-sidebar',
+	'description'   => 'Sidebar for the Author Page',
+	'before_widget' => '<li id="%1$s" class="widget %2$s">',
+	'after_widget'  => '</li>',
+	'before_title'  => '<h3 class="widget-title">',
+	'after_title'   => '</h3>' 
+));
+
