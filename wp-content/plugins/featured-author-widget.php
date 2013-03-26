@@ -47,11 +47,11 @@ class FeatAuthWidget extends WP_Widget
     // WIDGET CODE GOES HERE
 	$feat_args = array(
 		'meta_key'     => 'featured_auth',
-		'meta_value'   => true
+		'meta_value'   => 'true',
+		'fields'       => 'all' 
 	 );
-	
+	 
 	$users = get_users($feat_args);
-	var_dump($users);
 	
 	// Start Code	
 	echo '<ul class="frp-widget">';
@@ -61,14 +61,14 @@ class FeatAuthWidget extends WP_Widget
 				<li class="frp-news">
 					<div class="row-fluid">
 						<div class="thumb span3 zmb">
-							<a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php echo get_avatar( get_the_author_meta( 'ID' ), 220 ); ?></a>
+							<a href="<?php echo get_author_posts_url( $user->ID ); ?>"><?php echo get_avatar( $user->ID , 220 ); ?></a>
 						</div>
 						<div class="listing-info span9 zmb">
-							<h5><a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php echo get_the_author(); ?></a></h5>
+							<h5><a href="<?php echo get_author_posts_url( $user->ID ); ?>"><?php echo get_the_author_meta( 'user_nicename', $user->ID ); ?></a></h5>
 							<div class="excerpt">
-								<?php echo get_the_author_meta( 'description' ); ?>
+								<?php echo get_the_author_meta( 'description', $user->ID ); ?>
 							</div>
-							<a class="profile-link" href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><i class="icon-plus"></i>&nbsp;View Profile</a>	
+							<a class="profile-link" href="<?php echo get_author_posts_url( $user->ID ); ?>"><i class="icon-plus"></i>&nbsp;View Profile</a>	
 						</div>
 					</div>
 				</li>
