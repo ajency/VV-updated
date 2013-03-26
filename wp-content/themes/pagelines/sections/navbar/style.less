@@ -7,15 +7,15 @@ body.navbar_fixed {
 		padding-top: 50px;
 	}
 	.fixed_width #page .page-canvas{
-		margin-top: 42px; 
-		padding-top: 0; 
+		margin-top: 42px;
+		padding-top: 0;
 	}
 }
 
 /*  Basic formatting
  ************************************************************/
 .section-navbar {
-	z-index: 2020;
+	z-index: @zindexFixedNavbar;
 	margin: 0 auto;
 	width: 100%;
 	.content-pad{
@@ -25,7 +25,7 @@ body.navbar_fixed {
 			padding: 0 15px;
 		}
 	}
-	
+
 	&.fixed-top{
 		position: fixed;
 	}
@@ -51,17 +51,10 @@ body.navbar_fixed {
 		.dropdown-menu li:hover .sub-menu {
 		  	visibility: visible;
 		  	margin-top:-6px;
-
-		  	&:hover {
-		  		.border-radius(0 5px 5px 0);
-		  	}
 		}
 		.dropdown:hover .dropdown-menu {
 			margin-top:0;
 		  	display: block;
-		  	&:hover{
-		  		.border-radius(5px 0 0 5px);
-		  	}
 		}
 	}
 	.navline {
@@ -71,7 +64,7 @@ body.navbar_fixed {
 		display: block;
 		margin: 0 10px 0 0;
 		font-size: .9em;
-		
+
 		> .dropdown > .dropdown-menu{
 			&:before {
 			  content: '';
@@ -124,14 +117,14 @@ body.navbar_fixed {
 					.border-radius(6px 0 6px 6px);
 				}
 			}
-			
+
 		}
-		
+
 
 		> li {
 			display: block;
 			float: left;
-			
+
 			> a {
 				text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 				&:hover{
@@ -167,7 +160,7 @@ body.navbar_fixed {
 			}
 		}
 	}
-	
+
 	.searchform{
 		float: right;
 		margin: 7px 0 5px;
@@ -258,13 +251,13 @@ body.navbar_fixed {
 					background: rgba(0, 0, 0, 0.1);
 				}
 			}
-			
+
 			.caret{
 				border-top-color:  rgba(0,0,0,.5);
 			}
 		}
-	
-		
+
+
 		.nav-btn-navbar .icon-bar{
 			background:rgba(0,0,0,.7);
 			box-shadow: 0 1px 0 #fff;
@@ -274,10 +267,10 @@ body.navbar_fixed {
 
 
 // Hide Title on Fixed Crackbar
-#navbar.fixed-top { 
+#navbar.fixed-top {
 	.navbar-title {
 		display:none;
-	} 
+	}
 }
 
 // CrackBar Title Defaults
@@ -299,16 +292,16 @@ span.navbar-title {
 	li {
 		list-style:none;
 	}
-} 
-
-	
+}
 
 
 
-	
+
+
+
 
 /* Nav Toggle Responsive
- ************************************************************/	
+ ************************************************************/
 	.nav-btn-navbar {
 		display: none;
 		float: right;
@@ -352,7 +345,7 @@ span.navbar-title {
 .navbar-collapse{
 	height:auto;
 	overflow: visible;// IE8 FIx
-} 
+}
 .nav-collapse.collapse {
 	position: relative;
 	height: auto; // this was height:0; but testing height: auto for IE8
@@ -369,12 +362,12 @@ span.navbar-title {
 // * Responsive Handling
 // ************************************************************/
 @media (max-width: 400px) {
-	
+
 .navbar .plbrand img{
 	max-width: 210px;
 }
 
-}//-- End Media Query --// 	
+}//-- End Media Query --//
 
 @media (max-width: 600px) {
 
@@ -383,11 +376,11 @@ span.navbar-title {
 	margin:0 auto;
 }
 
-}//-- End Media Query --// 	
+}//-- End Media Query --//
 
 
 @media (max-width: 767px){
-	
+
 body.navbar_fixed {
 	.page-canvas  {
 	  padding-top: 0;
@@ -491,7 +484,7 @@ body.navbar_fixed {
 			color: #000;
 		}
 		.dropdown-menu{
-			li > a:hover, 
+			li > a:hover,
 			.active > a,
 			.active > a:hover,
 			a:hover{
@@ -499,7 +492,7 @@ body.navbar_fixed {
 				text-shadow: 0 1px 0 rgba(255,255,255,.5);
 			}
 		}
-		.current-menu-item > a, 
+		.current-menu-item > a,
 		.navline > li > a:hover{
 			color: #000;
 			text-shadow: 0 1px 0 rgba(255,255,255,.5);
@@ -511,7 +504,7 @@ body.navbar_fixed {
 
 }
 
-} //-- End Media Query --// 	
+} //-- End Media Query --//
 
 @media (min-width:767px) {
 

@@ -64,7 +64,7 @@ class FeatAuthWidget extends WP_Widget
 							<a href="<?php echo get_author_posts_url( $user->ID ); ?>"><?php echo get_avatar( $user->ID , 220 ); ?></a>
 						</div>
 						<div class="listing-info span9 zmb">
-							<h5><a href="<?php echo get_author_posts_url( $user->ID ); ?>"><?php echo get_the_author_meta( 'user_nicename', $user->ID ); ?></a></h5>
+							<h5><a href="<?php echo get_author_posts_url( $user->ID ); ?>"><?php echo get_the_author_meta( 'display_name', $user->ID ); ?></a></h5>
 							<div class="excerpt">
 								<?php echo get_the_author_meta( 'description', $user->ID ); ?>
 							</div>

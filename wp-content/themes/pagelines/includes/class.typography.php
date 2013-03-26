@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * class PageLinesFoundry
@@ -6,17 +6,20 @@
  *
  */
 class PageLinesFoundry {
-	
-	var $gfont_base_uri = '//fonts.googleapis.com/css?v2&family=';
+
+	var $gfont_base_uri = 'fonts.googleapis.com/css?v2&family=';
 	var $foundry;
-	
+
 	/**
 	 * PHP5 constructor
 	 *
 	 */
 	function __construct( ) {
 
-		$this->gfont_base_uri = apply_filters( 'pagelines_gfont_baseurl', $this->gfont_base_uri );
+		// get users modified gfonts url and strip // if present
+		$gurl = ltrim( apply_filters( 'pagelines_gfont_baseurl', $this->gfont_base_uri ), '/' );
+		// strip http:// and https:// and prepend url with // so ssl works properly
+		$this->gfont_base_uri = sprintf( '//%s', str_replace( array( 'http://','https://' ), '', $gurl ) );
 		$this->foundry = $this->get_type_foundry();
 	}
 
@@ -26,7 +29,7 @@ class PageLinesFoundry {
 	*
 	*/
 	function get_type_foundry(){
-		
+
 		$thefoundry = array(
 			'anton' => array(
 				'name' => 'Anton',
@@ -40,7 +43,7 @@ class PageLinesFoundry {
 				'family' 	=> 'Arial, "Helvetica Neue", Helvetica, sans-serif',
 				'web_safe' 	=> true,
 				'google' 	=> false,
-				'monospace' => false, 
+				'monospace' => false,
 				'free'		=> true
 			),
 			'arial_black' => array(
@@ -78,19 +81,12 @@ class PageLinesFoundry {
 				'google' => true,
 				'monospace' => false
 			),
-			'chau_philomene_one' => array(
-				'name' => '"Chau Philomene One"',
-				'family' => '"Chau Philomene One", sans-serif',
-				'web_safe' => true,
-				'google' => array('400','400italic'),
-				'monospace' => false
-			),
 			'courier_new' => array(
 				'name' => 'Courier',
 				'family' => 'Courier, Verdana, sans-serif',
 				'web_safe' => true,
 				'google' => false,
-				'monospace' => true, 
+				'monospace' => true,
 				'free'		=> true
 			),
 			'crimson_text' => array(
@@ -126,7 +122,7 @@ class PageLinesFoundry {
 				'family' => '"Droid Sans", "Lucida Grande", Tahoma, sans-serif',
 				'web_safe' => true,
 				'google' => array('regular', 'bold'),
-				'monospace' => false, 
+				'monospace' => false,
 				'free'		=> true
 			),
 			'droid_mono' => array(
@@ -148,7 +144,7 @@ class PageLinesFoundry {
 				'family' => 'Georgia, "Times New Roman", Times, serif',
 				'web_safe' => true,
 				'google' => false,
-				'monospace' => false, 
+				'monospace' => false,
 				'free'		=> true
 			),
 			'happy_monkey' => array(
@@ -156,7 +152,7 @@ class PageLinesFoundry {
 				'family' => '"Happy Monkey", serif',
 				'web_safe' => true,
 				'google' => '400',
-				'monospace' => false, 
+				'monospace' => false,
 			),
 			'im_fell_dw_pica' => array(
 				'name' => 'IM Fell DW Pica',
@@ -191,7 +187,7 @@ class PageLinesFoundry {
 				'family' => '"Josefin Sans", "Century Gothic", Verdana, sans-serif',
 				'web_safe' => true,
 				'google' => true,
-				'monospace' => false, 
+				'monospace' => false,
 			),
 			'kreon' => array(
 				'name' 		=> 'Kreon',
@@ -212,7 +208,7 @@ class PageLinesFoundry {
 				'family' => 'Lobster, Arial, sans-serif',
 				'web_safe' => true,
 				'google' => true,
-				'monospace' => false, 
+				'monospace' => false,
 				'free'		=> true
 			),
 			'lora' => array(
@@ -227,7 +223,7 @@ class PageLinesFoundry {
 				'family' 	=> 'Merriweather, georgia, times, serif',
 				'web_safe' 	=> true,
 				'google' 	=> true,
-				'monospace' => false, 
+				'monospace' => false,
 				'free'		=> true
 			),
 			'molengo' => array(
@@ -277,7 +273,7 @@ class PageLinesFoundry {
 				'family' => '"Times New Roman", Times, Georgia, serif',
 				'web_safe' => true,
 				'google' => false,
-				'monospace' => false, 
+				'monospace' => false,
 				'free'		=> true
 			),
 			'trebuchet_ms' => array(
@@ -285,7 +281,7 @@ class PageLinesFoundry {
 				'family' => '"Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Arial, sans-serif',
 				'web_safe' => true,
 				'google' => false,
-				'monospace' => false, 
+				'monospace' => false,
 				'free'		=> true
 			),
 			'verdana' => array(
@@ -293,7 +289,7 @@ class PageLinesFoundry {
 				'family' => 'Verdana, sans-serif',
 				'web_safe' => true,
 				'google' => false,
-				'monospace' => false, 
+				'monospace' => false,
 				'free'		=> true
 			),
 			'vollkorn' => array(
@@ -343,7 +339,7 @@ class PageLinesFoundry {
 				'family' => 'Calibri, "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif',
 				'web_safe' => false,
 				'google' => false,
-				'monospace' => false, 
+				'monospace' => false,
 				'free'		=> true
 			),
 			'cambria' => array(
@@ -365,7 +361,7 @@ class PageLinesFoundry {
 				'family' => '"Century Gothic", "Apple Gothic", Verdana, sans-serif',
 				'web_safe' => false,
 				'google' => false,
-				'monospace' => false, 
+				'monospace' => false,
 				'free'		=> true
 			),
 			'century_schoolbook' => array(
@@ -373,7 +369,7 @@ class PageLinesFoundry {
 				'family' => '"Century Schoolbook", Georgia, "Times New Roman", Times, serif',
 				'web_safe' => false,
 				'google' => false,
-				'monospace' => false, 
+				'monospace' => false,
 				'free'		=> true
 			),
 			'consolas' => array(
@@ -388,7 +384,7 @@ class PageLinesFoundry {
 				'family' => 'Constantia, Georgia, "Times New Roman", Times, serif',
 				'web_safe' => false,
 				'google' => false,
-				'monospace' => false, 
+				'monospace' => false,
 				'free'		=> true
 			),
 			'corbel' => array(
@@ -410,7 +406,7 @@ class PageLinesFoundry {
 				'family' => 'Garamond, "Hoefler Text", "Times New Roman", Times, serif',
 				'web_safe' => false,
 				'google' => false,
-				'monospace' => false, 
+				'monospace' => false,
 				'free'		=> true
 			),
 			'gill_sans' => array(
@@ -418,14 +414,14 @@ class PageLinesFoundry {
 				'family' => '"Gill Sans MT", "Gill Sans", Calibri, "Trebuchet MS", sans-serif',
 				'web_safe' => false,
 				'google' => false,
-				'monospace' => false, 
+				'monospace' => false,
 			),
 			'helvetica' => array(
 				'name' => 'Helvetica',
 				'family' => '"Helvetica Neue", Helvetica, Arial, sans-serif',
 				'web_safe' => false,
 				'google' => false,
-				'monospace' => false, 
+				'monospace' => false,
 				'free'		=> true
 			),
 			'hoefler' => array(
@@ -469,21 +465,21 @@ class PageLinesFoundry {
 				'family' 		=> 'Tahoma, Geneva, Verdana, sans-serif',
 				'web_safe' 		=> false,
 				'google' 		=> false,
-				'monospace' 	=> false, 
+				'monospace' 	=> false,
 				'free'			=> true
 			)
 		);
-		
-	
+
+
 		return apply_filters('pagelines_foundry', $thefoundry);
 	}
-	
+
 	/**
 	 * Creates the import URL for google fonts
 	 *
 	 */
 	function google_import($gfonts) {
-		
+
 		foreach(array_unique($gfonts) as $id)
 			$family[] = urlencode($this->foundry[$id]['name']) . (is_array($this->foundry[$id]['google']) ? ':' . implode(',', $this->foundry[$id]['google']) : '');
 			$this->gfont_key = implode('|', $family);
@@ -491,7 +487,7 @@ class PageLinesFoundry {
 			$this->gfont_import = sprintf('@import url(%s);%s', $this->gfont_uri, "\n");
 		return $this->gfont_import;
 	}
-	
+
 
 	/**
 	*
@@ -499,17 +495,17 @@ class PageLinesFoundry {
 	*
 	*/
 	function get_the_import( $font ){
-		
+
 		$family[] = urlencode($this->foundry[$font]['name']) . (is_array($this->foundry[$font]['google']) ? ':' . implode(',', $this->foundry[$font]['google']) : '');
-		
+
 		$this->gfont_key = implode('|', $family);
 		$this->gfont_uri = $this->gfont_base_uri . $this->gfont_key;
 		$this->gfont_import = sprintf('@import url(%s);', $this->gfont_uri);
-		
+
 		return $this->gfont_import;
-		
+
 	}
-	
+
 
 	/**
 	*
@@ -522,10 +518,10 @@ class PageLinesFoundry {
 			return implode('|', $gfont_key_array);
 		}
 		else return '';
-		
-		
+
+
 	}
-	
+
 
 	/**
 	*
@@ -543,7 +539,7 @@ class PageLinesFoundry {
 				endforeach;
 			endforeach;
 	}
-	
+
 
 	/**
 	*
@@ -556,7 +552,7 @@ class PageLinesFoundry {
 
 		return $this->foundry[$font_id]['family'];
 	}
-	
+
 
 	/**
 	*
@@ -565,13 +561,13 @@ class PageLinesFoundry {
 	*/
 	function get_type_css($typesettings){
 		$defaults = array(
-			'font' 		=> null, 
+			'font' 		=> null,
 			'kern'		=> '0.00em',
-			'transform'	=> 'none', 
-			'weight'	=> 'normal', 
+			'transform'	=> 'none',
+			'weight'	=> 'normal',
 			'variant'	=> 'normal',
-			'style'		=> 'normal', 
-			'selectors'	=> null, 
+			'style'		=> 'normal',
+			'selectors'	=> null,
 			'prepend'	=> null
 		);
 		$type_css = '';
@@ -579,27 +575,27 @@ class PageLinesFoundry {
 
 		if(isset($t['font']) && !empty($t['font'])) {
 			$pre = (!empty($t['prepend'])) ? trim(trim($t['prepend']), ',') . ',' : '';
-			$type_css = 'font-family:' . $pre . $this->get_stack($t['font']) .';';	
+			$type_css = 'font-family:' . $pre . $this->get_stack($t['font']) .';';
 		}
-		
-		if( '0.00em' != (string) $t['kern'] ) 
+
+		if( '0.00em' != (string) $t['kern'] )
 			$type_css .= 'letter-spacing:'. $t['kern'] .';';
 
-		if( $t['transform'] != 'none' ) 
+		if( $t['transform'] != 'none' )
 			$type_css .= 'text-transform:'. $t['transform'] .';';
 
-		if( $t['weight'] != 'normal' ) 
+		if( $t['weight'] != 'normal' )
 			$type_css .= 'font-weight:'. $t['weight'] .';';
 
-		if( $t['variant'] != 'normal' ) 
+		if( $t['variant'] != 'normal' )
 			$type_css .= 'font-variant:'. $t['variant'] .';';
 
-		if( $t['style'] != 'normal' ) 
+		if( $t['style'] != 'normal' )
 			$type_css .= 'font-style:'. $t['style'] .';';
-			
+
 		return ( isset( $type_css ) ) ? $type_css : '';
 	}
-	
+
 
 	/**
 	*
@@ -609,53 +605,53 @@ class PageLinesFoundry {
 	function render_css(){
 		$css = '';
 		foreach (get_option_array() as $mid){
-			
-			foreach($mid as $oid => $o){ 
-				
+
+			foreach($mid as $oid => $o){
+
 				if( isset( $o['type'] ) && $o['type'] == 'typography'){
-					
+
 					$type = ploption($oid);
-					
+
 					$font_id = $type['font'];
-					
+
 					// Don't render if font isn't set.
 					if(isset($font_id) && isset($this->foundry[$font_id]) ){
-						
+
 						if($this->foundry[$font_id]['google'])
 							$google_fonts[] = $font_id;
 
-						$type_selectors = $o['selectors']; 
+						$type_selectors = $o['selectors'];
 
 						if( isset($type['selectors']) && !empty($type['selectors']) ) $type_selectors .=  ',' . trim(trim($type['selectors']), ',');
 
 						$type_css = $this->get_type_css($type);
-					
-					
+
+
 						$type_css_keys[] = $type_selectors . '{'.$type_css.'}';
 					}
-					
+
 				}
-				
+
 			}
 		}
-		
-		if(isset($google_fonts) && is_array($google_fonts )){
-			
-			$css .= $this->google_import($google_fonts);
-			
-		}
-		
 
-		
+		if(isset($google_fonts) && is_array($google_fonts )){
+
+			$css .= $this->google_import($google_fonts);
+
+		}
+
+
+
 		// Render the font CSS
 		if(isset($type_css_keys) && is_array($type_css_keys)){
 			foreach($type_css_keys as $typeface)
 				$css .= $typeface;
-			
+
 		}
-		
+
 		return $css;
-		
+
 	}
 }
 
@@ -663,28 +659,28 @@ class PageLinesFoundry {
 function pl_type_el($type_key, $element){
 
 	$type = ploption($type_key);
-	
+
 	if(!$type)
 		$type = array();
-	
+
 	$defaults = array(
-		'font' 		=> 'helvetica', 
+		'font' 		=> 'helvetica',
 		'kern'		=> '0.00em',
-		'transform'	=> 'none', 
-		'weight'	=> 'normal', 
+		'transform'	=> 'none',
+		'weight'	=> 'normal',
 		'variant'	=> 'normal',
 		'style'		=> 'normal'
 	);
 
 	$t = wp_parse_args($type, $defaults);
-	
+
 	if( $element == 'stack' )
 		$value = get_font_stack($t['font']);
 	else
 		$value = $t[$element];
-		
+
 	return $value;
-		
+
 }
 
 /**
@@ -693,13 +689,13 @@ function pl_type_el($type_key, $element){
 *
 */
 function get_font_stack($font_slug){
-	
+
 	$foundry = new PageLinesFoundry;
-	
+
 	if ( '' == $font_slug || ! array_key_exists( $font_slug, $foundry->foundry ) )
 		$font_slug = 'helvetica';
-				
-	return $foundry->foundry[$font_slug]['family'];	
+
+	return $foundry->foundry[$font_slug]['family'];
 }
 
 /**
@@ -708,22 +704,22 @@ function get_font_stack($font_slug){
 *
 */
 function load_custom_font($font, $selectors){
-	
-	
+
+
 	if( $font ){
-		
+
 		$foundry = new PageLinesFoundry;
-		
+
 		if ( ! isset($foundry->foundry[$font]) )
 			return '';
-		
+
 		$rule = sprintf('%s{font-family: %s;}', $selectors, $foundry->foundry[$font]['family']);
-		
+
 		return sprintf('<style type="text/css">%s%s</style>', $foundry->get_the_import($font), $rule);
-		
-	}else 
+
+	}else
 		return '';
-	
+
 }
 
 /**
@@ -737,11 +733,11 @@ function load_custom_font($font, $selectors){
  * @return  float - calculated value; default: 24px
  */
 function page_line_height($fontsize, $line_width){
-	
+
 	$golden = 1.618;
-	
+
 	$lh = $golden - ( 1 / (2*$golden) ) * ( 1 - $line_width/pow(($fontsize*$golden), 2) );
-	
+
 	return round($lh*$fontsize);
-	
+
 }

@@ -5,6 +5,9 @@ Add **ALL** Googlefonts to the PageLines font system.
 
 == Changelog ==
 
+= 1.5 =
+* Now uses the Google API to fetch all possible fonts.
+
 = 1.4.2 =
 * Update to latest list of fonts.
 
@@ -25,5 +28,5 @@ Add **ALL** Googlefonts to the PageLines font system.
 = 1.1 =
 * Add 50 new fonts.
 
-= 1.0 = 
+= 1.0 =
 * Initial release.
