@@ -387,6 +387,24 @@ function output_single_author_bio() {
 
 add_action('pagelines_before_videoloop', 'output_single_author_bio',1);
 
+/****Output Single Issue Info****/
+function output_single_issue_info() {
+	if ( is_category() )
+	{
+	$cat = get_category( get_query_var( 'cat' ) );
+	$cat_name = $cat->name;
+	$cat_desc = $cat->description;
+	?>
+		<div class="issue-section">
+			<h1><span>Issue: </span><?php echo $cat_name; ?></h1>
+			<p><?php echo $cat_desc; ?></p>
+		</div>
+	<?php
+	}
+}
+
+add_action('pagelines_before_videoloop', 'output_single_issue_info',1);
+
 /****Register Author Sidebar****/
 register_sidebar(array(
 	'name'          => __( 'Author Sidebar' ),
@@ -398,3 +416,30 @@ register_sidebar(array(
 	'after_title'   => '</h3>' 
 ));
 
+/****Function to Set Featured Users****/
+add_action( 'edit_user_profile', 'show_featured_auth_field' );
+
+function show_featured_auth_field( $user ) { ?>
+
+<h3>Featured Author</h3>
+<table class="form-table">
+	<tr>
+		<th><label>Featured Settings</label></th>
+		<td>
+			<input type="checkbox" name="featured_auth" id="featured_auth" value="true" <?php if (esc_attr( get_the_author_meta( "featured_auth", $user->ID )) == "true") echo "checked"; ?> />
+			<label for="featured_auth">Author is Featured</label>
+		</td>
+	</tr>
+</table>
+<?php }
+
+add_action( 'edit_user_profile_update', 'save_featured_auth_field' );
+
+function save_featured_auth_field( $user_id ) {
+	if ( !current_user_can( 'edit_user', $user_id ) )
+		return false;
+	
+	if (!isset($_POST['featured_auth'])) $_POST['featured_auth'] = "false"; 
+
+	update_user_meta( $user_id, 'featured_auth', $_POST['featured_auth'] );
+}

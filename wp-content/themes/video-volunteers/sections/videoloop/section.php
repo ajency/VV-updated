@@ -24,53 +24,67 @@ class PageLinesVideoLoop extends PageLinesSection {
 		
 		if ( is_author() )
 		{
-		
 			$args = array (
 				'author_name' => (get_query_var('author_name')),
+				'posts_per_page' => 6
 			);
-			$theposts = new WP_Query();
-			$theposts -> query($args); ?>
-				<div class="video-list">
-					<h2>Videos</h2>
-					<ul class="videos clearfix">
-				
-					<?php while ( $theposts -> have_posts() ) : $theposts -> the_post();  
+		}
+		elseif ( is_category() )
+		{
+			$args = array (
+				'cat' => (get_query_var('cat')),
+				'posts_per_archive_page' => 6
+			);
+		}
+		$theposts = new WP_Query();
+		$theposts -> query($args); ?>
+			<div class="video-list">
+				<?php if ( is_author() )
+				{
+					echo '<h2>Videos</h2>';
+				}
+				elseif ( is_category() )
+				{
 					
-					$thumb = get_post_meta(get_the_ID(), 'Thumbnail', true); ?>
-							
-						<li>
-							<div class="thumb">
-								<a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
-									<img src="http://indiaunheard.videovolunteers.org<?php echo $thumb; ?>" alt="<?php the_title_attribute(); ?>" />
-								</a>
+				} ?>
+				<ul class="videos clearfix">
+			
+				<?php while ( $theposts -> have_posts() ) : $theposts -> the_post();  
+				
+				$thumb = get_post_meta(get_the_ID(), 'Thumbnail', true); ?>
+						
+					<li>
+						<div class="thumb">
+							<a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
+								<img src="http://indiaunheard.videovolunteers.org<?php echo $thumb; ?>" alt="<?php the_title_attribute(); ?>" />
+							</a>
+						</div>
+						<div class="info">
+							<div class="item-title">
+								<h5><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h5>
+								<span class="item-details">
+									<?php the_time('m/j/y') ?><i class="icon-angle-right"></i><?php the_category(' <i class="icon-angle-right"></i> ') ?>
+								</span>
 							</div>
-							<div class="info">
-								<div class="item-title">
-									<h5><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h5>
-									<span class="item-details">
-										<?php the_time('m/j/y') ?><i class="icon-angle-right"></i><?php the_category(' <i class="icon-angle-right"></i> ') ?>
-									</span>
-								</div>
-								<div class="item-meta">
-									<div class="row-fluid">
-										<div class="views span6">
-											<span>150</span> Views
-										</div>
-										<div class="shares span6">
-											<span>50</span> Shares
-										</div>
+							<div class="item-meta">
+								<div class="row-fluid">
+									<div class="views span6">
+										<span>150</span> Views
+									</div>
+									<div class="shares span6">
+										<span>50</span> Shares
 									</div>
 								</div>
 							</div>
-						</li>
-							
-					<?php endwhile; 
-					wp_reset_query(); ?>
-					
-					</ul>
-				</div>
-			<?php 
-		}
+						</div>
+					</li>
+						
+				<?php endwhile; 
+				wp_reset_query(); ?>
+				
+				</ul>
+			</div>
+		<?php 
 	}
 
 }

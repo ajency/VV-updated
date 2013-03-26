@@ -716,7 +716,7 @@ width:100% !important;
 
 
 /****Flexible Recent Posts Widget Styles****/
-#flexible-recent-posts-widget-2 {
+#flexible-recent-posts-widget-2, #flexible-recent-posts-widget-6 {
 	position: relative;
 	.frp-all-category-news {
 		position: absolute;
@@ -1350,7 +1350,7 @@ width:100% !important;
 			float: left;
 			margin: 0 3.3% 20px 0;
 			.thumb {
-				height: 108px;
+				height: 133px;
 				overflow: hidden;
 				background: #ccc;
 				a {
@@ -1369,7 +1369,7 @@ width:100% !important;
 						text-transform: uppercase;
 						font-size: 0.9em;
 						margin: 5px 0;
-						height: 35px;
+						height: 33px;
 						overflow: hidden;
 						a {
 							color: @logo-color;
@@ -1454,28 +1454,27 @@ width:100% !important;
 @media (min-width: 768px) and (max-width: 979px){
 
 .author_list {
-      
-		li {
+	li {
 		width: 21% !important;
 		float: left;
 		margin: 0 3.4% 30px 0 !important;
 		.info {
 			height: auto!important;
-			}
+		}
 		.thumb {
 			height: 121px!important;
-			}
+		}
 		.desc{
-		color: #949494;
-		font-size: 11px!important;
-		margin-top: -14px;
+			color: #949494;
+			font-size: 11px!important;
+			margin-top: -14px;
 		}
 		.social_link{
-		margin-top: -2px;
-		margin-bottom: 4px;
-		img{
-			display: inline-block;
-			margin-left: 5px;
+			margin-top: -2px;
+			margin-bottom: 4px;
+			img{
+				display: inline-block;
+				margin-left: 5px;
 			}
 		}
 		.item-meta {
@@ -1491,7 +1490,6 @@ width:100% !important;
 
 
 .action-box {
-	
 	.fboxtitle {
 		h3 {
 			font-size: 1.8em !important;
@@ -1739,7 +1737,7 @@ font-size: 43px!important;
 	background: #F2F2F2;
 	.border-radius(2px);
 	.box-shadow(0 0 5px lighten(@grey-regular, 10%));
-	margin: 5px 5px 20px;
+	margin: 5px 5px 20px !important;
 	.widget-title {
 		box-shadow: none !important;
 		padding: 0.3em 3em 0.5em 0 !important;
@@ -2343,5 +2341,12 @@ font-size: 43px!important;
 				color: @orange;
 			}
 		}
+	}
+}
+
+/****Sidebar Styles****/
+.scolumn {
+	.scolumn-pad {
+		padding: 0 13px 0 0;
 	}
 }
