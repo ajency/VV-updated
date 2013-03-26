@@ -104,8 +104,9 @@ body{font-family: 'Merriweather Sans', sans-serif !important; font-size: 13px;}
 }
 
 div.testimonials-slider-quotecontainer {
-width: 96% !important;
+	width: 96% !important;
 }
+
 @media (max-width: 767px) { 
 .logo-bar {
 	.logo-link {
@@ -124,23 +125,27 @@ width: 96% !important;
 	}
 }
 }
+
 .sort_txt{
+	float: left;
+	line-height: 29px;
+	margin-right: 15px;
+}
+
+.filter_sec{
+	float:right;
+}
+
+.filter_area {
+	select{
+		float:left;
+	}
+	.filter_txt{
 		float: left;
 		line-height: 29px;
 		margin-right: 15px;
+	}
 }
-.filter_sec{float:right;}
-.filter_area {
-		select{
-				float:left;
-		}
-		.filter_txt{
-				float: left;
-				line-height: 29px;
-				margin-right: 15px;
-		}
-}
-
 
 .author_list {
       margin-left: 47px !important;
@@ -203,25 +208,24 @@ width: 96% !important;
 }
 /****sider update stream widget ****/
 .widget_stream{
-			h3 {
-			font-size: 19.4px ;
-			}
-			.meta{
-			padding: 0em 1em 1em !important;
-			font-size: 0.70em!important;
-			
-			}
-			.excerpt {
-			font-style: normal!important;
-			font-size: 11px!important;
-		}
+	h3 {
+		font-size: 19.4px ;
+	}
+	.meta{
+		padding: 0em 1em 1em !important;
+		font-size: 0.70em!important;
+	
+	}
+	.excerpt {
+		font-style: normal!important;
+		font-size: 11px!important;
+	}
 }
+
 .widget{
-.action-box {
-text-indent: 0% !important;
-
-}
-
+	.action-box {
+		text-indent: 0% !important;
+	}
 }
 
 /****Main Nav Styles****/
@@ -2348,5 +2352,46 @@ font-size: 43px!important;
 .scolumn {
 	.scolumn-pad {
 		padding: 0 13px 0 0;
+	}
+}
+
+/****Home Box Styles****/
+.vv_widget_boxes_container {
+	padding-top: 30px;
+	.vv_widget_box {
+		position: relative;
+		margin-bottom: 20px !important;
+		margin-left: 2.12766% !important;
+		.vv_widget_title {
+			background: @orange;
+			color: #FFF !important;
+			top: -30px;
+			padding: 5px 10px;
+			position: absolute;
+			text-transform: uppercase;
+		}
+		.vv_widget_excerpt {
+			background: @logo-color;
+			color: #FFF;
+			top: 0px;
+			padding: 5px;
+			position: absolute;
+			font-weight: bold;
+			a {
+				color: #FFF;
+			}
+		}
+		.vv_widget_text {
+			background: rgba(0, 0, 0, 0.31);
+			bottom: 0;
+			color: #FFF !important;
+			padding: 5px 0 5px 5px;
+			position: absolute;
+			font-size: 0.9em;
+			width: 98.5%;
+		}
+		&:first-child {
+			margin-left: 0 !important;
+		}
 	}
 }
