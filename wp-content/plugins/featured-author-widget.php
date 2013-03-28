@@ -48,7 +48,8 @@ class FeatAuthWidget extends WP_Widget
 	$feat_args = array(
 		'meta_key'     => 'featured_auth',
 		'meta_value'   => 'true',
-		'fields'       => 'all' 
+		'fields'       => 'all',
+		'number'       => '5'
 	 );
 	 
 	$users = get_users($feat_args);
