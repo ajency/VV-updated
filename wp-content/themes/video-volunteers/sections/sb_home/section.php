@@ -5,7 +5,8 @@
 	Author URI: http://www.ajency.in
 	Description: A widgetized area on the homepage
 	Class Name: HomePageSidebar
-	Workswith: sidebar1, sidebar2, sidebar_wrap, templates, main, header, morefoot
+	Edition: pro
+	Workswith: sidebar1, sidebar2, sidebar_wrap, templates, main, header, morefoot, content
 	Persistant: true
 */
 

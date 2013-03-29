@@ -419,7 +419,7 @@ register_sidebar(array(
 /****Register Home Page Sidebar****/
 register_sidebar(array(
 	'name'          => __( 'Home Page Sidebar' ),
-	'id'            => 'home-page-sidebar',
+	'id'            => 'home-page-widgets',
 	'description'   => 'Widget area for the Home Page',
 	'before_widget' => '<li id="%1$s" class="widget %2$s">',
 	'after_widget'  => '</li>',
