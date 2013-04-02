@@ -57,30 +57,26 @@ class HomeBoxWidget extends WP_Widget
     extract($args, EXTR_SKIP);
  
     echo '<li class="widget fix">';
-    echo '<div class="widget-pad">';
     $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
- 
-    if (!empty($title))
-      echo $before_title . $title . $after_title;;
- 
+    $link = empty($instance['link']) ? ' ' : apply_filters('widget_link', $instance['link']);
+    $link_text = empty($instance['link_text']) ? ' ' : apply_filters('widget_link_text', $instance['link_text']);
+    $image = empty($instance['image']) ? ' ' : apply_filters('widget_image', $instance['image']);
+    $desc = empty($instance['desc']) ? ' ' : apply_filters('widget_desc', $instance['desc']);
+	
     // WIDGET CODE GOES HERE
 	
 	// Start Code	
 	echo '<div class="vv_widget_boxes_container row-fluid">';
-	foreach ( $users as $user ) 
-		{
-			?>				
-				<div class="span6 vv_widget_box">
-					<div class="vv_widget_title"><?php echo $title; ?></div>
-					<div class="vv_widget_excerpt"><a href="<?php echo $link; ?>"><?php echo $link_text; ?></a></div>
-					<div class="vv_widget_text"><?php echo $desc; ?></div>
-					<div><img src="<?php echo $image; ?>"/></div>
-				</div>
-			<?php
-		}
+		?>				
+			<div class="span6 vv_widget_box">
+				<div class="vv_widget_title"><?php echo $title; ?></div>
+				<div class="vv_widget_excerpt"><a href="<?php echo $link; ?>"><?php echo $link_text; ?></a></div>
+				<div class="vv_widget_text"><?php echo $desc; ?></div>
+				<div><img src="<?php echo $image; ?>"/></div>
+			</div>
+		<?php
 	echo '</div>';
- 
-    echo '</div>';
+	
     echo '</li>';
   }
  

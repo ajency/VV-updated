@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Featured Authors Widget
+Plugin Name: VV Featured Authors Widget
 Plugin URI: http://ajency.in/
 Description: Featured Authors Widget pulls the featured authors to display on your sidebar
 Author: Ajency
@@ -14,7 +14,7 @@ class FeatAuthWidget extends WP_Widget
   function FeatAuthWidget()
   {
     $widget_ops = array('classname' => 'FeatAuthWidget', 'description' => 'Displays a list of featured authors' );
-    $this->WP_Widget('FeatAuthWidget', 'Featured Authors Widget', $widget_ops);
+    $this->WP_Widget('FeatAuthWidget', 'VV Featured Authors Widget', $widget_ops);
   }
  
   function form($instance)

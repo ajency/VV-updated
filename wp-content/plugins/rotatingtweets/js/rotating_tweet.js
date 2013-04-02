@@ -4,8 +4,9 @@
 jQuery(document).ready(function() {
 	jQuery('.rotatingtweets').each(function() {
 		/* Get the ID of the rotating tweets div - and parse it to get rotation speed and rotation fx */
-		var rotate_id = "#"+this.id
+		var rotate_id = "#"+this.id;
 		var rotate_id_split = rotate_id.split('_');
+		var rotate_class = "."+this.id;
 		var rotate_timeout = rotate_id_split[1];
 		var rotate_fx = rotate_id_split[2];
 		var rotate_wp_debug = jQuery(this).hasClass('wp_debug');
@@ -16,16 +17,15 @@ jQuery(document).ready(function() {
 		if(rotate_fx == null){rotate_fx = 'scrollUp'};
 		var rt_height_px = 'auto';
 		/* Now find the widget container width */
-		var rt_target_width = jQuery(this).closest('.widget_rotatingtweets_widget').width();
-		if( rt_target_width == null ) {
-			var rt_target_width = jQuery(this).closest('.widget').width();
-		}
+		// Get the size of the parent box and subtract any padding
+		var rt_target_width = jQuery(this).parent().innerWidth() - parseFloat(jQuery(this).parent().css('padding-left')) - parseFloat(jQuery(this).parent().css('padding-right'));
 		var rt_fit = 1;
 		if( rt_target_width == null ) {
 			rt_fit = 0;
 		}
 		if(rotate_wp_debug) {
 			console.log('rt_target_width = '+rt_target_width);
+			console.log('rotate_timeout = '+rotate_timeout);
 		};
 		/* If we're displaying an 'official' tweet, reset all the heights - this option is currently switched off! */
 //		var rt_official_child = rotate_id + ' .twitter-tweet';
@@ -38,6 +38,8 @@ jQuery(document).ready(function() {
 			timeout: rotate_timeout,
 			cleartypeNoBg: true,
 			width: rt_target_width,
+			prev: rotate_class + '_rtw_prev',
+			next: rotate_class + '_rtw_next',
 			fx: rotate_fx,
 			fit: rt_fit
 		});
@@ -69,6 +71,8 @@ jQuery(document).ready(function() {
 				width: rt_target_width,
 				cleartypeNoBg: true,
 				fit: rt_fit,
+				prev: rotate_class + '_rtw_prev',
+				next: rotate_class + '_rtw_next',
 				fx: rotate_fx
 			});
 		}
@@ -106,11 +110,11 @@ jQuery(document).ready(function() {
 			/* Now get the padding-left dimension (if it exists) and subtract it from the max width	*/
 			if(rotate_wp_debug) {
 				console.log ('Now check for \'padding-left\'');
-				console.log ('- leftpadding - text : '+ jQuery(rt_block_id).css('padding-left') + ' and value: ' +parseInt(jQuery(rt_block_id).css('padding-left')));
+				console.log ('- leftpadding - text : '+ jQuery(rt_block_id).css('padding-left') + ' and value: ' +parseFloat(jQuery(rt_block_id).css('padding-left')));
 			};
 			var rt_max_width = jQuery(rotate_id).width();
 			if( typeof jQuery(rt_block_id).css('padding-left') != 'undefined' ) {
-				rt_max_width = rt_max_width - parseInt(jQuery(rt_block_id).css('padding-left'));
+				rt_max_width = rt_max_width - parseFloat(jQuery(rt_block_id).css('padding-left')) - 1 ;
 				if(rotate_wp_debug) {
 					console.log('- Padding is not undefined');
 				};

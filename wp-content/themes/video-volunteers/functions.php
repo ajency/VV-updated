@@ -416,17 +416,6 @@ register_sidebar(array(
 	'after_title'   => '</h3>' 
 ));
 
-/****Register Home Page Sidebar****/
-register_sidebar(array(
-	'name'          => __( 'Home Page Sidebar' ),
-	'id'            => 'home-page-widgets',
-	'description'   => 'Widget area for the Home Page',
-	'before_widget' => '<li id="%1$s" class="widget %2$s">',
-	'after_widget'  => '</li>',
-	'before_title'  => '<h3 class="widget-title">',
-	'after_title'   => '</h3>' 
-));
-
 /****Function to Set Featured Users****/
 add_action( 'edit_user_profile', 'show_featured_auth_field' );
 

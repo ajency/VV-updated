@@ -17,7 +17,11 @@
  * @author PageLines
  */
 class HomePageSidebar extends PageLinesSection {
-
+	
+	function section_persistent() {
+		$setup = pagelines_standard_sidebar($this->name, $this->settings['description']);
+		pagelines_register_sidebar($setup, 100);
+	}
 	/**
 	* Section template.
 	*/
