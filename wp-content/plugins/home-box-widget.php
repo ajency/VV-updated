@@ -68,7 +68,7 @@ class HomeBoxWidget extends WP_Widget
 	// Start Code	
 	echo '<div class="vv_widget_boxes_container row-fluid">';
 		?>				
-			<div class="span6 vv_widget_box">
+			<div class="span12 vv_widget_box">
 				<div class="vv_widget_title"><?php echo $title; ?></div>
 				<div class="vv_widget_excerpt"><a href="<?php echo $link; ?>"><?php echo $link_text; ?></a></div>
 				<div class="vv_widget_text"><?php echo $desc; ?></div>

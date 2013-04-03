@@ -70,37 +70,55 @@ body{font-family: 'Merriweather Sans', sans-serif !important; font-size: 13px;}
 		}
 	}
 }
-/****Home Widget box Styles****/
-.vv_widget_box{
-			position: relative;
-			.vv_widget_title{
+/****Home Box Styles****/
+#list_sb_home {
+	li {
+		width: 48%;
+		margin: 0 4% 0 0;
+		float: left;
+		.vv_widget_boxes_container {
+			padding-top: 30px;
+			.vv_widget_box {
+				position: relative;
+				margin-bottom: 20px !important;
+				margin-left: 2.12766% !important;
+				.vv_widget_title {
+					background: @orange;
+					color: #FFF !important;
+					top: -30px;
+					padding: 5px 10px;
 					position: absolute;
-					background: #29A5AA;
-					padding: 5px;
-					color: white;
-					margin-top: -19px;
 					text-transform: uppercase;
-					
 				}
-			.vv_widget_excerpt{
-					position: absolute;
-					background: #7E7272;
+				.vv_widget_excerpt {
+					background: @logo-color;
+					color: #FFF;
+					top: 0px;
 					padding: 5px;
-					color: white;
-					margin-top: 12px;
-					a{
-					color:#fff!important;
-					}
-			}
-		.vv_widget_text{
 					position: absolute;
+					font-weight: bold;
+					a {
+						color: #FFF;
+					}
+				}
+				.vv_widget_text {
 					background: rgba(0, 0, 0, 0.31);
-					color: white;
 					bottom: 0;
+					color: #FFF !important;
+					padding: 5px 0 5px 5px;
+					position: absolute;
+					font-size: 0.9em;
 					width: 98.5%;
-					padding: 5px 0px 5px 5px;
-		
+				}
+				&:first-child {
+					margin-left: 0 !important;
+				}
+			}
 		}
+		&:last-child {
+			margin: 0;
+		}
+	}
 }
 
 div.testimonials-slider-quotecontainer {
@@ -2402,46 +2420,5 @@ font-size: 43px!important;
 .scolumn {
 	.scolumn-pad {
 		padding: 0 13px 0 0;
-	}
-}
-
-/****Home Box Styles****/
-.vv_widget_boxes_container {
-	padding-top: 30px;
-	.vv_widget_box {
-		position: relative;
-		margin-bottom: 20px !important;
-		margin-left: 2.12766% !important;
-		.vv_widget_title {
-			background: @orange;
-			color: #FFF !important;
-			top: -30px;
-			padding: 5px 10px;
-			position: absolute;
-			text-transform: uppercase;
-		}
-		.vv_widget_excerpt {
-			background: @logo-color;
-			color: #FFF;
-			top: 0px;
-			padding: 5px;
-			position: absolute;
-			font-weight: bold;
-			a {
-				color: #FFF;
-			}
-		}
-		.vv_widget_text {
-			background: rgba(0, 0, 0, 0.31);
-			bottom: 0;
-			color: #FFF !important;
-			padding: 5px 0 5px 5px;
-			position: absolute;
-			font-size: 0.9em;
-			width: 98.5%;
-		}
-		&:first-child {
-			margin-left: 0 !important;
-		}
 	}
 }
