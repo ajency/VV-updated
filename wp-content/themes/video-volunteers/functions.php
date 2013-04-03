@@ -80,8 +80,6 @@ add_action('pagelines_after_navbar','output_tag_line',10);
 /****Output Titles for Homepage Boxes****/
 function output_homepage_titles() {
 	echo '<div class="action-titles"><h3 class="main-title hide">What Can You Do Here?</h3>';
-	echo '<h4 class="sub-title-individual hide">As an Individual</h4>';
-	echo '<h4 class="sub-title-company hide">As a Company</h4></div>';
 }
 
 add_action('pagelines_inside_bottom_boxes', 'output_homepage_titles',1);

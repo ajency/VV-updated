@@ -134,7 +134,16 @@ function frp_thumbnail( $atts ) {
 		$atts['size'] = $size;
 	}
 
-	return get_the_post_thumbnail( null, $atts['size'] );
+	//return values from either custom field or thumbnail
+	
+	$thumb_url = get_post_meta($GLOBALS['post']->ID, 'Thumbnail', true);
+	if (!$thumb_url) {
+		return get_the_post_thumbnail( null, $atts['size'] );
+	}
+	else {
+		$thumb = '<img alt="'. get_the_title() .'" src="http://indiaunheard.videovolunteers.org'. $thumb_url .'" />';
+		return $thumb;
+	}
 }
 
 function frp_link() {
