@@ -604,6 +604,50 @@ width:100% !important;
 	}
 }
 
+#list_sb_home_cats {
+	li {
+		.border-radius(2px);
+		.box-shadow(0 0 5px lighten(@grey-regular, 10%));
+		background: #F2F2F2;
+		padding: 1.2%;
+		float: left;
+		margin: 0 3% 12px 0;
+		width: 28.93%;
+		.images {
+			[class*="span"] {
+				margin-bottom: 6px;
+			}
+		}
+		.info {
+			padding: 6px 0 0;
+			h4 {
+				text-transform: uppercase;
+				font-size: 1.2em;
+				a {
+					color: @logo-color;
+				}
+			}
+			.span3 {
+				text-align: right;
+				a {
+					text-transform: uppercase;
+					font-size: 0.88em;
+					i {
+						color: @orange;
+					}
+					&:hover {
+						text-decoration: none;
+						font-weight: bold;
+					}
+				}
+			}
+		}
+		&:last-child {
+			margin: 0 0 12px 0;
+		}
+	}
+}
+
 /****Content Area Styles****/
 #content {
 	.content-pad {
