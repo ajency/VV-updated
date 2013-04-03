@@ -387,17 +387,21 @@ add_action('pagelines_before_videoloop', 'output_single_author_bio',1);
 
 /****Output Single Issue Info****/
 function output_single_issue_info() {
-	if ( is_category() )
+	if ( is_category('videos') )
 	{
-	$cat = get_category( get_query_var( 'cat' ) );
-	$cat_name = $cat->name;
-	$cat_desc = $cat->description;
-	?>
-		<div class="issue-section">
-			<h1><span>Issue: </span><?php echo $cat_name; ?></h1>
-			<p><?php echo $cat_desc; ?></p>
-		</div>
-	<?php
+		$cat = get_category( get_query_var( 'cat' ) );
+		$cat_name = $cat->name;
+		$cat_desc = $cat->description;
+		?>
+			<div class="issue-section">
+				<h1><span>Issue: </span><?php echo $cat_name; ?></h1>
+				<p><?php echo $cat_desc; ?></p>
+			</div>
+		<?php
+	}
+	else
+	{
+		
 	}
 }
 

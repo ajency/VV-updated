@@ -26,14 +26,14 @@ class PageLinesVideoLoop extends PageLinesSection {
 		{
 			$args = array (
 				'author_name' => (get_query_var('author_name')),
-				'posts_per_page' => 6
+				'posts_per_page' => 9
 			);
 		}
 		elseif ( is_category() )
 		{
 			$args = array (
 				'cat' => (get_query_var('cat')),
-				'posts_per_archive_page' => 6
+				'posts_per_archive_page' => 12
 			);
 		}
 		$theposts = new WP_Query();
