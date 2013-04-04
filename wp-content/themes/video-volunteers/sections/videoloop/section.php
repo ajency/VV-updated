@@ -68,14 +68,14 @@ class PageLinesVideoLoop extends PageLinesSection {
 									</span>
 								</div>
 								<div class="item-meta">
-									<div class="row-fluid">
+									<!--<div class="row-fluid">
 										<div class="views span6">
 											<span>150</span> Views
 										</div>
 										<div class="shares span6">
 											<span>50</span> Shares
 										</div>
-									</div>
+									</div>-->
 								</div>
 							</div>
 						</li>

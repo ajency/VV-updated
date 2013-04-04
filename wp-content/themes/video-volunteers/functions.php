@@ -45,10 +45,10 @@ function output_header_bar() {
 	echo '<a href="'. get_bloginfo('url') .'" class="logo-link"><img src="'. get_bloginfo('stylesheet_directory') .'/images/site-logo.png" alt="Video Volunteers" /></a>';
 	echo '<div class="impact fix">';
 	echo '<div class="impact-image">';
-	echo '<a href="#"><img src="'. get_bloginfo('stylesheet_directory') .'/images/impact.png" alt="Video Volunteers" /></a>';
+	echo '<a href="'. get_bloginfo('url') .'/about-videovolunteers/impact/"><img src="'. get_bloginfo('stylesheet_directory') .'/images/impact.png" alt="Video Volunteers" /></a>';
 	echo '</div>';
 	echo '<div class="impact-desc">';
-	echo '<p>If I were you, I would try to stick a gnome in sideways so Sally can sell sea shells by the sea shore. Westside.</p><a href="'. get_bloginfo('url') .'" class="more-link"><i class="icon-plus"></i>&nbsp;More</a>';
+	echo '<p>If I were you, I would try to stick a gnome in sideways so Sally can sell sea shells by the sea shore. Westside.</p><a href="'. get_bloginfo('url') .'/about-videovolunteers/impact/" class="more-link"><i class="icon-plus"></i>&nbsp;More</a>';
 	echo '</div>';
 	echo '</div></div></div></div></div>';
 }
