@@ -385,17 +385,47 @@ function output_single_author_bio() {
 
 add_action('pagelines_before_videoloop', 'output_single_author_bio',1);
 
-/****Output Single Issue Info****/
-function output_single_issue_info() {
-	if ( is_category('videos') )
+/**
+ * Tests if any of a post's assigned categories are descendants of target categories
+ *
+ * @param int|array $cats The target categories. Integer ID or array of integer IDs
+ * @param int|object $_post The post. Omit to test the current post in the Loop or main query
+ * @return bool True if at least 1 of the post's categories is a descendant of any of the target categories
+ * @see get_term_by() You can get a category by name or slug, then pass ID to this function
+ * @uses get_term_children() Passes $cats
+ * @uses in_category() Passes $_post (can be empty)
+ * @version 2.7
+ * @link http://codex.wordpress.org/Function_Reference/in_category#Testing_if_a_post_is_in_a_descendant_category
+ */
+if ( ! function_exists( 'post_is_in_descendant_category' ) ) {
+	function post_is_in_descendant_category( $cats, $_post = null ) {
+		foreach ( (array) $cats as $cat ) {
+			// get_term_children() accepts integer ID only
+			$descendants = get_term_children( (int) $cat, 'category' );
+			if ( $descendants && in_category( $descendants, $_post ) )
+				return true;
+		}
+		return false;
+	}
+}
+
+/****Output Category Info****/
+function output_category_info() {
+	
+	$cat = get_category( get_query_var( 'cat' ) );
+	$cat_name = $cat->name;
+	$cat_desc = $cat->description;
+	
+	if ( ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) )
 	{
-		$cat = get_category( get_query_var( 'cat' ) );
-		$cat_name = $cat->name;
-		$cat_desc = $cat->description;
 		?>
 			<div class="issue-section">
-				<h1><span>Issue: </span><?php echo $cat_name; ?></h1>
-				<p><?php echo $cat_desc; ?></p>
+				<?php if ( is_category( 'videos' ) ) { ?>
+					<h1><?php echo $cat_name; ?></h1>
+				<?php } else { ?>
+					<h1><span>Issue: </span><?php echo $cat_name; ?></h1>
+					<p><?php echo $cat_desc; ?></p>
+				<?php } ?>
 			</div>
 		<?php
 	}
@@ -405,7 +435,36 @@ function output_single_issue_info() {
 	}
 }
 
-add_action('pagelines_before_videoloop', 'output_single_issue_info',1);
+add_action('pagelines_before_videoloop', 'output_category_info',1);
+
+/****Display Sticky Post on Blog Page****/
+function display_blog_sticky() {
+	if ( is_category('blog') ) {
+		$args = array(
+			'posts_per_page' => 1,
+			'post__in'  => get_option( 'sticky_posts' ),
+			'ignore_sticky_posts' => 1
+		);
+		query_posts( $args );
+			while ( have_posts() ) : the_post(); ?>
+				<div id="sticky-post-div">
+					<div class="pad">
+						<h2>
+							<a href="<?php the_permalink(); ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+						</h2>
+						<?php if ( has_post_thumbnail() ) { ?>
+							<a href="<?php the_permalink(); ?>"><?php echo the_post_thumbnail( array(600,450) ); ?></a>
+						<?php } ?>
+						<div class="clearfix"></div>
+						<p><?php the_excerpt(); ?></p>
+					</div>
+				</div>
+			<?php endwhile;
+		wp_reset_query();
+	}
+}
+
+add_action('pagelines_content_before_columns', 'display_blog_sticky',1);
 
 /****Register Author Sidebar****/
 register_sidebar(array(
