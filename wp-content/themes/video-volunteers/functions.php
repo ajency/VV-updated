@@ -528,7 +528,7 @@ function output_blog_cats() {
 
 add_action('pagelines_before_videoloop', 'output_blog_cats',1);
 
-/* FUUNCTION TO LOAD POSTS BASED ON CATEGORIES */
+/* FUNCTION TO LOAD POSTS BASED ON CATEGORIES */
  function abc_get_posts(){
  	if($_POST['cat_id']== '' || $_POST['cat_id']== -1 )
  	{	
