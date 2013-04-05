@@ -32,7 +32,7 @@ require_once( dirname(__FILE__) . '/setup.php' );
 function output_css_js() {
 	
 	echo '<link href="http://fonts.googleapis.com/css?family=Merriweather+Sans:400,700,300,800" rel="stylesheet" type="text/css">';
-	
+		echo '<script src="'. get_bloginfo('stylesheet_directory') .'/js/isotope.js"></script>';
 	
 }
 
@@ -76,6 +76,21 @@ function output_tag_line() {
 }
 
 add_action('pagelines_after_navbar','output_tag_line',10);
+
+function output_category_line() {
+	
+		echo '<div class="texture"><div class="content"><div class="content-pad"><div class="tag-line fix">';
+		echo '<h3>We train marginalised communities to produce</h3>';
+		echo '<h1><em>News</em>, <em>Watch It</em>, <em>Take Action</em> &amp; <em>Devise Solutions</em>.</h1>';
+		echo '</div></div></div></div></div>';
+
+}
+
+add_action('pagelines_before_videofilter','output_category_line',10);
+
+
+
+
 
 /****Output Titles for Homepage Boxes****/
 function output_homepage_titles() {
