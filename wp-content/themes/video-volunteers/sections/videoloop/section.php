@@ -22,7 +22,54 @@ class PageLinesVideoLoop extends PageLinesSection {
 	*/
    function section_template() {
 		
-		if ( ( is_author() ) || ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) ) {
+		if ( is_category( 'videos' ) ) {
+			
+			$filter = array(
+				'hide_empty' => 0, 
+				'name' => 'category_parent', 
+				'orderby' => 'name', 
+				'selected' => $category->parent, 
+				'hierarchical' => true, 
+				'show_option_none' => __('All'),
+				'child_of' => 16
+			);
+			
+			wp_dropdown_categories($filter);
+			
+			?>
+			<div id="vid-content" class="video-list">
+			
+			</div>
+			<script type="text/javascript">
+				jQuery(document).ready(function(){ 
+						get_cat_post('');
+				});
+				
+				var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
+
+				function get_cat_post(id) {
+					jQuery.post(ajaxurl,
+						{
+							action : 'abc_get_posts',
+							cat_id : id
+						},
+						function(res)
+						{
+							//if(res.success == 1)	
+							jQuery("#vid-content").empty();
+							jQuery("#vid-content").html(res.html);
+						},'json');
+				}
+				
+				jQuery("#category_parent").change(function(){
+					var itm = jQuery(this).val();
+					get_cat_post(itm);
+				});  
+			</script>
+			<?php
+		}
+		elseif ( ( is_author() ) || ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) ) {
+			
 			if ( is_author() )
 			{
 				$args = array (
@@ -45,45 +92,46 @@ class PageLinesVideoLoop extends PageLinesSection {
 						echo '<h2>Videos</h2>';
 					}
 					elseif ( is_category() )
-					{
+					{	
 						
-					} ?>
-					<ul class="videos clearfix">
+					} 
+					echo '<ul class="videos clearfix">';
 				
-					<?php while ( $theposts -> have_posts() ) : $theposts -> the_post();  
-					
-					$thumb = get_post_meta(get_the_ID(), 'Thumbnail', true); ?>
-							
-						<li>
-							<div class="thumb">
-								<a href="<?php the_permalink(); ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
-									<img src="http://indiaunheard.videovolunteers.org<?php echo $thumb; ?>" alt="<?php the_title_attribute(); ?>" />
-								</a>
-							</div>
-							<div class="info">
-								<div class="item-title">
-									<h5><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h5>
-									<span class="item-details">
-										<?php the_time('m/j/y') ?><i class="icon-angle-right"></i><?php the_category(' <i class="icon-angle-right"></i> ') ?>
-									</span>
+						while ( $theposts -> have_posts() ) : $theposts -> the_post();  
+						
+						$thumb = get_post_meta(get_the_ID(), 'Thumbnail', true); ?>
+								
+							<li>
+								<div class="thumb">
+									<a href="<?php the_permalink(); ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
+										<img src="http://indiaunheard.videovolunteers.org<?php echo $thumb; ?>" alt="<?php the_title_attribute(); ?>" />
+									</a>
 								</div>
-								<div class="item-meta">
-									<!--<div class="row-fluid">
-										<div class="views span6">
-											<span>150</span> Views
-										</div>
-										<div class="shares span6">
-											<span>50</span> Shares
-										</div>
-									</div>-->
+								<div class="info">
+									<div class="item-title">
+										<h5><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h5>
+										<span class="item-details">
+											<?php the_time('m/j/y') ?><i class="icon-angle-right"></i><?php the_category(' <i class="icon-angle-right"></i> ') ?>
+										</span>
+									</div>
+									<div class="item-meta">
+										<!--<div class="row-fluid">
+											<div class="views span6">
+												<span>150</span> Views
+											</div>
+											<div class="shares span6">
+												<span>50</span> Shares
+											</div>
+										</div>-->
+									</div>
 								</div>
-							</div>
-						</li>
-							
-					<?php endwhile; 
-					wp_reset_query(); ?>
-					
-					</ul>
+							</li>
+								
+						<?php endwhile; 
+						wp_reset_query(); ?>
+						
+						</ul>
+						
 				</div>
 			<?php 
 		}

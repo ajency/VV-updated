@@ -416,22 +416,23 @@ function output_category_info() {
 	$cat_name = $cat->name;
 	$cat_desc = $cat->description;
 	
-	if ( ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) )
-	{
-		?>
-			<div class="issue-section">
-				<?php if ( is_category( 'videos' ) ) { ?>
-					<h1><?php echo $cat_name; ?></h1>
-				<?php } else { ?>
-					<h1><span>Issue: </span><?php echo $cat_name; ?></h1>
-					<p><?php echo $cat_desc; ?></p>
-				<?php } ?>
-			</div>
-		<?php
+	if ( is_author() ) {
+		//Do Nothing!
 	}
-	else
-	{
-		
+	else {
+		if ( ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) )
+		{
+			?>
+				<div class="issue-section">
+					<?php if ( is_category( 'videos' ) ) { ?>
+						<h1><?php echo $cat_name; ?></h1>
+					<?php } else { ?>
+						<h1><span>Issue: </span><?php echo $cat_name; ?></h1>
+						<p><?php echo $cat_desc; ?></p>
+					<?php } ?>
+				</div>
+			<?php
+		}
 	}
 }
 
@@ -504,3 +505,83 @@ function save_featured_auth_field( $user_id ) {
 
 	update_user_meta( $user_id, 'featured_auth', $_POST['featured_auth'] );
 }
+
+/****Function to output Blog Sub-categories****/
+function output_blog_cats() {
+
+}
+
+add_action('pagelines_before_videoloop', 'output_blog_cats',1);
+
+/* FUUNCTION TO LOAD POSTS BASED ON CATEGORIES */
+ function abc_get_posts(){
+ 	if($_POST['cat_id']== '' || $_POST['cat_id']== -1 )
+ 	{	
+ 		$args = array (
+			'cat' => (get_query_var('cat')),
+			'posts_per_archive_page' => 12,
+			'category__in' => 16
+		);
+ 		$query = new WP_Query($args);
+ 	}
+ 	else 
+ 	{ 	
+		$args = array (
+			'cat' => (get_query_var('cat')),
+			'posts_per_archive_page' => 12,
+			'category__in' => array($_POST['cat_id'] )
+		);
+ 		$query = new WP_Query($args);
+ 	} 		
+	
+ 	ob_start();
+ 	?> 		
+ 		
+		<?php if ( $query->have_posts() ) : ?>
+			
+			<ul class="videos clearfix">
+			<?php /* Start the Loop */ ?>
+			<?php while ( $query->have_posts() ) : $query->the_post(); 
+				$thumb = get_post_meta(get_the_ID(), 'Thumbnail', true);
+			?>
+				<li>
+					<div class="thumb">
+						<a href="<?php the_permalink(); ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
+							<img src="http://indiaunheard.videovolunteers.org<?php echo $thumb; ?>" alt="<?php the_title_attribute(); ?>" />
+						</a>
+					</div>
+					<div class="info">
+						<div class="item-title">
+							<h5><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h5>
+							<span class="item-details">
+								<?php the_time('m/j/y') ?><i class="icon-angle-right"></i><?php the_category(' <i class="icon-angle-right"></i> ') ?>
+							</span>
+						</div>
+						<div class="item-meta">
+							<!--<div class="row-fluid">
+								<div class="views span6">
+									<span>150</span> Views
+								</div>
+								<div class="shares span6">
+									<span>50</span> Shares
+								</div>
+							</div>-->
+						</div>
+					</div>
+				</li>
+			<?php endwhile; ?>
+			</ul>
+			
+		<?php else : ?>
+
+			<h1>Nothing!</h1>
+
+		<?php endif; // end have_posts() check 
+		
+	$html=ob_get_clean();
+	echo json_encode(array('html'=>$html,'success'=>true));
+	die;
+  
+  }
+add_action('wp_ajax_abc_get_posts','abc_get_posts');
+add_action('wp_ajax_nopriv_abc_get_posts','abc_get_posts');
