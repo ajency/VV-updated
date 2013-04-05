@@ -523,7 +523,18 @@ function save_featured_auth_field( $user_id ) {
 
 /****Function to output Blog Sub-categories****/
 function output_blog_cats() {
-
+	if ( is_category('blog') ) {
+		$args = array (
+			'parent' => 5652,
+			'hide_empty' => 0
+		);
+		$categories = get_categories($args);
+			foreach($categories as $category) { 
+				echo '<p>Category: <a href="' . get_category_link( $category->term_id ) . '" title="' . sprintf( __( "View all posts in %s" ), $category->name ) . '" ' . '>' . $category->name.'</a> </p> ';
+				echo '<p> Description:'. $category->description . '</p>';
+				echo '<p> Post Count: '. $category->count . '</p>';  
+			} 
+	}
 }
 
 add_action('pagelines_before_videoloop', 'output_blog_cats',1);
