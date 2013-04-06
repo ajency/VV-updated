@@ -465,14 +465,14 @@ function display_blog_sticky() {
 			while ( have_posts() ) : the_post(); ?>
 				<div id="sticky-post-div">
 					<div class="pad">
-						<h2>
-							<a href="<?php the_permalink(); ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a>
-						</h2>
 						<?php if ( has_post_thumbnail() ) { ?>
 							<a href="<?php the_permalink(); ?>"><?php echo the_post_thumbnail( array(600,450) ); ?></a>
 						<?php } ?>
-						<div class="clearfix"></div>
+						<h2>
+							<a href="<?php the_permalink(); ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+						</h2>
 						<p><?php the_excerpt(); ?></p>
+						<div class="clearfix"></div>
 					</div>
 				</div>
 			<?php endwhile;
@@ -529,11 +529,16 @@ function output_blog_cats() {
 			'hide_empty' => 0
 		);
 		$categories = get_categories($args);
+			echo '<div class="category-boxes clearfix">';
+			
 			foreach($categories as $category) { 
-				echo '<p>Category: <a href="' . get_category_link( $category->term_id ) . '" title="' . sprintf( __( "View all posts in %s" ), $category->name ) . '" ' . '>' . $category->name.'</a> </p> ';
-				echo '<p> Description:'. $category->description . '</p>';
-				echo '<p> Post Count: '. $category->count . '</p>';  
+				echo '<div class="box">';
+				echo '<h3> <a href="' . get_category_link( $category->term_id ) . '" title="' . sprintf( __( "View all posts in %s" ), $category->name ) . '" ' . '>' . $category->name.'</a> </h3> ';
+				echo '<div class="boxtext">'. $category->description . '</div>';
+				echo '</div>';
 			} 
+			
+			echo '</div>';
 	}
 }
 
@@ -611,3 +616,187 @@ add_action('pagelines_before_videoloop', 'output_blog_cats',1);
   }
 add_action('wp_ajax_abc_get_posts','abc_get_posts');
 add_action('wp_ajax_nopriv_abc_get_posts','abc_get_posts');
+
+/****Functions for Story Stream****/
+// Add the Meta Box
+function add_custom_meta_box() {
+	add_meta_box(
+			'custom_meta_box', // $id
+			'Custom Meta Box', // $title
+			'show_custom_meta_box', // $callback
+			'post', // $page
+			'normal', // $context
+			'high'); // $priority
+}
+add_action('add_meta_boxes', 'add_custom_meta_box');
+
+
+// The Callback
+function show_custom_meta_box() {
+	
+	$meta = get_post_meta( get_the_ID() );
+	
+	echo "Belongs To ";
+	$posts= get_main_stories();
+	
+	echo '<input type="hidden" name="vv_belongs_to_nonce" value="'.wp_create_nonce(basename(__FILE__)).'" />';
+	echo "&nbsp;<select name='vv_belongs_to' id='vv_belongs_to'>";
+	echo "<option value='none'>none</option>";
+	foreach ($posts as $ps)
+	{
+		if($meta['vv_belongs_to'][0]==$ps->ID)
+			echo"<option value='$ps->ID' selected>$ps->post_title</option>";
+		else 
+			echo"<option value='$ps->ID'>$ps->post_title</option>";
+	}
+	echo "</select>";
+}
+
+function get_main_stories()
+{
+	$args= array(
+			'post_type' => 'post',
+			 'meta_query' => array(
+			       array(
+			           'key' => 'vv_belongs_to',
+			           'value' => 'none',			           
+			       )
+   				)
+			
+			
+			);
+	$query= new WP_Query($args);
+	
+	$arr= array();
+	
+	if($query->have_posts())
+	{
+		while($query->have_posts()) :$query->the_post();
+			global $post;
+		$arr[] = $post;
+			
+		endwhile;	
+		
+	}	
+	return $arr;
+}
+
+// Save the Data
+function save_custom_meta($post_id) {
+	
+	// verify nonce
+	if (!wp_verify_nonce($_POST['vv_belongs_to_nonce'], basename(__FILE__)))
+		return $post_id;
+	// check autosave
+	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+		return $post_id;
+	// check permissions
+	if ('page' == $_POST['post_type']) {
+		if (!current_user_can('edit_page', $post_id))
+			return $post_id;
+
+	} elseif (!current_user_can('edit_post', $post_id)) {
+		return $post_id;
+	
+	}
+	
+	//save ur value to DB
+	update_post_meta($post_id, 'vv_belongs_to', $_POST['vv_belongs_to']);
+	
+}	
+add_action('save_post', 'save_custom_meta');
+
+/* FUNCTION TO CHECK IF CURRENT POST HAS ANY UPDATE POSTS */
+function check_for_updates($id) {
+	global $wpdb;
+
+	$post_tbl= $wpdb->base_prefix."posts";
+	$post_meta_tbl= $wpdb->base_prefix."postmeta";
+	$q="SELECT p.id,p.post_title FROM $post_tbl as p,$post_meta_tbl as m WHERE p.id=m.post_id AND m.meta_key='vv_belongs_to' AND m.meta_value=$id";
+	$res=$wpdb->get_results($q);
+
+	return $res;
+}
+
+/****Function for Time Ago****/
+function time_ago( $type = 'post' ) {
+	$d = 'comment' == $type ? 'get_comment_time' : 'get_post_time';
+
+	return human_time_diff($d('U'), current_time('timestamp')) . " " . __('ago');
+
+}
+
+/****Function to Output Story Stream Updates****/
+function output_story_updates() {
+	if ( is_single() ) {
+		//Start updates
+		echo '<div id="story-stream">';
+		$updates=check_for_updates(get_the_id());
+		if($updates) {
+			?>
+			<h2 class="updates-header"><span><?php echo count($updates); ?> Updates</span> for <?php echo get_the_title(get_the_id()); ?></h2>
+			<ol class="updates">
+				<?php foreach ($updates as $up) { 
+				$comments_count = wp_count_comments($up);
+				?>
+				<li>
+					<div class="row-fluid">
+						<div class="span2">
+							<div class="meta">
+								<span><?php echo time_ago($up->id); ?></span>
+								<span class="comments"><em><?php echo $comments_count->total_comments; ?></em>comments</span>
+							</div>
+						</div>
+						<div class="span10">
+							<h3><?php echo '<a href=" '. get_permalink($up->id) .' "> '. $up->post_title .' </a>'; ?></h3>
+							<div class="excerpt"><?php echo the_excerpt($up->id); ?></div>
+						</div>
+					</div>
+				</li>
+				<?php } ?>
+			</ol>
+			<?php
+		}
+		echo '</div>';
+		//End Updates
+	}
+}
+add_action('pagelines_inside_bottom_postloop', 'output_story_updates',1);
+
+/* FUNCTION TO ADD FIELD FOR VIDEO_PROFILE */
+
+add_action( 'show_user_profile', 'my_show_extra_profile_fields' );
+add_action( 'edit_user_profile', 'my_show_extra_profile_fields' );
+
+function my_show_extra_profile_fields( $user ) { ?>
+
+<h3>Extra Field </h3>
+
+<table class="form-table">
+
+<tr>
+<th><label for="vv_video_profile">Video Profile</label></th>
+
+<td>
+<textarea name='wpum_video_profile' id='wpum_video_profile' >
+<?php echo esc_attr( get_the_author_meta( 'wpum_video_profile', $user->ID ) ); ?>
+</textarea>
+<br>
+<span class="description">(Embed the video (code) with 600px of WIDTH ) .</span>
+</td>
+</tr>
+
+</table>
+<?php }
+//save new field added
+add_action( 'personal_options_update', 'my_save_extra_profile_fields' );
+add_action( 'edit_user_profile_update', 'my_save_extra_profile_fields' );
+
+function my_save_extra_profile_fields( $user_id ) {
+
+if ( !current_user_can( 'edit_user', $user_id ) )
+return false;
+
+/* Copy and paste this line for additional fields. Make sure to change 'twitter' to the field ID. */
+update_usermeta( $user_id, 'wpum_video_profile', $_POST['wpum_video_profile'] );
+}
