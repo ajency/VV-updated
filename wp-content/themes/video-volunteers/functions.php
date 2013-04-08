@@ -771,14 +771,13 @@ function output_story_updates() {
 			<ol class="updates">
 				<?php foreach ($updates as $up) { 
 				setup_postdata( $up );
-				$comments_count = wp_count_comments($up);
 				?>
 				<li>
 					<div class="row-fluid">
 						<div class="span2">
 							<div class="meta">
 								<span><?php echo human_time_diff( get_the_time('U', $up), current_time('timestamp') ) . ' ago'; ?></span>
-								<span class="comments"><em><?php echo $comments_count->total_comments; ?></em>comments</span>
+								<span class="comments"><em><?php echo $up->comment_count; ?></em>comments</span>
 							</div>
 						</div>
 						<div class="span10">
@@ -830,7 +829,6 @@ function my_save_extra_profile_fields( $user_id ) {
 if ( !current_user_can( 'edit_user', $user_id ) )
 return false;
 
-/* Copy and paste this line for additional fields. Make sure to change 'twitter' to the field ID. */
 update_usermeta( $user_id, 'wpum_video_profile', $_POST['wpum_video_profile'] );
 }
 
