@@ -99,22 +99,33 @@ function output_homepage_titles() {
 
 add_action('pagelines_inside_bottom_boxes', 'output_homepage_titles',1);
 
-/****Output Social Bar in Content****/
-add_filter ('the_content', 'insertSocial');
+/****Plus One Script****/
+function add_social_scripts() {
+	echo '<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>';
+	echo '<script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>';
+}
+add_action('wp_footer', 'add_social_scripts');
 
+/****Output Social Bar in Content****/
 function insertSocial($content) {
-   if(is_single()) {
-	  $content = trim($content);
-      $content_array = explode(">",$content);
-	  $content_new = '<div class="social-bar">';
-      $content_new.= '<h4>Think this issue needs more voices? <small>Help spread the word, Share this story.</small></h4>';
-      
-	  $content_new.= '<div class="social-buttons"><div class="social-button"><iframe scrolling="no" frameborder="0" allowtransparency="true" src="http://platform.twitter.com/widgets/tweet_button.1362636220.html#_=1363001285231&amp;count=vertical&amp;id=twitter-widget-1&amp;lang=en&amp;original_referer=http%3A%2F%2Fwww.vv.ajency.in%2Ftest-sticky-post%2F&amp;size=m&amp;text=Test%20Sticky%20Post&amp;url=http%3A%2F%2Fwww.vv.ajency.in%2Ftest-sticky-post%2F&amp;via=socializeWP" class="twitter-share-button twitter-count-vertical" style="width: 58px; height: 62px;" title="Twitter Tweet Button" data-twttr-rendered="true"></iframe></div><div class="social-button"><iframe scrolling="no" frameborder="0" allowtransparency="true" style="border:none; overflow:hidden; width:45px; height:65px;" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.vv.ajency.in%2Ftest-sticky-post%2F&amp;send=false&amp;layout=box_count&amp;width=45&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=arial&amp;height=65"></iframe></div><div class="social-button"><div style="height: 60px; width: 50px; display: inline-block; text-indent: 0px; margin: 0px; padding: 0px; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline;" id="___plusone_1"><iframe width="100%" scrolling="no" frameborder="0" hspace="0" marginheight="0" marginwidth="0" style="position: static; top: 0px; width: 50px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 60px;" tabindex="0" vspace="0" id="I1_1363001287924" name="I1_1363001287924" src="https://plusone.google.com/_/+1/fastbutton?bsv&amp;size=tall&amp;hl=en-US&amp;origin=http%3A%2F%2Fwww.vv.ajency.in&amp;url=http%3A%2F%2Fwww.vv.ajency.in%2Ftest-sticky-post%2F&amp;jsh=m%3B%2F_%2Fscs%2Fapps-static%2F_%2Fjs%2Fk%3Doz.gapi.en.IOaFQMAHVRI.O%2Fm%3D__features__%2Fam%3DUQE%2Frt%3Dj%2Fd%3D1%2Frs%3DAItRSTNYuZ6HDkdZho3xDZgOVYkx4qGWPQ#_methods=onPlusOne%2C_ready%2C_close%2C_open%2C_resizeMe%2C_renderstart%2Concircled&amp;id=I1_1363001287924&amp;parent=http%3A%2F%2Fwww.vv.ajency.in&amp;rpctoken=22999206" allowtransparency="true" data-gapiattached="true" title="+1"></iframe></div></div></div>';
-	  
-	  $content_new.= '</div';
-	  
-	  $temp_content_array = array();
-	  $content_para_count = count($content_array );	
+	if( is_single() && in_the_loop() ) {
+		$content = trim($content);
+		$content_array = explode(">",$content);
+		$content_new = '<div class="social-bar">';
+		$content_new.= '<h4>Think this issue needs more voices? <small>Help spread the word, Share this story.</small></h4>';
+		$content_new.= '<div class="social-buttons">';
+		// Twitter Tweet Button
+		$content_new.= '<div class="social-button"><a href="http://twitter.com/share?url='. urlencode(get_permalink()) .'&via=videovolunteers&count=vertical" class="twitter-share-button">Tweet</a></div>';
+		// Facebook Button
+		$content_new.= '<div class="social-button"><iframe scrolling="no" frameborder="0" allowtransparency="true" style="border:none; overflow:hidden; width:45px; height:65px;" 	src="//www.facebook.com/plugins/like.php?href='. urlencode(get_permalink()) .'&send=false&layout=box_count&width=45&show_faces=false&action=like&colorscheme=light&font=arial&height=65"></iframe></div>';
+		// Google+ Button
+		$content_new.= '<div class="social-button"><g:plusone size="tall" href="'. urlencode(get_permalink()) .'"></g:plusone></div>';
+
+		$content_new.= '</div>';
+		$content_new.= '</div';
+
+		$temp_content_array = array();
+		$content_para_count = count($content_array );	
 	
 		if($content_para_count<=2)
 		{
@@ -138,9 +149,11 @@ function insertSocial($content) {
 		}
 		$content = implode(">",$content_array);	
 	  
-   }
-   return $content;
+	}
+	return $content;
 }
+
+add_filter ('the_content', 'insertSocial');
 
 /*appending a list of child pages*/
 function append_child_pages() {
@@ -712,18 +725,10 @@ function check_for_updates($id) {
 
 	$post_tbl= $wpdb->base_prefix."posts";
 	$post_meta_tbl= $wpdb->base_prefix."postmeta";
-	$q="SELECT p.id,p.post_title FROM $post_tbl as p,$post_meta_tbl as m WHERE p.id=m.post_id AND m.meta_key='vv_belongs_to' AND m.meta_value=$id";
+	$q="SELECT * FROM $post_tbl as p,$post_meta_tbl as m WHERE p.id=m.post_id AND m.meta_key='vv_belongs_to' AND m.meta_value=$id";
 	$res=$wpdb->get_results($q);
 
 	return $res;
-}
-
-/****Function for Time Ago****/
-function time_ago( $type = 'post' ) {
-	$d = 'comment' == $type ? 'get_comment_time' : 'get_post_time';
-
-	return human_time_diff($d('U'), current_time('timestamp')) . " " . __('ago');
-
 }
 
 /****Function to Output Story Stream Updates****/
@@ -737,19 +742,20 @@ function output_story_updates() {
 			<h2 class="updates-header"><span><?php echo count($updates); ?> Updates</span> for <?php echo get_the_title(get_the_id()); ?></h2>
 			<ol class="updates">
 				<?php foreach ($updates as $up) { 
+				setup_postdata( $up );
 				$comments_count = wp_count_comments($up);
 				?>
 				<li>
 					<div class="row-fluid">
 						<div class="span2">
 							<div class="meta">
-								<span><?php echo time_ago($up->id); ?></span>
+								<span><?php echo human_time_diff( get_the_time('U', $up), current_time('timestamp') ) . ' ago'; ?></span>
 								<span class="comments"><em><?php echo $comments_count->total_comments; ?></em>comments</span>
 							</div>
 						</div>
 						<div class="span10">
-							<h3><?php echo '<a href=" '. get_permalink($up->id) .' "> '. $up->post_title .' </a>'; ?></h3>
-							<div class="excerpt"><?php echo the_excerpt($up->id); ?></div>
+							<h3><a href="<?php echo get_permalink($up); ?>"><?php echo $up->post_title; ?> </a></h3>
+							<div class="excerpt"><?php echo the_excerpt($up); ?></div>
 						</div>
 					</div>
 				</li>
