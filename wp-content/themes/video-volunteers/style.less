@@ -1244,7 +1244,8 @@ div.testimonials-slider-quotecontainer {
 		width: 20px;
 		height: 53px;
 		position: relative;
-		top: 113px;
+		/*top: 113px;*/
+		top: 72px;
 		right: 10px;
 		background: url('@{plChildRoot}/images/action-box-arrow.png') no-repeat right top;
 		z-index: 1;
@@ -1275,6 +1276,10 @@ div.testimonials-slider-quotecontainer {
 				text-decoration: none;
 				font-weight: bold;
 			}
+		}
+		.share-button {
+			padding: 5px 0 0;
+			text-indent: 20%;
 		}
 	}
 	.info-box-arrow {
@@ -1392,6 +1397,22 @@ div.testimonials-slider-quotecontainer {
 				img {
 					display: inline-block;
 					margin: 0 3px;
+				}
+			}
+		}
+		.auth-video {
+			.video-player {
+				position: relative;
+				padding-bottom: 56.25%; /* 16:9 */
+				padding-top: 25px;
+				height: 0;
+				margin: 20px 0 0;
+				object, embed {
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
 				}
 			}
 		}

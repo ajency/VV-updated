@@ -117,7 +117,7 @@ function insertSocial($content) {
 		// Twitter Tweet Button
 		$content_new.= '<div class="social-button"><a href="http://twitter.com/share?url='. urlencode(get_permalink()) .'&via=videovolunteers&count=vertical" class="twitter-share-button">Tweet</a></div>';
 		// Facebook Button
-		$content_new.= '<div class="social-button"><iframe scrolling="no" frameborder="0" allowtransparency="true" style="border:none; overflow:hidden; width:45px; height:65px;" 	src="//www.facebook.com/plugins/like.php?href='. urlencode(get_permalink()) .'&send=false&layout=box_count&width=45&show_faces=false&action=like&colorscheme=light&font=arial&height=65"></iframe></div>';
+		$content_new.= '<div class="social-button"><iframe src="//www.facebook.com/plugins/like.php?href='. urlencode(get_permalink()) .'&amp;send=false&amp;layout=box_count&amp;width=45&amp;show_faces=false&amp;font=arial&amp;colorscheme=light&amp;action=like&amp;height=65" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:45px; height:90px;" allowTransparency="true"></iframe></div>';
 		// Google+ Button
 		$content_new.= '<div class="social-button"><g:plusone size="tall" href="'. urlencode(get_permalink()) .'"></g:plusone></div>';
 
@@ -155,7 +155,7 @@ function insertSocial($content) {
 
 add_filter ('the_content', 'insertSocial');
 
-/*appending a list of child pages*/
+/****Function appending a list of child pages****/
 function append_child_pages() {
 global $wpdb;
     global $post;
@@ -313,16 +313,27 @@ function output_single_video() {
 						<div class="single-vid-info">
 							<div class="action-box-arrow"></div>
 							<div class="action-box">
+								<!-- Views/Shares Counter
 								<h2 class="views">500<small>Views</small></h2>
 								<h2 class="shares">50<small>Shares</small></h2>
+								
 								<a class="more-link" href="#"><i class="icon-plus"></i>&nbsp;Facebook Like/Share</a>
 								<a class="more-link" href="#"><i class="icon-plus"></i>&nbsp;Tweet This</a>
 								<a class="more-link" href="#"><i class="icon-plus"></i>&nbsp;Email This</a>
+								-->
+								<div class="share-button">
+									<a href="http://twitter.com/share?url='. urlencode(get_permalink()) .'&via=videovolunteers&count=horizontal" class="twitter-share-button">Tweet</a>
+								</div>
+								<div class="share-button">
+									<iframe src="//www.facebook.com/plugins/like.php?href=<?php echo urlencode(get_permalink()); ?>&amp;send=false&amp;layout=standard&amp;width=250&amp;show_faces=false&amp;font=arial&amp;colorscheme=light&amp;action=like&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:35px;" allowTransparency="true"></iframe>
+								</div>
+								<div class="share-button">
+									<g:plusone href="'. urlencode(get_permalink()) .'"></g:plusone>
+								</div>
 							</div>
 							<div class="info-box-arrow"></div>
 							<div class="info-box">
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu facilisis arcu. Vestibulum a massa nulla, in fermentum augue. Curabitur mattis eleifend aliquam. Phasellus at nunc nisl. Praesent venenatis enim id dui porta sit amet bibendum quam hendrerit. </p>
-								<a class="more-link"><i class="icon-plus"></i> More</a>
+								<p><?php echo get_post_meta( get_the_ID(), '_higlight_text', true); ?></p>
 							</div>
 						</div>
 					</div>
@@ -398,11 +409,28 @@ function output_single_author_bio() {
 							<h4>Bio:</h4>
 							<p><?php echo $curauth->description; ?></p>
 						</div>
-						<span>Connect with him&nbsp;
-								<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a>
-								<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a>
-								<a href="mailto:<?php echo get_the_author_meta('email'); ?>"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
-							</span>
+						<span>Connect with <?php echo $curauth->nickname; ?>&nbsp;
+							<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a>
+							<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a>
+							<a href="mailto:<?php echo get_the_author_meta('email'); ?>"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
+						</span>
+						<div class="auth-video">
+							<?php
+							$video = $curauth->wpum_video_profile;
+							?>
+							<?php if($video != NULL) {?>
+
+							<div id="x-video-0" class="video-player">
+								<object width="400" height="405" standby="Introducing VideoPress for WordPress.com" style="visibility: visible; ">
+								<param name="seamlesstabbing" value="true"></param>
+								<param name="allowFullScreen" value="true"></param>
+								<param name="allowscriptaccess" value="always" width="500" height="405"></param>
+								<!--[if !IE]>-->	
+								<?php echo htmlspecialchars_decode($video); ?>
+								</object>
+							</div>
+							<?php } ?>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -776,23 +804,22 @@ add_action( 'edit_user_profile', 'my_show_extra_profile_fields' );
 
 function my_show_extra_profile_fields( $user ) { ?>
 
-<h3>Extra Field </h3>
+	<h3>Video Field </h3>
 
-<table class="form-table">
+	<table class="form-table">
 
-<tr>
-<th><label for="vv_video_profile">Video Profile</label></th>
+		<tr>
+			<th><label for="vv_video_profile">Video Profile</label></th>
+			<td>
+			<textarea name='wpum_video_profile' id='wpum_video_profile' >
+			<?php echo esc_attr( get_the_author_meta( 'wpum_video_profile', $user->ID ) ); ?>
+			</textarea>
+			<br>
+			<span class="description">(Embed the video (code) with 600px of WIDTH ) .</span>
+			</td>
+		</tr>
 
-<td>
-<textarea name='wpum_video_profile' id='wpum_video_profile' >
-<?php echo esc_attr( get_the_author_meta( 'wpum_video_profile', $user->ID ) ); ?>
-</textarea>
-<br>
-<span class="description">(Embed the video (code) with 600px of WIDTH ) .</span>
-</td>
-</tr>
-
-</table>
+	</table>
 <?php }
 //save new field added
 add_action( 'personal_options_update', 'my_save_extra_profile_fields' );
@@ -805,4 +832,28 @@ return false;
 
 /* Copy and paste this line for additional fields. Make sure to change 'twitter' to the field ID. */
 update_usermeta( $user_id, 'wpum_video_profile', $_POST['wpum_video_profile'] );
+}
+
+/****Highlight Text for Videos****/
+add_action( 'add_meta_boxes', 'highlight_meta' );
+function highlight_meta() {
+	add_meta_box( 'highlight_meta', 'Highlight Text For Video', 'highlight_video_meta', 'post', 'side', 'high' );
+}
+
+function highlight_video_meta( $post ) {
+	$higlight_text = get_post_meta( $post->ID, '_higlight_text', true);
+	echo 'Please enter the highlight text for a single video below. This is only seen on the single video page.';
+	?>
+	<textarea name="higlight_text" style="display: block; width: 100%; min-height: 100px;"><?php echo esc_attr( $higlight_text ); ?></textarea>
+	<?php
+}
+
+add_action( 'save_post', 'save_highlight_meta' );
+function save_highlight_meta( $post_ID ) {
+	global $post;
+	if( $post->post_type == "post" ) {
+		if (isset( $_POST ) ) {
+			update_post_meta( $post_ID, '_higlight_text', strip_tags( $_POST['higlight_text'] ) );
+		}
+	}
 }
