@@ -117,7 +117,7 @@ function insertSocial($content) {
 		// Twitter Tweet Button
 		$content_new.= '<div class="social-button"><a href="http://twitter.com/share?url='. urlencode(get_permalink()) .'&via=videovolunteers&count=vertical" class="twitter-share-button">Tweet</a></div>';
 		// Facebook Button
-		$content_new.= '<div class="social-button"><iframe src="//www.facebook.com/plugins/like.php?href='. urlencode(get_permalink()) .'&amp;send=false&amp;layout=box_count&amp;width=45&amp;show_faces=false&amp;font=arial&amp;colorscheme=light&amp;action=like&amp;height=65" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:45px; height:90px;" allowTransparency="true"></iframe></div>';
+		$content_new.= '<div class="social-button"><iframe src="//www.facebook.com/plugins/like.php?href='. urlencode(get_permalink()) .'&amp;send=false&amp;layout=box_count&amp;width=45&amp;show_faces=false&amp;font=arial&amp;colorscheme=light&amp;action=like&amp;height=65" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:45px; height:65px;" allowTransparency="true"></iframe></div>';
 		// Google+ Button
 		$content_new.= '<div class="social-button"><g:plusone size="tall" href="'. urlencode(get_permalink()) .'"></g:plusone></div>';
 
@@ -282,6 +282,15 @@ function youtube_id_from_url($link){
 
 }
 
+/****Function to get Video View Count****/
+function count_views( $youtube_id ) {
+	$video_ID = youtube_id_from_url($youtube_id);
+	$JSON = file_get_contents("https://gdata.youtube.com/feeds/api/videos/{$video_ID}?v=2&alt=json");
+	$JSON_Data = json_decode($JSON);
+	$views = $JSON_Data->{'entry'}->{'yt$statistics'}->{'viewCount'};
+	echo $views;
+}
+
 /****Output Single Video Posts****/
 function output_single_video() {
 	if ( is_single() )
@@ -331,10 +340,17 @@ function output_single_video() {
 									<g:plusone href="'. urlencode(get_permalink()) .'"></g:plusone>
 								</div>
 							</div>
-							<div class="info-box-arrow"></div>
-							<div class="info-box">
-								<p><?php echo get_post_meta( get_the_ID(), '_higlight_text', true); ?></p>
-							</div>
+							<?php
+							$highlight_text = get_post_meta( get_the_ID(), '_higlight_text', true);
+							if ($highlight_text !== '') {
+							?>
+								<div class="info-box-arrow"></div>
+								<div class="info-box">
+									<p><?php echo get_post_meta( get_the_ID(), '_higlight_text', true); ?></p>
+								</div>
+							<?php
+							}
+							?>
 						</div>
 					</div>
 				</div>

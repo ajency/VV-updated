@@ -1,10 +1,10 @@
 === Rotating Tweets (Twitter widget and shortcode) ===
 Contributors: mpntod
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9XCNM4QSVHYT8
-Tags: shortcode,widget,twitter,rotating,rotate,rotator,tweet,tweets,animation,jquery,jquery cycle,cycle,multilingual
+Tags: shortcode,widget,twitter,rotating,rotate,rotator,tweet,tweets,animation,jquery,jquery cycle,cycle,multilingual,responsive
 Requires at least: 2.6
 Tested up to: 3.5.1
-Stable tag: 1.4.0
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,6 +16,7 @@ Twitter widget and shortcode to show your latest tweets one at a time an animate
 * **Space efficient** - instead of showing all your tweets at once, shows one at a time and then smoothly replaces it with the next one. After showing all your tweets, loops back to the beginning again.
 * **Reliable** - keeps showing your latest Tweets even if the Twitter website is down.
 * **Customisable** - you decide whose tweets to show, how many to show, whether to include retweets and replies, and whether to show a follow button. You can also decide how quickly the tweets rotate and what type of animation to use.
+* **Responsive** - resizes as your page resizes
 * Gives you the option to show a fully customisable Twitter 'follow' button
 * Replaces [t.co](http://t.co) links with the original link
 * Caches the most recent data from Twitter to avoid problems with rate limiting
@@ -77,8 +78,8 @@ Possible variables for the shortcode include:
 	* `show_meta_via` = `'0'` or `'1'` - show how each tweet was posted - optional - default is `'1'`
 	* `show_meta_reply_retweet_favorite` = `'0'` or `'1'` - show 'reply', 'retweet' and 'favorite' buttons - optional - default is `'0'`
 	* `show_meta_prev_next` = `'0'` or `'1'` - show 'next', 'prev' links - optional - default is `'0'`
-		* `next` = content for the next button (default `'next'`)
 		* `prev` = content for the prev button (default `'prev'`)
+		* `next` = content for the next button (default `'next'`)
 		* `middot` = content for the space between the buttons (default `' &amp;middot; '`)
 		* `np_pos` = position for 'next' and 'prev' buttons - `'top'` or `'bottom'` (default `'top'`)
 * **Twitter follow button**
@@ -91,6 +92,7 @@ Most of this is my own work, but special thanks are owed to:
 
 * The [jQuery](http://jquery.com/) team
 * [Mike Alsup](http://jquery.malsup.com/cycle/) for [jQuery.Cycle](http://jquery.malsup.com/cycle/)
+* [Syd Lawrence](http://sydlawrence.com/) for introducing me to jQuery and jQuery.Cycle
 * [Abraham Williams](http://abrah.am) for [TwitterOAuth](https://github.com/abraham/twitteroauth)
 * [Liam Gaddy](http://profiles.wordpress.org/lgladdy/) at [Storm Consultancy](http://www.stormconsultancy.co.uk/) for [his work](http://www.stormconsultancy.co.uk/blog/development/tools-plugins/oauth-twitter-feed-for-developers-library-and-wordpress-plugin/) on [oAuth Twitter Feed for Developers](http://wordpress.org/extend/plugins/oauth-twitter-feed-for-developers/) (although I ended up using it for inspiration rather than plugging it in directly).
 * All the people who have given advice and suggested improvements
@@ -100,7 +102,16 @@ Most of this is my own work, but special thanks are owed to:
 In most cases, each use (or "instance") of this plug-in gets data from Twitter every 2 minutes. The exception is when two or more instances share the same settings (screen name etc.), in which case they share the same data rather than each calling it separately.
 
 = How can I pull information from two accounts into one widget =
-The easiest way is to use a search term like 'from:account1 OR from:account2'.
+The easiest way is to use a search term like `'from:account1 OR from:account2'`.
+
+= My widget is too wide! =
+Try putting:
+`
+div.widget_rotatingtweets_widget, div.rotatingtweet, div.widget_rotatingtweets_widget div.widget-title {
+	max-width: 123px;
+}
+`
+into your CSS - changing `123px;` to the width you're aiming at - either via putting `rotatingtweets.css` into `wp-content/uploads` or by editing your own template files.
 
 = How can I add a Twitter bird to the left of my tweets? =
 You can do this by going to the `rotatingtweets/css` directory and renaming `rotatingtweets-sample.css` to `rotatingtweets.css` and putting it in the `wp-content/uploads/` directory.  This displays a Twitter bird to the left of your tweets.  Any CSS you put into `rotatingtweets.css` won't be overwritten when the plug-in is upgraded to the latest version.
@@ -130,13 +141,25 @@ If there is only one copy of `jquery` and of `jquery.cycle` on your page, the be
 1. Read the diagnostics and look for any problems that relate to JavaScript. This will normally tell you which JavaScript (if any) is having problems.
 
 == Upgrade notice ==
-= 1.4.0 =
-* Access search, favorites and lists through Rotating Tweets widgets.
+= 1.4.3 =
+* Works with responsive templates. Fixes some styling problems.
 
 = 0.700 (1.3.0) =
 * Upgrade needed for Rotating Tweets to keep working after May 2013. Supports version 1.1 of the Twitter API.
 
 == Changelog ==
+= 1.4.3 =
+* Removes two lines of CSS causing formatting problems
+* Improves responsiveness going from narrow to wider layouts
+
+= 1.4.2 =
+* Corrected minor error with resizing of `.rtw_meta` div
+
+= 1.4.1 =
+* Now works with responsive formats
+* Adjusted width overflow issues
+* Added [instructions on how to deal with width issues](http://wordpress.org/extend/plugins/rotatingtweets/faq/)
+
 = 1.4.0 =
 * Support for search, favorites and lists via Rotating Tweets widgets.
 
