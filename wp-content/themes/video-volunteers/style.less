@@ -118,6 +118,61 @@ body{font-family: 'Merriweather Sans', sans-serif !important; font-size: 13px;}
 		&:last-child {
 			margin: 0;
 		}
+		&.impact-widget {
+			width: 100%;
+			float: none;
+			#impactloop {
+				margin: 0 0 20px;
+				.header {
+					background: @orange;
+					text-align: center;
+					margin: 0 0 10px;
+					box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+					h4 {
+						margin: 10px 0;
+						a {
+							color: #FFF;
+							font-family: 'Merriweather Sans', sans-serif !important;
+							font-size: 1.4em;
+							text-transform: uppercase;
+						}
+					}
+				}
+				.impact {
+					h5 {
+						margin: 0 0 5px;
+						a {
+							color: @logo-color;
+							font-family: 'Merriweather Sans', sans-serif !important;
+							font-size: 1.3em;
+						}
+					}
+					.meta {
+						font-size: 0.8em;
+						color: rgba(0, 0, 0, 0.7);
+						border-top: 1px dotted lighten(@grey-regular, 30%);
+						font-style: italic;
+						a {
+							color: @orange;
+						}
+					}
+					.excerpt {
+						color: #777777;
+						font-size: 0.9em;
+						img {
+							padding: 2px;
+							border: 1px solid #f4f4f4;
+							box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+							margin: 0 5px 5px 0;
+							float: left;
+						}
+					}
+					.more-link {
+						color: @orange;
+					}
+				}
+			}
+		}
 	}
 }
 
