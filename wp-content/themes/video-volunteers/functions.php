@@ -871,3 +871,10 @@ function save_highlight_meta( $post_ID ) {
 		}
 	}
 }
+
+/****Add Excerpt On Pages****/
+function add_excerpts_section_to_pages() {
+     add_post_type_support( 'page', 'excerpt' );
+}
+
+add_action( 'init', 'add_excerpts_section_to_pages' );
