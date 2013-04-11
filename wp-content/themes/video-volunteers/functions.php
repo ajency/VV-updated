@@ -157,7 +157,7 @@ add_filter ('the_content', 'insertSocial');
 
 /****Function appending a list of child pages****/
 function append_child_pages() {
-global $wpdb;
+	global $wpdb;
     global $post;
  
     /*
@@ -165,7 +165,7 @@ global $wpdb;
      * the ORDER in specified in this page.
      */
     $sql = "SELECT * FROM $wpdb->posts WHERE post_parent = " .
-        $post->ID . " AND post_type = 'page' ORDER BY menu_order";
+    $post->ID . " AND post_type = 'page' ORDER BY menu_order";
  
     // do the query
     $child_pages = $wpdb->get_results( $sql, 'OBJECT' );
@@ -221,8 +221,8 @@ global $wpdb;
                 "<a href='" . $permalink . "' rel='bookmark' title='" . $cp->post_title . "'>" .
                 $cp->post_title .
             "</a></h5>\n";
-  $html .= "<div class='page_excerpt'><span> ".$cp->post_content."</span> </div>\n";
-           $html .="<a class='continue_reading_link' href='". $permalink ."' >Read More -></a>"; 
+			$html .= "<div class='page_excerpt'><span> ".$cp->post_content."</span> </div>\n";
+			$html .="<a class='continue_reading_link' href='". $permalink ."' >Read More -></a>"; 
 			$html .= "
 			</div>\n";
 

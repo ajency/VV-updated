@@ -2519,3 +2519,51 @@ div.testimonials-slider-quotecontainer {
 		padding: 0 13px 0 0;
 	}
 }
+
+/****Regional Categories Widget Styles****/
+#regional-cats {
+	.header {
+		margin: 0 0 10px;
+		border-bottom: 1px dotted @orange;
+		h3 {
+			color: @orange;
+			font-size: 1.6em;
+			text-transform: uppercase;
+		}
+	}
+	.regions {
+		margin-bottom: 0;
+		.accordion-group {
+			.accordion-heading {
+				.border-radius(3px);
+				.box-shadow(0 0 2px lighten(@grey-regular, 30%));
+				a {
+					color: lighten(@grey-regular, 20%);
+					font-size: 1.1em;
+				}
+				&:hover {
+					background: #FFF;
+				}
+			}
+			.accordion-body {
+				ul {
+					margin: 0;
+					li {
+						border-bottom: 1px solid lighten(@grey-regular, 60%);
+						a {
+							display: block;
+							padding: 6px 0;
+							color: @logo-color;
+							&:hover {
+								text-decoration: none;
+							}
+						}
+						&:hover {
+							border-bottom: 1px solid @logo-color;
+						}
+					}
+				}
+			}
+		}
+	}
+}
