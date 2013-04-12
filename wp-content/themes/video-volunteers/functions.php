@@ -389,16 +389,16 @@ function output_single_video_author() {
 							<span>Connect with him&nbsp;
 								<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a>
 								<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a>
-								<a href="#myModal"  data-toggle="modal"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
+								<a href="#myModal1"  data-toggle="modal"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
 							</span>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div id="myModal1" style="left:21%" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-       <h3 id="myModalLabel">Contact <?php echo $curauth->nickname; ?> Author </h3>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times; </button>
+       <h3 id="myModalLabel">Contact <?php the_author_posts_link(); ?> Author </h3>
   </div>
   <div class="modal-body">
 
@@ -480,7 +480,7 @@ wp_mail($ToEmail, $EmailSubject, $MESSAGE_BODY, "From: awmadvior.com");
 add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
 wp_mail($ToEmail1, $EmailSubject, $MESSAGE_BODY, "From: awmadvior.com");
 ?> 
-Your message was sent
+<h3>Your message was sent</h3>
 <?php 
 } else { 
 ?> 
@@ -491,7 +491,7 @@ Your message was sent
   </div>
   <div class="modal-body">
 
- <form action="" method="post">
+ <form action="" method="post" name="myForm">
 <table width="400" border="0" cellspacing="2" cellpadding="0">
 <tr>
 <td width="29%" class="bodytext">Your name:</td>
@@ -507,13 +507,31 @@ Your message was sent
 </tr>
 <tr>
 <td class="bodytext"> </td>
-<td align="left" valign="top"><input type="submit" name="Submit" value="Send"></td>
+<td align="left" valign="top"><input type="submit" name="Submit" value="Send" onsubmit="return validateForm()" ></td>
 </tr>
 </table>
 </form> 
 </div>
 
 </div>
+<script>
+function validateForm()
+{
+var x=document.forms["myForm"]["name1"].value;
+if (x==null || x=="")
+  {
+  alert("Name must be filled out");
+  return false;
+  }
+  var x=document.forms["myForm"]["email1"].value;
+if (x==null || x=="")
+  {
+  alert("Email must be filled out");
+  return false;
+  }
+ 
+}
+</script>
 <?php 
 }; 
 ?>
