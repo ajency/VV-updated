@@ -5,7 +5,7 @@ Donate link: http://siboliban.org/donate
 Tags: author image, author photo, author avatar, avatar, bbPress, profile avatar, profile image, user avatar, user image, user photo
 Requires at least: 3.1
 Tested up to: 3.5.1
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -226,6 +226,10 @@ Outputs:
 5. Options for the [avatar] shortcode.
 
 == Changelog ==
+
+= 1.3.3 =
+* Update: Shortcode checks for user ID, login, slug, or e-mail address
+* Update: Move jquery to register_script for < WP 3.5
 
 = 1.3.2 =
 * Bug Fix: Check for user before setting name in alt tag
