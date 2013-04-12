@@ -1,8 +1,8 @@
 .settings
 .buildpath
 .project
-/.htaccess
 /wp-config.php
+/.htaccess
 /wp-content/advanced-cache.php
 /wp-content/cache/
 /wp-content/db.php
