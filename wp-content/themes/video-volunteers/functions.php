@@ -426,7 +426,7 @@ function output_single_video_author() {
 					</div>
 				</div>
 			</div>
-								<?php 
+			<?php 
 				
 						
 if ($_POST["email2"]<>'') { 
@@ -492,6 +492,9 @@ wp_mail($ToEmail2, $EmailSubject, $MESSAGE_BODY, "From: awmadvior.com");
  frmvalidator.addValidation("email2","email");
 
 </script>
+<?php 
+}; 
+?>
 			<div class="thumb-image">
 				<img src="http://indiaunheard.videovolunteers.org<?php echo $thumb_img; ?>" alt="<?php the_title_attribute(); ?>" />
 			</div>
