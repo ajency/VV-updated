@@ -10,3 +10,6 @@
 /wp-content/plugins/w3-total-cache/
 /wp-content/plugins/wp-optimize/
 /wp-content/w3tc-config/
+/wp-config.php
+wp-content/plugins/wp-smtp
+

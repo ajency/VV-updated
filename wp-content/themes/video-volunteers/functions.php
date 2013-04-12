@@ -389,12 +389,42 @@ function output_single_video_author() {
 							<span>Connect with him&nbsp;
 								<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a>
 								<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a>
-								<a href="mailto:<?php echo get_the_author_meta('email'); ?>"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
+								<a href="#myModal"  data-toggle="modal"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
 							</span>
 						</div>
 					</div>
 				</div>
 			</div>
+			<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+       <h3 id="myModalLabel">Contact <?php echo $curauth->nickname; ?> Author </h3>
+  </div>
+  <div class="modal-body">
+
+ <form action="" method="post">
+<table width="400" border="0" cellspacing="2" cellpadding="0">
+<tr>
+<td width="29%" class="bodytext">Your name:</td>
+<td width="71%"><input name="name1" type="text" id="name" size="32"></td>
+</tr>
+<tr>
+<td class="bodytext">Email address:</td>
+<td><input name="email1" type="text" id="email" size="32"></td>
+</tr>
+<tr>
+<td class="bodytext">Comment:</td>
+<td><textarea name="comment1" cols="45" rows="6" id="comment" class="bodytext"></textarea></td>
+</tr>
+<tr>
+<td class="bodytext"> </td>
+<td align="left" valign="top"><input type="submit" name="Submit" value="Send"></td>
+</tr>
+</table>
+</form> 
+</div>
+
+</div>
 			<div class="thumb-image">
 				<img src="http://indiaunheard.videovolunteers.org<?php echo $thumb_img; ?>" alt="<?php the_title_attribute(); ?>" />
 			</div>
@@ -428,25 +458,40 @@ function output_single_author_bio() {
 						<span>Connect with <?php echo $curauth->nickname; ?>&nbsp;
 							<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a>
 							<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a>
-							<a href="mailto:<?php echo get_the_author_meta('email'); ?>"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
+							<a href="#myModal"  data-toggle="modal"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
 						</span>
 						<?php 
-if ($_POST["email"]<>'') { 
-    $ToEmail = $_POST[_post_author_email];
+				
+						
+if ($_POST["email1"]<>'') { 
+
+    $admin_email = get_the_author_meta('email');	
+	$admin1_email = get_settings('admin_email');
+	$ToEmail1 =$admin1_email; 
+	$ToEmail =$admin_email; 
     $EmailSubject = 'Site contact form'; 
-    $mailheader = "From: ".$_POST["email"]."\r\n"; 
-    $mailheader .= "Reply-To: ".$_POST["email"]."\r\n"; 
-    $mailheader .= "Content-type: text/html; charset=iso-8859-1\r\n"; 
-    $MESSAGE_BODY = "Name: ".$_POST["name"].""; 
-    $MESSAGE_BODY .= "Email: ".$_POST["email"].""; 
-    $MESSAGE_BODY .= "Comment: ".nl2br($_POST["comment"]).""; 
-    mail($ToEmail, $EmailSubject, $MESSAGE_BODY, $mailheader) or die ("Failure"); 
+	$MESSAGE_BODY = "Name: ".$_POST["name1"].""; 
+    $MESSAGE_BODY .= "Email: ".$_POST["email1"].""; 
+    $MESSAGE_BODY .= "Comment: ".nl2br($_POST["comment1"]).""; 
+   
+	
+add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
+wp_mail($ToEmail, $EmailSubject, $MESSAGE_BODY, "From: awmadvior.com");
+add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
+wp_mail($ToEmail1, $EmailSubject, $MESSAGE_BODY, "From: awmadvior.com");
 ?> 
 Your message was sent
 <?php 
 } else { 
 ?> 
-<form action="" method="post">
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times; </button>
+    <h3 id="myModalLabel">Contact <?php echo $curauth->nickname; ?> Author </h3>
+  </div>
+  <div class="modal-body">
+
+ <form action="" method="post">
 <table width="400" border="0" cellspacing="2" cellpadding="0">
 <tr>
 <td width="29%" class="bodytext">Your name:</td>
@@ -466,6 +511,9 @@ Your message was sent
 </tr>
 </table>
 </form> 
+</div>
+
+</div>
 <?php 
 }; 
 ?>
