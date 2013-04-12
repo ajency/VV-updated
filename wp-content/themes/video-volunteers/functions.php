@@ -155,6 +155,36 @@ function insertSocial($content) {
 
 add_filter ('the_content', 'insertSocial');
 
+/****Function to add Read more to the content of a Page with child Pages****/
+function page_readmore_script() {
+	$post = get_post();
+	$children = get_pages('child_of='.$post->ID);
+	
+	if( count( $children ) != 0 ) { 
+		?>
+			<style type="text/css">#post-<?php echo $post->ID; ?> {display: none;}</style>
+			<div class="post-meta">
+				<h1 class="entry-title"><?php echo $post->post_title; ?></h1>
+			</div>
+			<div class="excerpt-spl entry_content">
+				<p><?php echo $post->post_excerpt; ?></p>
+			</div>
+			<a class="read-full-content btn btn-mini" href="#"><i class="icon-caret-up"></i> / <i class="icon-caret-down"></i></a>
+			<script>
+				jQuery('.read-full-content').click(function() {
+				  jQuery('#post-<?php echo $post->ID; ?>').slideToggle('slow', function() {
+					// Animation complete.
+					jQuery('.excerpt-spl').slideToggle('slow');
+				  });
+				  return false;
+				});
+			</script>
+		<?php 
+	}
+}
+
+add_action('loop_start','page_readmore_script',10);
+
 /****Function appending a list of child pages****/
 function append_child_pages() {
 	global $wpdb;
@@ -164,18 +194,18 @@ function append_child_pages() {
      * create a query that will locate all children of THIS page keeping
      * the ORDER in specified in this page.
      */
-    $sql = "SELECT * FROM $wpdb->posts WHERE post_parent = " .
-    $post->ID . " AND post_type = 'page' ORDER BY menu_order";
+    $sql = "SELECT * FROM $wpdb->posts WHERE post_parent = " . $post->ID . " AND post_type = 'page' ORDER BY menu_order";
  
     // do the query
     $child_pages = $wpdb->get_results( $sql, 'OBJECT' );
    
-    $html = "<hr />";
-
+    $html .= "<hr>";
+		
     // walk the pages we have found
-	$html .= "<div class='row-fluid'>";
     if ( $child_pages ) {
-
+		
+		$html .= "<div class='child-pages row-fluid'>\n";
+		
         /*
          * The $first variable is used to select the div elements that start
          * a new row, this is strictly for styling (.css) purposes.
@@ -202,7 +232,7 @@ function append_child_pages() {
              * 'first' class on and off to create a two column grid.
              */
 			
-            $class = 'span6';
+            $class = 'child span6';
             if ( $first ) {
                 $class .= ' first';
             }
@@ -221,20 +251,19 @@ function append_child_pages() {
                 "<a href='" . $permalink . "' rel='bookmark' title='" . $cp->post_title . "'>" .
                 $cp->post_title .
             "</a></h5>\n";
-			$html .= "<div class='page_excerpt'><span> ".$cp->post_content."</span> </div>\n";
+			$html .= "<div class='page_excerpt'><span> ".$cp->post_excerpt."</span> </div>\n";
 			$html .="<a class='continue_reading_link' href='". $permalink ."' >Read More -></a>"; 
-			$html .= "
-			</div>\n";
+			$html .= "</div>\n";
 
             // Toggle between being first and not first
             $first = ! $first;
        
-	   }
-   
+		}
+    $html .= "</div>\n";
 	}
-     $html .= "</div>";
+    
     // spit it out
-    echo $html . "<br class='clear' />";
+    echo $html;
 }
 add_action('pagelines_inside_bottom_postloop','append_child_pages',10);
 
