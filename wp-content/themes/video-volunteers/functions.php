@@ -426,26 +426,52 @@ function output_single_video_author() {
 					</div>
 				</div>
 			</div>
-			<div id="myModal1" style="left:21%" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								<?php 
+				
+						
+if ($_POST["email2"]<>'') { 
+
+    $admin_email = get_the_author_meta('email');	
+	$admin2_email = get_settings('admin_email');
+	$ToEmail2 =$admin1_email; 
+	$ToEmail =$admin_email; 
+    $EmailSubject = 'Site contact form'; 
+	$MESSAGE_BODY = "Name: ".$_POST["name2"].""; 
+    $MESSAGE_BODY .= "Email: ".$_POST["email2"].""; 
+    $MESSAGE_BODY .= "Comment: ".nl2br($_POST["comment2"]).""; 
+   
+	
+add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
+wp_mail($ToEmail, $EmailSubject, $MESSAGE_BODY, "From: awmadvior.com");
+add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
+wp_mail($ToEmail2, $EmailSubject, $MESSAGE_BODY, "From: awmadvior.com");
+?> 
+<h3>Your message was sent</h3>
+<?php 
+} else { 
+?> 	
+			
+			<div id="myModal1" style="left:27%" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times; </button>
        <h3 id="myModalLabel">Contact <?php the_author_posts_link(); ?> Author </h3>
   </div>
+  
   <div class="modal-body">
 
- <form action="" method="post">
+ <form action="" method="post"  name="myForm2">
 <table width="400" border="0" cellspacing="2" cellpadding="0">
 <tr>
 <td width="29%" class="bodytext">Your name:</td>
-<td width="71%"><input name="name1" type="text" id="name" size="32"></td>
+<td width="71%"><input name="name2" type="text" id="name" size="32"></td>
 </tr>
 <tr>
 <td class="bodytext">Email address:</td>
-<td><input name="email1" type="text" id="email" size="32"></td>
+<td><input name="email2" type="text" id="email" size="32"></td>
 </tr>
 <tr>
 <td class="bodytext">Comment:</td>
-<td><textarea name="comment1" cols="45" rows="6" id="comment" class="bodytext"></textarea></td>
+<td><textarea name="comment2" cols="45" rows="6" id="comment" class="bodytext"></textarea></td>
 </tr>
 <tr>
 <td class="bodytext"> </td>
@@ -456,6 +482,16 @@ function output_single_video_author() {
 </div>
 
 </div>
+<script  type="text/javascript">
+ var frmvalidator = new Validator("myForm2");
+ frmvalidator.addValidation("name2","req","Please enter your First Name");
+ frmvalidator.addValidation("name2","maxlen=20",
+        "Max length for name1 is 20");
+ frmvalidator.addValidation("email2","maxlen=50");
+ frmvalidator.addValidation("email2","req");
+ frmvalidator.addValidation("email2","email");
+
+</script>
 			<div class="thumb-image">
 				<img src="http://indiaunheard.videovolunteers.org<?php echo $thumb_img; ?>" alt="<?php the_title_attribute(); ?>" />
 			</div>
@@ -538,30 +574,22 @@ wp_mail($ToEmail1, $EmailSubject, $MESSAGE_BODY, "From: awmadvior.com");
 </tr>
 <tr>
 <td class="bodytext"> </td>
-<td align="left" valign="top"><input type="submit" name="Submit" value="Send" onsubmit="return validateForm()" ></td>
+<td align="left" valign="top"><input type="submit" name="Submit" value="Send" ></td>
 </tr>
 </table>
 </form> 
 </div>
 
 </div>
-<script>
-function validateForm()
-{
-var x=document.forms["myForm"]["name1"].value;
-if (x==null || x=="")
-  {
-  alert("Name must be filled out");
-  return false;
-  }
-  var x=document.forms["myForm"]["email1"].value;
-if (x==null || x=="")
-  {
-  alert("Email must be filled out");
-  return false;
-  }
- 
-}
+<script  type="text/javascript">
+ var frmvalidator = new Validator("myForm");
+ frmvalidator.addValidation("name1","req","Please enter your First Name");
+ frmvalidator.addValidation("name1","maxlen=20",
+        "Max length for name1 is 20");
+ frmvalidator.addValidation("email1","maxlen=50");
+ frmvalidator.addValidation("email1","req");
+ frmvalidator.addValidation("email1","email");
+
 </script>
 <?php 
 }; 
