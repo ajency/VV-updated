@@ -481,15 +481,15 @@ function output_single_author_bio() {
 				</div>
 				<div class="span9">
 					<div class="details">
-						<h3><?php echo $curauth->nickname; ?></h3>
+						<h3><?php echo $curauth->display_name; ?></h3>
 						<div class="bio">
 							<h4>Bio:</h4>
 							<p><?php echo $curauth->description; ?></p>
 						</div>
-						<span>Connect with <?php echo $curauth->nickname; ?>&nbsp;
+						<span>Connect with <?php echo $curauth->display_name; ?>&nbsp;
 							<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a>
 							<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a>
-							<a href="#myModal"  data-toggle="modal"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
+							<a href="#auth-<?php echo $curauth->ID ?>"  data-toggle="modal"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
 						</span>
 						<?php 
 				
@@ -515,10 +515,10 @@ wp_mail($ToEmail1, $EmailSubject, $MESSAGE_BODY, "From: awmadvior.com");
 <?php 
 } else { 
 ?> 
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="auth-<?php echo $curauth->ID ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times; </button>
-    <h3 id="myModalLabel">Contact <?php echo $curauth->nickname; ?> Author </h3>
+    <h3 id="myModalLabel">Contact <?php echo $curauth->display_name; ?></h3>
   </div>
   <div class="modal-body">
 
