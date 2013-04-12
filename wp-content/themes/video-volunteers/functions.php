@@ -157,29 +157,31 @@ add_filter ('the_content', 'insertSocial');
 
 /****Function to add Read more to the content of a Page with child Pages****/
 function page_readmore_script() {
+	if ( is_page() ) {
 	$post = get_post();
 	$children = get_pages('child_of='.$post->ID);
-	
-	if( count( $children ) != 0 ) { 
-		?>
-			<style type="text/css">#post-<?php echo $post->ID; ?> {display: none;}</style>
-			<div class="post-meta">
-				<h1 class="entry-title"><?php echo $post->post_title; ?></h1>
-			</div>
-			<div class="excerpt-spl entry_content">
-				<p><?php echo $post->post_excerpt; ?></p>
-			</div>
-			<a class="read-full-content btn btn-mini" href="#"><i class="icon-caret-up"></i> / <i class="icon-caret-down"></i></a>
-			<script>
-				jQuery('.read-full-content').click(function() {
-				  jQuery('#post-<?php echo $post->ID; ?>').slideToggle('slow', function() {
-					// Animation complete.
-					jQuery('.excerpt-spl').slideToggle('slow');
-				  });
-				  return false;
-				});
-			</script>
-		<?php 
+		
+		if( count( $children ) != 0 ) { 
+			?>
+				<style type="text/css">#post-<?php echo $post->ID; ?> {display: none;}</style>
+				<div class="post-meta">
+					<h1 class="entry-title"><?php echo $post->post_title; ?></h1>
+				</div>
+				<div class="excerpt-spl entry_content">
+					<p><?php echo $post->post_excerpt; ?></p>
+				</div>
+				<a class="read-full-content btn btn-mini" href="#"><i class="icon-caret-up"></i> / <i class="icon-caret-down"></i></a>
+				<script>
+					jQuery('.read-full-content').click(function() {
+					  jQuery('#post-<?php echo $post->ID; ?>').slideToggle('slow', function() {
+						// Animation complete.
+						jQuery('.excerpt-spl').slideToggle('slow');
+					  });
+					  return false;
+					});
+				</script>
+			<?php 
+		}
 	}
 }
 
