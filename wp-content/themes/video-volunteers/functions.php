@@ -418,8 +418,8 @@ function output_single_video_author() {
 						<div class="details span11">
 							<h4><?php the_author_posts_link(); ?></h4>
 							<span>Connect with him&nbsp;
-								<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a>
-								<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a>
+							<!--	<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a>
+								<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a>-->
 								<a href="#myModal1"  data-toggle="modal"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
 							</span>
 						</div>
@@ -428,12 +428,12 @@ function output_single_video_author() {
 			</div>
 			<?php 
 				
-						
+					
 if ($_POST["email2"]<>'') { 
 
     $admin_email = get_the_author_meta('email');	
-	$admin2_email = get_settings('admin_email');
-	$ToEmail2 =$admin1_email; 
+	$admin2_email = get_option('admin_email');;
+	$ToEmail2 =$admin2_email; 
 	$ToEmail =$admin_email; 
     $EmailSubject = 'Site contact form'; 
 	$MESSAGE_BODY = "Name: ".$_POST["name2"].""; 
@@ -442,11 +442,14 @@ if ($_POST["email2"]<>'') {
    
 	
 add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
-wp_mail($ToEmail, $EmailSubject, $MESSAGE_BODY, "From: awmadvior.com");
+wp_mail($ToEmail, $EmailSubject, $MESSAGE_BODY, "From: videovolunteers.org");
 add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
-wp_mail($ToEmail2, $EmailSubject, $MESSAGE_BODY, "From: awmadvior.com");
+wp_mail($ToEmail2, $EmailSubject, $MESSAGE_BODY, "From: videovolunteers.org");
+global $post ;
+
 ?> 
-<h3>Your message was sent</h3>
+<input type="text" name="redirect_to" id="redirect_to" value="<?php echo site_url().$post->slug;?>">
+<input type="text" name="hdn_mail_sent" id="hdn_mail_sent" value="Your message was sent">
 <?php 
 } else { 
 ?> 	
@@ -459,7 +462,7 @@ wp_mail($ToEmail2, $EmailSubject, $MESSAGE_BODY, "From: awmadvior.com");
   
   <div class="modal-body">
 
- <form action="" method="post"  name="myForm2">
+ <form action="" method="post"  >
 <table width="400" border="0" cellspacing="2" cellpadding="0">
 <tr>
 <td width="29%" class="bodytext">Your name:</td>
@@ -480,18 +483,22 @@ wp_mail($ToEmail2, $EmailSubject, $MESSAGE_BODY, "From: awmadvior.com");
 </table>
 </form> 
 </div>
+<script>
+jQuery(document).ready(function($){
+if($("#hdn_mail_sent").length)
+ {
+  
+ if($("#hdn_mail_sent").val()=="Your message was sent")
+ {
+ 	// setTimeout(window.location = $('#redirect_to').val(), 5000); 
+ }
 
-</div>
-<script  type="text/javascript">
- var frmvalidator = new Validator("myForm2");
- frmvalidator.addValidation("name2","req","Please enter your First Name");
- frmvalidator.addValidation("name2","maxlen=20",
-        "Max length for name1 is 20");
- frmvalidator.addValidation("email2","maxlen=50");
- frmvalidator.addValidation("email2","req");
- frmvalidator.addValidation("email2","email");
+ }
 
+}
 </script>
+</div>
+
 <?php 
 }; 
 ?>
@@ -526,8 +533,8 @@ function output_single_author_bio() {
 							<p><?php echo $curauth->description; ?></p>
 						</div>
 						<span>Connect with <?php echo $curauth->display_name; ?>&nbsp;
-							<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a>
-							<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a>
+						<!--	<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a>
+							<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a>-->
 							<a href="#auth-<?php echo $curauth->ID ?>"  data-toggle="modal"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
 						</span>
 						<?php 
@@ -536,7 +543,7 @@ function output_single_author_bio() {
 if ($_POST["email1"]<>'') { 
 
     $admin_email = get_the_author_meta('email');	
-	$admin1_email = get_settings('admin_email');
+	$admin1_email = get_option('admin_email');;
 	$ToEmail1 =$admin1_email; 
 	$ToEmail =$admin_email; 
     $EmailSubject = 'Site contact form'; 
@@ -546,11 +553,29 @@ if ($_POST["email1"]<>'') {
    
 	
 add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
-wp_mail($ToEmail, $EmailSubject, $MESSAGE_BODY, "From: awmadvior.com");
+wp_mail($ToEmail, $EmailSubject, $MESSAGE_BODY, "From: videovolunteers.org");
 add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
-wp_mail($ToEmail1, $EmailSubject, $MESSAGE_BODY, "From: awmadvior.com");
+wp_mail($ToEmail1, $EmailSubject, $MESSAGE_BODY, "From: videovolunteers.org");
+global $post ;
 ?> 
-<h3>Your message was sent</h3>
+<h3>Message was sent</h3>
+<input type="hidden" name="redirect_to" id="redirect_to" value="<?php echo site_url().$post->slug;?>/author/<?php echo get_query_var('author_name') ?>/">
+<input type="hidden" name="hdn_mail_sent" id="hdn_mail_sent" value="Your message was sent">
+<script>
+jQuery(document).ready(function($){
+alert ("hi");
+if(jQuery("#hdn_mail_sent").length)
+ {
+  
+ if(jQuery("#hdn_mail_sent").val()=="Your message was sent")
+ {
+ setTimeout(window.location = jQuery('#redirect_to').val(), 5000); 
+ }
+
+ }
+
+}
+</script>
 <?php 
 } else { 
 ?> 
@@ -561,7 +586,7 @@ wp_mail($ToEmail1, $EmailSubject, $MESSAGE_BODY, "From: awmadvior.com");
   </div>
   <div class="modal-body">
 
- <form action="" method="post" name="myForm">
+ <form action="" method="post" >
 <table width="400" border="0" cellspacing="2" cellpadding="0">
 <tr>
 <td width="29%" class="bodytext">Your name:</td>
@@ -584,16 +609,7 @@ wp_mail($ToEmail1, $EmailSubject, $MESSAGE_BODY, "From: awmadvior.com");
 </div>
 
 </div>
-<script  type="text/javascript">
- var frmvalidator = new Validator("myForm");
- frmvalidator.addValidation("name1","req","Please enter your First Name");
- frmvalidator.addValidation("name1","maxlen=20",
-        "Max length for name1 is 20");
- frmvalidator.addValidation("email1","maxlen=50");
- frmvalidator.addValidation("email1","req");
- frmvalidator.addValidation("email1","email");
 
-</script>
 <?php 
 }; 
 ?>
