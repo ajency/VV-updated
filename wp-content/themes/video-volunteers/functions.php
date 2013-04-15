@@ -420,88 +420,83 @@ function output_single_video_author() {
 							<span>Connect with him&nbsp;
 							<!--	<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a>
 								<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a>-->
-								<a href="#myModal1"  data-toggle="modal"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
+								<a href="#auth-<?php echo $curauth->ID ?>" data-toggle="modal"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
 							</span>
 						</div>
 					</div>
 				</div>
 			</div>
-			<?php 
+			<?php 	
+			//Contact Author Form					
+			if ($_POST["email2"]<>'') { 
+
+				$admin_email = get_the_author_meta('email');	
+				$admin2_email = get_option('admin_email');;
+				$ToEmail2 =$admin2_email; 
+				$ToEmail =$admin_email; 
+				$EmailSubject = 'Site contact form'; 
+				$MESSAGE_BODY = "Name: ".$_POST["name2"].""; 
+				$MESSAGE_BODY .= "Email: ".$_POST["email2"].""; 
+				$MESSAGE_BODY .= "Comment: ".nl2br($_POST["comment2"]).""; 
 				
-					
-if ($_POST["email2"]<>'') { 
+				add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
+				wp_mail($ToEmail, $EmailSubject, $MESSAGE_BODY, "From: videovolunteers.org");
+				add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
+				wp_mail($ToEmail2, $EmailSubject, $MESSAGE_BODY, "From: videovolunteers.org");
+				global $post ;
+				?> 
+					<input type="text" name="redirect_to" id="redirect_to" value="<?php echo site_url().$post->slug;?>">
+					<input type="text" name="hdn_mail_sent" id="hdn_mail_sent" value="Your message was sent">
+				<?php 
+			} 
+			else { 
+			?> 			
+			<div id="auth-<?php echo $curauth->ID ?>" style="left:27%" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times; </button>
+				   <h3 id="myModalLabel">Contact <?php the_author_posts_link(); ?> Author </h3>
+				</div>
+			  
+				<div class="modal-body">
 
-    $admin_email = get_the_author_meta('email');	
-	$admin2_email = get_option('admin_email');;
-	$ToEmail2 =$admin2_email; 
-	$ToEmail =$admin_email; 
-    $EmailSubject = 'Site contact form'; 
-	$MESSAGE_BODY = "Name: ".$_POST["name2"].""; 
-    $MESSAGE_BODY .= "Email: ".$_POST["email2"].""; 
-    $MESSAGE_BODY .= "Comment: ".nl2br($_POST["comment2"]).""; 
-   
-	
-add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
-wp_mail($ToEmail, $EmailSubject, $MESSAGE_BODY, "From: videovolunteers.org");
-add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
-wp_mail($ToEmail2, $EmailSubject, $MESSAGE_BODY, "From: videovolunteers.org");
-global $post ;
+					<form action="" method="post"  >
+						<table width="400" border="0" cellspacing="2" cellpadding="0">
+							<tr>
+								<td width="29%" class="bodytext">Your name:</td>
+								<td width="71%"><input name="name2" type="text" id="name" size="32"></td>
+							</tr>
+							<tr>
+								<td class="bodytext">Email address:</td>
+								<td><input name="email2" type="text" id="email" size="32"></td>
+							</tr>
+							<tr>
+								<td class="bodytext">Comment:</td>
+								<td><textarea name="comment2" cols="45" rows="6" id="comment" class="bodytext"></textarea></td>
+							</tr>
+							<tr>
+								<td class="bodytext"> </td>
+								<td align="left" valign="top"><input type="submit" name="Submit" value="Send"></td>
+							</tr>
+						</table>
+					</form> 
+				</div>
+				<script>
+					jQuery(document).ready(function($){
+						if($("#hdn_mail_sent").length)
+						{
+							if($("#hdn_mail_sent").val()=="Your message was sent")
+							{
+								// setTimeout(window.location = $('#redirect_to').val(), 5000); 
+							}
+						}
 
-?> 
-<input type="text" name="redirect_to" id="redirect_to" value="<?php echo site_url().$post->slug;?>">
-<input type="text" name="hdn_mail_sent" id="hdn_mail_sent" value="Your message was sent">
-<?php 
-} else { 
-?> 	
-			
-			<div id="myModal1" style="left:27%" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times; </button>
-       <h3 id="myModalLabel">Contact <?php the_author_posts_link(); ?> Author </h3>
-  </div>
-  
-  <div class="modal-body">
+					}
+				</script>
+			</div>
 
- <form action="" method="post"  >
-<table width="400" border="0" cellspacing="2" cellpadding="0">
-<tr>
-<td width="29%" class="bodytext">Your name:</td>
-<td width="71%"><input name="name2" type="text" id="name" size="32"></td>
-</tr>
-<tr>
-<td class="bodytext">Email address:</td>
-<td><input name="email2" type="text" id="email" size="32"></td>
-</tr>
-<tr>
-<td class="bodytext">Comment:</td>
-<td><textarea name="comment2" cols="45" rows="6" id="comment" class="bodytext"></textarea></td>
-</tr>
-<tr>
-<td class="bodytext"> </td>
-<td align="left" valign="top"><input type="submit" name="Submit" value="Send"></td>
-</tr>
-</table>
-</form> 
-</div>
-<script>
-jQuery(document).ready(function($){
-if($("#hdn_mail_sent").length)
- {
-  
- if($("#hdn_mail_sent").val()=="Your message was sent")
- {
- 	// setTimeout(window.location = $('#redirect_to').val(), 5000); 
- }
-
- }
-
-}
-</script>
-</div>
-
-<?php 
-}; 
-?>
+			<?php 
+			}; 
+			?>
 			<div class="thumb-image">
 				<img src="http://indiaunheard.videovolunteers.org<?php echo $thumb_img; ?>" alt="<?php the_title_attribute(); ?>" />
 			</div>
@@ -537,82 +532,75 @@ function output_single_author_bio() {
 							<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a>-->
 							<a href="#auth-<?php echo $curauth->ID ?>"  data-toggle="modal"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
 						</span>
+						<?php 				
+						//Contact Author Form							
+						if ($_POST["email1"]<>'') { 
+
+							$admin_email = get_the_author_meta('email');	
+							$admin1_email = get_option('admin_email');;
+							$ToEmail1 =$admin1_email; 
+							$ToEmail =$admin_email; 
+							$EmailSubject = 'Site contact form'; 
+							$MESSAGE_BODY = "Name: ".$_POST["name1"].""; 
+							$MESSAGE_BODY .= "Email: ".$_POST["email1"].""; 
+							$MESSAGE_BODY .= "Comment: ".nl2br($_POST["comment1"]).""; 
+						   
+							add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
+							wp_mail($ToEmail, $EmailSubject, $MESSAGE_BODY, "From: videovolunteers.org");
+							add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
+							wp_mail($ToEmail1, $EmailSubject, $MESSAGE_BODY, "From: videovolunteers.org");
+							global $post ;
+							?> 
+								<h3>Message was sent</h3>
+								<input type="hidden" name="redirect_to" id="redirect_to" value="<?php echo site_url().$post->slug;?>/author/<?php echo get_query_var('author_name') ?>/">
+								<input type="hidden" name="hdn_mail_sent" id="hdn_mail_sent" value="Your message was sent">
+								<script>
+									jQuery(document).ready(function($){
+									alert ("hi");
+										if(jQuery("#hdn_mail_sent").length)
+										{
+											if(jQuery("#hdn_mail_sent").val()=="Your message was sent")
+											{
+												setTimeout(window.location = jQuery('#redirect_to').val(), 5000); 
+											}
+										}
+									}
+								</script>
 						<?php 
-				
-						
-if ($_POST["email1"]<>'') { 
-
-    $admin_email = get_the_author_meta('email');	
-	$admin1_email = get_option('admin_email');;
-	$ToEmail1 =$admin1_email; 
-	$ToEmail =$admin_email; 
-    $EmailSubject = 'Site contact form'; 
-	$MESSAGE_BODY = "Name: ".$_POST["name1"].""; 
-    $MESSAGE_BODY .= "Email: ".$_POST["email1"].""; 
-    $MESSAGE_BODY .= "Comment: ".nl2br($_POST["comment1"]).""; 
-   
-	
-add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
-wp_mail($ToEmail, $EmailSubject, $MESSAGE_BODY, "From: videovolunteers.org");
-add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
-wp_mail($ToEmail1, $EmailSubject, $MESSAGE_BODY, "From: videovolunteers.org");
-global $post ;
-?> 
-<h3>Message was sent</h3>
-<input type="hidden" name="redirect_to" id="redirect_to" value="<?php echo site_url().$post->slug;?>/author/<?php echo get_query_var('author_name') ?>/">
-<input type="hidden" name="hdn_mail_sent" id="hdn_mail_sent" value="Your message was sent">
-<script>
-jQuery(document).ready(function($){
-alert ("hi");
-if(jQuery("#hdn_mail_sent").length)
- {
-  
- if(jQuery("#hdn_mail_sent").val()=="Your message was sent")
- {
- setTimeout(window.location = jQuery('#redirect_to').val(), 5000); 
- }
-
- }
-
-}
-</script>
-<?php 
-} else { 
-?> 
-<div id="auth-<?php echo $curauth->ID ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times; </button>
-    <h3 id="myModalLabel">Contact <?php echo $curauth->display_name; ?></h3>
-  </div>
-  <div class="modal-body">
-
- <form action="" method="post" >
-<table width="400" border="0" cellspacing="2" cellpadding="0">
-<tr>
-<td width="29%" class="bodytext">Your name:</td>
-<td width="71%"><input name="name1" type="text" id="name" size="32"></td>
-</tr>
-<tr>
-<td class="bodytext">Email address:</td>
-<td><input name="email1" type="text" id="email" size="32"></td>
-</tr>
-<tr>
-<td class="bodytext">Comment:</td>
-<td><textarea name="comment1" cols="45" rows="6" id="comment" class="bodytext"></textarea></td>
-</tr>
-<tr>
-<td class="bodytext"> </td>
-<td align="left" valign="top"><input type="submit" name="Submit" value="Send" ></td>
-</tr>
-</table>
-</form> 
-</div>
-
-</div>
-
-<?php 
-}; 
-?>
+						} 
+						else { 
+						?> 
+						<div id="auth-<?php echo $curauth->ID ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times; </button>
+								<h3 id="myModalLabel">Contact <?php echo $curauth->display_name; ?></h3>
+							</div>
+							<div class="modal-body">
+								<form action="" method="post" >
+									<table width="400" border="0" cellspacing="2" cellpadding="0">
+										<tr>
+											<td width="29%" class="bodytext">Your name:</td>
+											<td width="71%"><input name="name1" type="text" id="name" size="32"></td>
+										</tr>
+										<tr>
+											<td class="bodytext">Email address:</td>
+											<td><input name="email1" type="text" id="email" size="32"></td>
+										</tr>
+										<tr>
+											<td class="bodytext">Comment:</td>
+											<td><textarea name="comment1" cols="45" rows="6" id="comment" class="bodytext"></textarea></td>
+										</tr>
+										<tr>
+											<td class="bodytext"> </td>
+											<td align="left" valign="top"><input type="submit" name="Submit" value="Send" ></td>
+										</tr>
+									</table>
+								</form> 
+							</div>
+						</div>
+						<?php 
+						}; 
+						?>
 						<div class="auth-video">
 							<?php
 							$video = $curauth->wpum_video_profile;
