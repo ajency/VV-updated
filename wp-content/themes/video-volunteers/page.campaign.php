@@ -1,6 +1,6 @@
 <?php
 /*
-	Template Name: Campaign Page Template
+	Template Name: Campaign Page
 */
 
 setup_pagelines_template();
