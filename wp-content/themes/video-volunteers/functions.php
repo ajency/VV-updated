@@ -795,6 +795,8 @@ add_action('pagelines_before_videoloop', 'output_blog_cats',1);
  		
 		<?php if ( $query->have_posts() ) : ?>
 			
+			<style type="text/css">.video-list .videos li .info {height: 165px;}</style>
+			
 			<ul class="videos clearfix">
 			<?php /* Start the Loop */ ?>
 			<?php while ( $query->have_posts() ) : $query->the_post(); 
