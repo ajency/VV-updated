@@ -65,6 +65,16 @@ class PageLinesVideoLoop extends PageLinesSection {
 					var itm = jQuery(this).val();
 					get_cat_post(itm);
 				});  
+				
+				jQuery("#vid-content").on({
+					ajaxStart: function() { 
+						jQuery(this).addClass("loading"); 
+						jQuery(this).html("");
+					},
+					ajaxStop: function() { 
+						jQuery(this).removeClass("loading"); 
+					}    
+				});
 			</script>
 			<?php
 		}

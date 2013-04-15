@@ -417,10 +417,10 @@ function output_single_video_author() {
 						</div>
 						<div class="details span11">
 							<h4><?php the_author_posts_link(); ?></h4>
-							<span>Connect with him&nbsp;
+							<span>Connect with <?php echo get_the_author_meta('display_name'); ?>&nbsp;
 							<!--	<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a>
 								<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a>-->
-								<a href="#auth-<?php echo $curauth->ID ?>" data-toggle="modal"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
+								<a href="#auth-<?php echo get_the_author_meta('ID'); ?>" data-toggle="modal"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
 							</span>
 						</div>
 					</div>
@@ -451,14 +451,12 @@ function output_single_video_author() {
 			} 
 			else { 
 			?> 			
-			<div id="auth-<?php echo $curauth->ID ?>" style="left:27%" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div id="auth-<?php echo get_the_author_meta('ID'); ?>" style="left:27%" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times; </button>
-				   <h3 id="myModalLabel">Contact <?php the_author_posts_link(); ?> Author </h3>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times; </button>
+					<h3 id="myModalLabel">Contact <?php echo get_the_author_meta('display_name'); ?></h3>
 				</div>
-			  
 				<div class="modal-body">
-
 					<form action="" method="post"  >
 						<table width="400" border="0" cellspacing="2" cellpadding="0">
 							<tr>
@@ -489,7 +487,6 @@ function output_single_video_author() {
 								// setTimeout(window.location = $('#redirect_to').val(), 5000); 
 							}
 						}
-
 					}
 				</script>
 			</div>
