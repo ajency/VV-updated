@@ -119,9 +119,9 @@ class PageLinesVideoLoop extends PageLinesSection {
 								</div>
 								<div class="info">
 									<div class="item-title">
-										<h5><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h5>
+										<h5><a href="<?php the_permalink(); ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h5>
 										<span class="item-details">
-											<?php the_time('m/j/y') ?><i class="icon-angle-right"></i><?php the_category(' <i class="icon-angle-right"></i> ') ?>
+											<?php the_time('m/j/y'); ?><i class="icon-angle-right"></i><?php the_category(' <i class="icon-angle-right"></i> '); ?>
 										</span>
 									</div>
 									<div class="item-meta">
