@@ -1350,7 +1350,7 @@ div.testimonials-slider-quotecontainer {
 		width: 20px;
 		height: 53px;
 		position: relative;
-		top: 133px;
+		top: 33px;
 		right: 10px;
 		background: url('@{plChildRoot}/images/info-box-arrow.png') no-repeat right top;
 		z-index: 1;
@@ -2437,6 +2437,113 @@ div.testimonials-slider-quotecontainer {
 			}
 		}
 	}
+}
+
+/****Campaign Page Styles****/
+#campaign-page {
+	.stream-header {
+		margin: 0 0 0.3em;
+		font-family: 'Droid Sans', sans-serif !important;
+		font-size: 4.1em;
+		line-height: 1.1em;
+		color: @logo-color;
+	}
+	.meta {
+		color: lighten(@grey-regular, 20%);
+		font-size: 0.88em;
+		margin: 0 0 0.2em;
+		font-style: italic;
+		margin: 0 0 5px;
+	}
+	.meta-share {
+		padding: 0.3em 0.3em 0;
+		background: lighten(@grey-regular, 45%);
+	}
+	.excerpt {
+		color: @grey-regular;
+		margin: 1em 0 0.5em;
+	}
+}
+
+.campaign-video-list {
+	padding: 20px 0 0;
+	border-top: 1px dotted lighten(@grey-regular, 30%);
+	.videos {
+		list-style: none;
+		margin: 20px 0;
+		li {
+			width: 48%;
+			float: left;
+			margin: 0 2% 20px 0;
+			.vid-thumb {
+				background: #ccc;
+				.box-shadow(0 0 5px @grey-regular);
+			}
+		}
+	}
+}
+
+.single-campaign-info {
+	.action-box-arrow {
+		float: left;
+		width: 20px;
+		height: 53px;
+		position: relative;
+		/*top: 113px;*/
+		top: 72px;
+		right: 10px;
+		background: url('@{plChildRoot}/images/action-box-arrow.png') no-repeat right top;
+		z-index: 1;
+	}
+	.action-box {
+		text-indent: 30%;
+		margin-left: 10px;
+		h2 {
+			color: @logo-color;
+			margin: 10px 0;
+			&.shares {
+				margin: 10px 0 20px;
+			}
+		}
+		.more-link {
+			display: block;
+			margin: 5px 0;
+			color: @logo-color;
+			text-transform: uppercase;
+			i {
+				color: @orange;
+				margin-right: 5px;
+				&:before {
+					display: block;
+				}
+			}
+			&:hover {
+				text-decoration: none;
+				font-weight: bold;
+			}
+		}
+		.share-button {
+			padding: 5px 0 0;
+		}
+	}
+}
+
+@media (max-width: 767px) {
+.campaign-container {
+	> .row-fluid {
+		> [class*="span"] {
+			float: none;
+			width: 94%;
+			margin-left: 0;
+			.widget {
+				.action-box {
+					width: auto;
+					margin-left: 0;
+				}
+			}
+		}
+	}
+}
 }
 
 /****Single Post Styles****/

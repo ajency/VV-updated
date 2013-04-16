@@ -850,7 +850,7 @@ add_action('wp_ajax_nopriv_abc_get_posts','abc_get_posts');
 function add_custom_meta_box() {
 	add_meta_box(
 			'custom_meta_box', // $id
-			'Custom Meta Box', // $title
+			'Updates Meta Box', // $title
 			'show_custom_meta_box', // $callback
 			'post', // $page
 			'normal', // $context
@@ -928,7 +928,7 @@ function save_custom_meta($post_id) {
 	
 	}
 	
-	//save ur value to DB
+	//save your value to DB
 	update_post_meta($post_id, 'vv_belongs_to', $_POST['vv_belongs_to']);
 	
 }	
@@ -1049,3 +1049,63 @@ function add_excerpts_section_to_pages() {
 }
 
 add_action( 'init', 'add_excerpts_section_to_pages' );
+
+/****Function to add Updates to Campaign Page****/
+// Add the Meta Box
+function add_page_updates_meta_box() {
+	add_meta_box(
+			'page_updates_meta_box', // $id
+			'Updates Meta Box - Story Stream for this Campaign', // $title
+			'show_page_updates_meta_box', // $callback
+			'page', // $page
+			'normal', // $context
+			'high'); // $priority
+}
+add_action('add_meta_boxes', 'add_page_updates_meta_box');
+
+
+// The Callback
+function show_page_updates_meta_box() {
+	
+	$meta = get_post_meta( get_the_ID() );
+	
+	echo "Story Stream ";
+	$posts= get_main_stories();
+	
+	echo '<input type="hidden" name="vv_belongs_to_display_nonce" value="'.wp_create_nonce(basename(__FILE__)).'" />';
+	echo "&nbsp;<select name='vv_belongs_to_display' id='vv_belongs_to_display'>";
+	echo "<option value='none'>none</option>";
+	foreach ($posts as $ps)
+	{
+		if($meta['vv_belongs_to_display'][0]==$ps->ID)
+			echo"<option value='$ps->ID' selected>$ps->post_title</option>";
+		else 
+			echo"<option value='$ps->ID'>$ps->post_title</option>";
+	}
+	echo "</select>";
+}
+
+// Save the Data
+function save_page_updates_meta($post_id) {
+	
+	// verify nonce
+	if (!wp_verify_nonce($_POST['vv_belongs_to_display_nonce'], basename(__FILE__)))
+		return $post_id;
+	// check autosave
+	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+		return $post_id;
+	// check permissions
+	if ('page' == $_POST['post_type']) {
+		if (!current_user_can('edit_page', $post_id))
+			return $post_id;
+
+	} elseif (!current_user_can('edit_post', $post_id)) {
+		return $post_id;
+	
+	}
+	
+	//save your value to DB
+	update_post_meta($post_id, 'vv_belongs_to_display', $_POST['vv_belongs_to_display']);
+	
+}	
+add_action('save_post', 'save_page_updates_meta');
