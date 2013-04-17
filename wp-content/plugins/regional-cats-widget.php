@@ -81,7 +81,7 @@ class RegionalCatsWidget extends WP_Widget
 						<div class="accordion-group">
 							<div class="accordion-heading">
 								<a class="accordion-toggle" data-toggle="collapse" data-parent="#cat-accordion" href="#<?php echo $cat->slug; ?>">
-									<?php echo $cat->name; ?>
+									<?php echo $cat->name; ?><span class="caret"></span>
 								</a>
 							</div>
 							<div id="<?php echo $cat->slug; ?>" class="accordion-body collapse">

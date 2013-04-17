@@ -26,6 +26,9 @@ Version:        0.1.0
 	}
 }
 
+/****Custom ScrollBar Styles****/
+@import url('@{plChildRoot}/css/jquery.mCustomScrollbar.css');
+
 /****Header Font Styles****/
 .thead, h1, h2, h3, h4, h5, h6, .site-title {
 	font-family: 'Merriweather Sans', sans-serif !important;
@@ -1314,11 +1317,15 @@ div.testimonials-slider-quotecontainer {
 		z-index: 1;
 	}
 	.action-box {
-		text-indent: 30%;
 		margin-left: 10px;
 		h2 {
 			color: @logo-color;
 			margin: 10px 0;
+			font-size: 1.5em;
+			small {
+				color: @orange;
+				font-size: 1em;
+			}
 			&.shares {
 				margin: 10px 0 20px;
 			}
@@ -1342,7 +1349,6 @@ div.testimonials-slider-quotecontainer {
 		}
 		.share-button {
 			padding: 5px 0 0;
-			text-indent: 20%;
 		}
 	}
 	.info-box-arrow {
@@ -1359,7 +1365,7 @@ div.testimonials-slider-quotecontainer {
 		box-shadow: 0 0 3px #ccc;
 		background: url('@{plChildRoot}/images/checked-bg-green.jpg') repeat; 
 		padding: 1em 1.5em;
-		margin: 20px 0 0 10px;
+		margin: 0 0 0 10px;
 		position: relative;
 		color: #fff;
 		.more-link {
@@ -1380,13 +1386,16 @@ div.testimonials-slider-quotecontainer {
 			}
 		}
 		p {
-		  color:#fff !important;
+			color:#fff !important;
+			max-height: 120px;
+			overflow-y: scroll;
+			margin: 1em 0;
 		}
 	}
 }
 
 .about-vid {
-	padding: 0;
+	padding: 1em 0 1em 1em;
 	.author-info {
 		h3 {
 			color: @logo-color;
@@ -1396,10 +1405,10 @@ div.testimonials-slider-quotecontainer {
 			font-family: 'TeXGyreHerosBold' !important;
 		}
 		.avatar {
-			margin: 0 10px 0 5px !important;
+			margin-bottom: 0 !important;
 		}
 		.details {
-			margin: 0 0 5px !important;
+			margin-bottom: 0 !important;
 			h4 {
 				margin: 0 0 5px;
 				a {
@@ -1407,8 +1416,16 @@ div.testimonials-slider-quotecontainer {
 					font-family: 'TeXGyreHerosBold' !important;
 				}
 			}
-			span {
-				font-size: 1.2em;
+		}
+		span {
+			display: block;
+			margin: 5px 0;
+			&.desc {
+				font-size: 0.8em;
+				color: lighten(@grey-regular, 20%);
+			}
+			&.connect {
+				font-size: 1em;
 				color: @grey-regular;
 				a {
 					img {
@@ -2660,6 +2677,10 @@ div.testimonials-slider-quotecontainer {
 				a {
 					color: lighten(@grey-regular, 20%);
 					font-size: 1.1em;
+					.caret {
+						float: right;
+						margin: 8px 0 0;
+					}
 				}
 				&:hover {
 					background: #FFF;

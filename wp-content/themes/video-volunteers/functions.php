@@ -32,7 +32,7 @@ require_once( dirname(__FILE__) . '/setup.php' );
 function output_css_js() {
 	
 	echo '<link href="http://fonts.googleapis.com/css?family=Merriweather+Sans:400,700,300,800" rel="stylesheet" type="text/css">';
-		echo '<script src="'. get_bloginfo('stylesheet_directory') .'/js/isotope.js"></script>';
+	echo '<script src="'. get_bloginfo('stylesheet_directory') .'/js/isotope.js"></script>';
 	
 }
 
@@ -353,6 +353,7 @@ function output_single_video() {
 						<div class="single-vid-info">
 							<div class="action-box-arrow"></div>
 							<div class="action-box">
+								<h2>This issue needs your voice! <small>Share this story.</small></h2>
 								<!-- Views/Shares Counter
 								<h2 class="views">500<small>Views</small></h2>
 								<h2 class="shares">50<small>Shares</small></h2>
@@ -372,6 +373,9 @@ function output_single_video() {
 								</div>
 							</div>
 							<?php
+							//Add a Hook for author info
+							do_action( 'vv_video_sidebar' );
+							
 							$highlight_text = get_post_meta( get_the_ID(), '_higlight_text', true);
 							if ($highlight_text !== '') {
 							?>
@@ -379,7 +383,18 @@ function output_single_video() {
 								<div class="info-box">
 									<p><?php echo get_post_meta( get_the_ID(), '_higlight_text', true); ?></p>
 								</div>
+								<script>
+									jQuery(document).ready(function(){
+										jQuery('.info-box p').mCustomScrollbar();
+									});
+								</script>
 							<?php
+								//Enqueue Custom Scroll Scripts
+								wp_enqueue_script(
+									'custom-scroll',
+									get_stylesheet_directory_uri() . '/js/jquery.mCustomScrollbar.concat.min.js',
+									array( 'jquery' )
+								);
 							}
 							?>
 						</div>
@@ -399,38 +414,37 @@ function output_single_video_author() {
 	if ( is_single() )
 	{
 	$video = get_post_meta(get_the_ID(), 'Video', true); 
-	$thumb_img = get_post_meta(get_the_ID(), 'Thumbnail', true);
 	if($video !== '') 
 	//loop here
 		{ 
+		$curauth = get_queried_object()->post_author;
 		?>
-			<style>
-				.entry_content {padding: 0 1em;}
-				.entry_content p, .entry_content div {font-size: 0.9em;} 
-			</style>
 			<div class="about-vid">
 				<div class="author-info">
 					<h3>Video By Community Correspondent</h3>
 					<div class="row-fluid">
 						<div class="avatar span1">
-							<?php echo get_avatar( get_the_author_meta('ID'), 150 ); ?>
+							<?php echo get_avatar( get_the_author_meta('ID', $curauth), 150 ); ?>
 						</div>
 						<div class="details span11">
-							<h4><?php the_author_posts_link(); ?></h4>
-							<span>Connect with <?php echo get_the_author_meta('display_name'); ?>&nbsp;
-							<!--	<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a>
-								<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a>-->
-								<a href="#auth-<?php echo get_the_author_meta('ID'); ?>" data-toggle="modal"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
-							</span>
+							<h4>
+								<a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID', $curauth) ); ?>"><?php echo get_the_author_meta('display_name', $curauth); ?></a>
+							</h4>
 						</div>
 					</div>
+					<span class="desc"><?php echo substr( get_the_author_meta('description', $curauth), 0, 160 ); ?>...</span>
+					<span class="connect">Connect with <?php echo get_the_author_meta('display_name', $curauth); ?>&nbsp;
+					<!--	<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-fb.png" alt="connect-fb" width="16" height="16" class="alignnone size-full wp-image-233" /></a>
+						<a href="#"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-twitter.png" alt="connect-twitter" width="16" height="16" class="alignnone size-full wp-image-234" /></a>-->
+						<a href="#auth-<?php echo get_the_author_meta('ID', $curauth); ?>" data-toggle="modal"><img src="<?php bloginfo('url'); ?>/wp-content/uploads/2013/02/connect-email.png" alt="connect-email" width="16" height="16" class="alignnone size-full wp-image-232" /></a>
+					</span>
 				</div>
 			</div>
 			<?php 	
 			//Contact Author Form					
 			if ($_POST["email2"]<>'') { 
 
-				$admin_email = get_the_author_meta('email');	
+				$admin_email = get_the_author_meta('email', $curauth);	
 				$admin2_email = get_option('admin_email');;
 				$ToEmail2 =$admin2_email; 
 				$ToEmail =$admin_email; 
@@ -451,10 +465,10 @@ function output_single_video_author() {
 			} 
 			else { 
 			?> 			
-			<div id="auth-<?php echo get_the_author_meta('ID'); ?>" style="left:27%" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div id="auth-<?php echo get_the_author_meta('ID', $curauth); ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times; </button>
-					<h3 id="myModalLabel">Contact <?php echo get_the_author_meta('display_name'); ?></h3>
+					<h3 id="myModalLabel">Contact <?php echo get_the_author_meta('display_name', $curauth); ?></h3>
 				</div>
 				<div class="modal-body">
 					<form action="" method="post"  >
@@ -493,7 +507,27 @@ function output_single_video_author() {
 
 			<?php 
 			}; 
-			?>
+		}
+	//end loop here
+	}
+}
+
+add_action('vv_video_sidebar', 'output_single_video_author',1);
+
+/****Function to Output Single Video Thumbnail****/
+function output_single_video_thumbnail() {
+	if ( is_single() )
+	{
+	$video = get_post_meta(get_the_ID(), 'Video', true); 
+	$thumb_img = get_post_meta(get_the_ID(), 'Thumbnail', true);
+	if($video !== '') 
+	//loop here
+		{ 
+		?>
+			<style>
+				.entry_content {padding: 0 1em;}
+				.entry_content p, .entry_content div {font-size: 0.9em;} 
+			</style>
 			<div class="thumb-image">
 				<img src="http://indiaunheard.videovolunteers.org<?php echo $thumb_img; ?>" alt="<?php the_title_attribute(); ?>" />
 			</div>
@@ -503,7 +537,7 @@ function output_single_video_author() {
 	}
 }
 
-add_action('pagelines_loop_before_post_content', 'output_single_video_author',1);
+add_action('pagelines_loop_before_post_content', 'output_single_video_thumbnail',1);				
 
 /****Output Single Author Bio****/
 function output_single_author_bio() {
@@ -680,7 +714,10 @@ add_action('pagelines_before_videoloop', 'output_category_info',1);
 
 /****Display Sticky Post on Blog Page****/
 function display_blog_sticky() {
-	if ( is_category('blog') ) {
+	if ( is_single() || is_category( 'videos' ) || ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) ) {
+		//Do Nothing
+	}
+	else {
 		$args = array(
 			'posts_per_page' => 1,
 			'post__in'  => get_option( 'sticky_posts' ),
@@ -748,14 +785,17 @@ function save_featured_auth_field( $user_id ) {
 
 /****Function to output Blog Sub-categories****/
 function output_blog_cats() {
-	if ( is_category('blog') ) {
+	if ( is_category( 'videos' ) || ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) ) {
+		//Do Nothing
+	}
+	else {
+		$cat = get_category( get_query_var( 'cat' ) );
 		$args = array (
-			'parent' => 5652,
+			'parent' => $cat->cat_ID,
 			'hide_empty' => 0
 		);
 		$categories = get_categories($args);
 			echo '<div class="category-boxes clearfix">';
-			
 			foreach($categories as $category) { 
 				echo '<div class="box">';
 				echo '<h3> <a href="' . get_category_link( $category->term_id ) . '" title="' . sprintf( __( "View all posts in %s" ), $category->name ) . '" ' . '>' . $category->name.'</a> </h3> ';
@@ -869,7 +909,7 @@ function show_custom_meta_box() {
 	
 	echo '<input type="hidden" name="vv_belongs_to_nonce" value="'.wp_create_nonce(basename(__FILE__)).'" />';
 	echo "&nbsp;<select name='vv_belongs_to' id='vv_belongs_to'>";
-	echo "<option value='none'>none</option>";
+	echo "<option value='none'>Parent Story with Updates</option>";
 	foreach ($posts as $ps)
 	{
 		if($meta['vv_belongs_to'][0]==$ps->ID)
@@ -882,17 +922,16 @@ function show_custom_meta_box() {
 
 function get_main_stories()
 {
-	$args= array(
-			'post_type' => 'post',
-			 'meta_query' => array(
-			       array(
-			           'key' => 'vv_belongs_to',
-			           'value' => 'none',			           
-			       )
-   				)
-			
-			
-			);
+	$args = array(
+		'post_type' => 'post',
+		'meta_query' => array(
+			array(
+			   'key' => 'vv_belongs_to',
+			   'value' => 'none',			           
+			)
+		)
+	);
+	
 	$query= new WP_Query($args);
 	
 	$arr= array();
@@ -904,7 +943,6 @@ function get_main_stories()
 		$arr[] = $post;
 			
 		endwhile;	
-		
 	}	
 	return $arr;
 }
