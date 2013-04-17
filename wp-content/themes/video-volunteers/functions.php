@@ -366,7 +366,7 @@ function output_single_video() {
 									<a href="http://twitter.com/share?url='. urlencode(get_permalink()) .'&via=videovolunteers&count=horizontal" class="twitter-share-button">Tweet</a>
 								</div>
 								<div class="share-button">
-									<iframe src="//www.facebook.com/plugins/like.php?href=<?php echo urlencode(get_permalink()); ?>&amp;send=false&amp;layout=standard&amp;width=250&amp;show_faces=false&amp;font=arial&amp;colorscheme=light&amp;action=like&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:35px;" allowTransparency="true"></iframe>
+									<iframe src="//www.facebook.com/plugins/like.php?href=<?php echo urlencode(get_permalink()); ?>&amp;send=false&amp;layout=standard&amp;width=300&amp;show_faces=false&amp;font=arial&amp;colorscheme=light&amp;action=like&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:35px;" allowTransparency="true"></iframe>
 								</div>
 								<div class="share-button">
 									<g:plusone href="'. urlencode(get_permalink()) .'"></g:plusone>
@@ -1147,3 +1147,63 @@ function save_page_updates_meta($post_id) {
 	
 }	
 add_action('save_post', 'save_page_updates_meta');
+
+/****Function to Add Change.org Widget****/
+// Add the Meta Box
+function add_change_petition_box() {
+	add_meta_box(
+			'change_petition_box', // $id
+			'Change.org Petition - For this Campaign', // $title
+			'show_change_petition_box', // $callback
+			'page', // $page
+			'normal', // $context
+			'high'); // $priority
+}
+add_action('add_meta_boxes', 'add_change_petition_box');
+
+
+// The Callback
+function show_change_petition_box($post, $metabox) {
+	// Use nonce for verification
+	wp_nonce_field( plugin_basename( __FILE__ ), 'vv_change_petition_nonce' );
+
+	// The actual fields for data entry
+	// Use get_post_meta to retrieve an existing value from the database and use the value for the form
+	$value = get_post_meta( $post->ID, 'vv_change_petition', true );
+	echo '<label for="vv_change_petition_field">';
+	   _e("Change.org Petition URL" );
+	echo '</label> ';
+	echo '<input type="text" id="vv_change_petition_field" name="vv_change_petition_field" value="'.esc_attr($value).'" style="width:95%;" />';
+}
+
+// Save the Data
+function save_change_petition_meta($post_id) {
+	
+	// First we need to check if the current user is authorised to do this action. 
+	if ( 'page' == $_POST['post_type'] ) {
+	if ( ! current_user_can( 'edit_page', $post_id ) )
+		return;
+	} else {
+	if ( ! current_user_can( 'edit_post', $post_id ) )
+		return;
+	}
+
+	// Secondly we need to check if the user intended to change this value.
+	if ( ! isset( $_POST['vv_change_petition_nonce'] ) || ! wp_verify_nonce( $_POST['vv_change_petition_nonce'], plugin_basename( __FILE__ ) ) )
+	  return;
+
+	// Thirdly we can save the value to the database
+
+	//if saving in a custom table, get post_ID
+	$post_ID = $_POST['post_ID'];
+	//sanitize user input
+	$mydata = sanitize_text_field( $_POST['vv_change_petition_field'] );
+
+	// Do something with $mydata 
+	// either using 
+	add_post_meta($post_ID, 'vv_change_petition', $mydata, true) or
+	update_post_meta($post_ID, 'vv_change_petition', $mydata);
+	// or a custom table (see Further Reading section below)
+	
+}	
+add_action('save_post', 'save_change_petition_meta');

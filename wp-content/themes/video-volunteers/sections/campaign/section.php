@@ -62,11 +62,10 @@ class VVCampaign extends PageLinesSection {
 					</div>
 				</div>
 				<div class="span4">
-					<div class="single-campaign-info widget">
+					<!--<div class="single-campaign-info widget">
 						<div class="action-box-arrow visible-desktop"></div>
 						<div class="action-box">
 							<h2>Share to Support <?php the_title(); ?></h2>
-							<!--<button class="btn btn-large btn-warning" type="button">Click Here</button>-->
 							<div class="share-button">
 								<a href="http://twitter.com/share?url='. urlencode(get_permalink()) .'&via=videovolunteers&count=horizontal" class="twitter-share-button">Tweet</a>
 							</div>
@@ -77,7 +76,38 @@ class VVCampaign extends PageLinesSection {
 								<g:plusone href="'. urlencode(get_permalink()) .'"></g:plusone>
 							</div>
 						</div>
-					</div>
+					</div>-->
+					<?php
+						//Get Change.org Petition ID
+						$change_id = get_post_meta($post->ID, 'vv_change_petition', true);
+						if (!empty($change_id)) {
+						
+							$API_KEY = '3ac98f5d260b8758b9e19a759f83bef44ab00da2cf16f0d6eb1ab336dae158b8';
+							$REQUEST_URL = 'http://api.change.org/v1/petitions/get_id';
+							$PETITION_URL = $change_id;
+
+							$parameters = array(
+							  'api_key' => $API_KEY,
+							  'petition_url' => $PETITION_URL
+							);
+
+							$query_string = http_build_query($parameters);
+							$final_request_url = "$REQUEST_URL?$query_string";
+							$response = file_get_contents($final_request_url);
+
+							$json_response = json_decode($response, true);
+							$petition_id = $json_response['petition_id'];
+						
+						?>
+						<div id="change-widget">
+							<div id="change_BottomBar">
+								<span id="change_Powered"><a href="http://www.change.org" target="_blank">Petitions</a> by Change.org</span>
+								<a>|</a>
+								<span id="change_Start">Start a <a href="http://www.change.org/petition" target="_blank">Petition</a> &raquo;</span>
+							</div>
+							<script type="text/javascript" src="http://e.change.org/flash_petitions_widget.js?width=300&color=F26B26&petition_id=<?php echo $petition_id; ?>"></script>
+						</div>
+					<?php } ?>
 					<div style="clear: both;margin: 10px 0 0;"></div>
 					<div class="widget_stream" id="story-stream">
 						<?php 
