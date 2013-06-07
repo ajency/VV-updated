@@ -124,3 +124,8 @@ font-family: 'Merriweather Sans',sans-serif !important;
 color: #2B6A78;
 font-size: 22px;
 }
+
+#postloop .entry_content p
+{
+	margin:0 !important;
+}
