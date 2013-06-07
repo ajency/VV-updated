@@ -117,6 +117,8 @@ color: #7E7878;}
 }
 .continue_reading_link {
 color: #F26B26;
+display: block;
+margin-top: 4px;
 }
 h5.child_entry-title{margin-bottom: 18px}
 .child_entry-title a {
@@ -124,3 +126,18 @@ font-family: 'Merriweather Sans',sans-serif !important;
 color: #2B6A78;
 font-size: 22px;
 }
+
+#postloop .entry_content p
+{
+	
+}
+
+@media (max-width: 800px) 
+{
+	.child
+{
+	width:100% !important;
+	margin-left: 0 !important;
+	min-height: 0px !important;
+}
+ }
