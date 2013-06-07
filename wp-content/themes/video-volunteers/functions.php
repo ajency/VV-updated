@@ -88,13 +88,9 @@ function output_category_line() {
 
 add_action('pagelines_before_videofilter','output_category_line',10);
 
-
-
-
-
 /****Output Titles for Homepage Boxes****/
 function output_homepage_titles() {
-	echo '<div class="action-titles"><h3 class="main-title hide">What Can You Do Here?</h3>';
+	echo '<div class="action-titles"><h3 class="main-title hide">What Can You Do?</h3>';
 }
 
 add_action('pagelines_inside_bottom_boxes', 'output_homepage_titles',1);
@@ -742,7 +738,7 @@ function display_blog_sticky() {
 	}
 }
 
-add_action('pagelines_content_before_columns', 'display_blog_sticky',1);
+//add_action('pagelines_content_before_columns', 'display_blog_sticky',1);
 
 /****Register Author Sidebar****/
 register_sidebar(array(
