@@ -326,12 +326,14 @@ div.testimonials-slider-quotecontainer {
 		.border-radius(0);
 		.navbar-content-pad {
 			padding: 0;
+			position: relative;
 			.navline {
-				float: right;
+				float: left;
 				li {
 					a {
 						color: rgba(255, 255, 255, 0.7);
 						text-transform: uppercase;
+						font-weight: bold;
 						&:hover {
 							color: rgba(255, 255, 255, 1);
 							background: none transparent;
@@ -350,16 +352,18 @@ div.testimonials-slider-quotecontainer {
 				padding: 0 6px;
 				margin: 7px 0 5px;
 				font-size: 16px;
-				display: inline-block;
+				display: block;
+				position: absolute;
+				right: 0;
 			}
 			.searchform {
-				float: left;
+				float: right;
 				.searchfield {
 					.border-radius(0);
 					.box-shadow(0);
 					float: none;
 					padding: 5px;
-					margin-left: 8px;
+					margin-right: 28px;
 					background: none rgba(255, 255, 255, 0.9);
 					border: 1px solid rgba(255, 255, 255, 0.5);
 				}
