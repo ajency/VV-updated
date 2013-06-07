@@ -62,6 +62,14 @@ width: 96% !important;
 height:auto !important;
 
 }
+
+.child
+{
+	width:100% !important;
+	margin-left: 0 !important;
+	min-height: 0px !important;
+}
+
 #postloop .clip_box article {
 margin-bottom: 21px;
 }
@@ -102,7 +110,11 @@ background-repeat: repeat-x;
 }
 .page_excerpt span{ font-size: 12px;
 color: #7E7878;}
-.page_excerpt{margin-bottom: 2.7em;}
+.page_excerpt{}
+.child
+{
+	margin-bottom:0 !important;
+}
 .continue_reading_link {
 color: #F26B26;
 }

@@ -253,8 +253,8 @@ function append_child_pages() {
                 "<a href='" . $permalink . "' rel='bookmark' title='" . $cp->post_title . "'>" .
                 $cp->post_title .
             "</a></h5>\n";
-			$html .= "<div class='page_excerpt'><span> ".$cp->post_excerpt."</span> </div>\n";
-			$html .="<a class='continue_reading_link' href='". $permalink ."' >Read More -></a>"; 
+			$html .= "<div class='page_excerpt'><span> ".$cp->post_excerpt."</span> <br> <a class='continue_reading_link' href='". $permalink ."' >Read More -></a> </div>\n";
+			$html .=""; 
 			$html .= "</div>\n";
 
             // Toggle between being first and not first
