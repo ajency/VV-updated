@@ -131,3 +131,13 @@ font-size: 22px;
 {
 	
 }
+
+@media (max-width: 800px) 
+{
+	.child
+{
+	width:100% !important;
+	margin-left: 0 !important;
+	min-height: 0px !important;
+}
+ }
