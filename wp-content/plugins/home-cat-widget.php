@@ -112,7 +112,7 @@ class HomeCatsWidget extends WP_Widget
 					wp_reset_postdata(); 
 					?>
 				</div>
-				<div class="span4 visible-desktop">
+				<div class="span4">
 					<?php 
 					while ( $thumb_2->have_posts() ) :
 						$thumb_2->the_post();
@@ -126,7 +126,7 @@ class HomeCatsWidget extends WP_Widget
 					wp_reset_postdata(); 
 					?>
 				</div>
-				<div class="span4 visible-desktop">
+				<div class="span4">
 					<?php 
 					while ( $thumb_3->have_posts() ) :
 						$thumb_3->the_post();
