@@ -2862,3 +2862,29 @@ margin-bottom: -37px;
 	font-size: 1.2em;
 	margin: 10px 0;
 }
+
+.pages-tree-widget {
+	ul {
+		margin: 0 0 0 10px;
+		li {
+			display: block;
+			padding: 5px 0;
+			a {
+				font-size: 1.1em;
+			}
+			.children {
+				.current_page_item {
+					a {
+						font-weight: bold;
+						color: @orange;
+					}
+				}
+			}
+			&.current_page_parent {
+				&>a {
+					text-transform: uppercase;
+				}
+			}
+		}
+	}
+}
