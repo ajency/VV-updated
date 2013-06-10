@@ -1,6 +1,6 @@
 <?php
 /*
-	Template Name: parent Page
+	Template Name: Parent Page
 */
 
 setup_pagelines_template();
