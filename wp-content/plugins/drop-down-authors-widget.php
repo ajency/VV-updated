@@ -67,8 +67,8 @@ class DropDownAuthors extends WP_Widget
 	// Start Code
 		?>
 			<form action="<?php bloginfo('url'); ?>" method="get" class="form-inline">
-			<?php wp_dropdown_users( $args ); ?>
-			<input type="submit" name="submit" value="View Author Posts" class="btn" />
+				<?php wp_dropdown_users( $args ); ?>
+				<button type="submit" name="submit" class="btn">View Posts&nbsp;<i class="icon-arrow-right"></i></button>
 			</form>
 		<?php 
  
