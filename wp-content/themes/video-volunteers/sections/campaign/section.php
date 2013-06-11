@@ -43,20 +43,29 @@ class VVCampaign extends PageLinesSection {
 						</div>
 						<div class="campaign-video-list">
 							<?php
-								$campaign_vids = get_post_custom_values('CampaignVideo', $post->ID);
+								//$campaign_vids = get_post_custom_values('agc_video_campaign', $post->ID);
+								$nonce 		= wp_create_nonce('agc_video_campaign');
+								$campaign_vids 	= get_post_meta($post->ID, 'agc_video_campaign', true);
+								/*echo '<pre>';
+								print_r($campaign_vids);
+								echo '</pre>';*/
 							?>
 							<ul class="videos clearfix">
-								<?php 
+								<?php if($campaign_vids!='')
+								{
 									foreach ( $campaign_vids as $c_vid ) { 
 									
-									$videoID = youtube_id_from_url($c_vid);
+									 $videoID = youtube_id_from_url($c_vid['videolink']);
 								?>
 								<li>
+                                <div class="videotitle"><?php echo $c_vid['name']?></div>
 									<div class="vid-thumb">
 										<?php echo do_shortcode('[pl_video type="youtube" id="'.$videoID.'"]'); ?>
 									</div>
+                                    <div class="videodesc"><?php echo $c_vid['video-description']?></div>
 								</li>
-								<?php } ?>
+								<?php } 
+								}?>
 							</ul>
 						</div>
 					</div>
