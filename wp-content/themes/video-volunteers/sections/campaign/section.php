@@ -152,6 +152,7 @@ class VVCampaign extends PageLinesSection {
                     
                     <div class="campaign-single-pagewidget">
                     <?php
+					$pageid=$post->ID;
 					// The Query
 $query = new WP_Query(	array('post_type' => 'page', 'posts_per_page' => 3, 'orderby' => 'menu_order', 'meta_query' => array(array(
 					'value' => 'page.campaign.php',
@@ -163,13 +164,16 @@ print_r($query);
 echo '</pre>';*/
 
 // The Loop
-echo '<h3 class="widget-title">FEATURED CAMPAIGN</h3>';
+echo '<h3 class="widget-title">CAMPAIGNS</h3>';
 if ( $query->have_posts() ) {
 	while ( $query->have_posts() ) {
 		$query->the_post();
+		if($query->post->ID!=$pageid)
+		{
 		echo '<div class="videowidget"><div class="img">';
 		echo the_post_thumbnail();
 		echo '</div><div class="campaignwidget"><a href="'.$query->post->guid.'">' . get_the_title() . '</a><br></div><p>'.$query->post->post_excerpt.'</p></div>';
+		}
 	}
 } else {
 	echo "no posts found";
