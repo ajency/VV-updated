@@ -1252,7 +1252,7 @@ if ( $query->have_posts() ) {
 		$query->the_post();
 		echo '<div class="videowidget">';
 		echo the_post_thumbnail();
-		echo '<div class="campaignwidget"><a href="#">' . get_the_title() . '</a><br></div><p>'.$query->post->post_excerpt.'</p></div>';
+		echo '<div class="campaignwidget"><a href="'.$query->post->guid.'">' . get_the_title() . '</a><br></div><p>'.$query->post->post_excerpt.'</p></div>';
 	}
 } else {
 	echo "no posts found";

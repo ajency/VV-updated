@@ -149,6 +149,34 @@ class VVCampaign extends PageLinesSection {
 						</ol>
 						<?php } ?>
 					</div>
+                    
+                    <div class="campaign-single-pagewidget">
+                    <?php
+					// The Query
+$query = new WP_Query(	array('post_type' => 'page', 'posts_per_page' => 3, 'orderby' => 'menu_order', 'meta_query' => array(array(
+					'value' => 'page.campaign.php',
+					'compare' => 'LIKE'
+					)) ) );
+
+/*echo '<pre>';
+print_r($query);
+echo '</pre>';*/
+
+// The Loop
+if ( $query->have_posts() ) {
+	while ( $query->have_posts() ) {
+		$query->the_post();
+		echo '<div class="videowidget">';
+		echo the_post_thumbnail();
+		echo '<div class="campaignwidget"><a href="'.$query->post->guid.'">' . get_the_title() . '</a><br></div><p>'.$query->post->post_excerpt.'</p></div>';
+	}
+} else {
+	echo "no posts found";
+}
+	
+					?>
+                    </div>
+                    
 				</div>
 			</div>
 		</div>
