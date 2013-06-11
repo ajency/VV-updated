@@ -163,12 +163,13 @@ print_r($query);
 echo '</pre>';*/
 
 // The Loop
+echo '<h3 class="widget-title">FEATURED CAMPAIGN</h3>';
 if ( $query->have_posts() ) {
 	while ( $query->have_posts() ) {
 		$query->the_post();
-		echo '<div class="videowidget">';
+		echo '<div class="videowidget"><div class="img">';
 		echo the_post_thumbnail();
-		echo '<div class="campaignwidget"><a href="'.$query->post->guid.'">' . get_the_title() . '</a><br></div><p>'.$query->post->post_excerpt.'</p></div>';
+		echo '</div><div class="campaignwidget"><a href="'.$query->post->guid.'">' . get_the_title() . '</a><br></div><p>'.$query->post->post_excerpt.'</p></div>';
 	}
 } else {
 	echo "no posts found";
