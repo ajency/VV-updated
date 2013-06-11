@@ -1203,3 +1203,103 @@ function save_change_petition_meta($post_id) {
 	
 }	
 add_action('save_post', 'save_change_petition_meta');
+
+
+/**
+ * Adds Campaign_Widget widget.
+ */
+class Campaign_Widget extends WP_Widget {
+
+	/**
+	 * Register widget with WordPress.
+	 */
+	public function __construct() {
+		parent::__construct(
+	 		'Campaign_widget', // Base ID
+			'Campaign widget', // Name
+			array( 'description' => __( 'A Campaign widget', 'text_domain' ), ) // Args
+		);
+	}
+
+	/**
+	 * Front-end display of widget.
+	 *
+	 * @see WP_Widget::widget()
+	 *
+	 * @param array $args     Widget arguments.
+	 * @param array $instance Saved values from database.
+	 */
+	public function widget( $args, $instance ) {
+		extract( $args );
+		$title = apply_filters( 'widget_title', $instance['title'] );
+
+		echo $before_widget;
+		if ( ! empty( $title ) )
+			echo $before_title . $title . $after_title;
+		// The Query
+$query = new WP_Query(	array('post_type' => 'page', 'posts_per_page' => 1, 'orderby' => 'menu_order', 'meta_query' => array(array(
+					'value' => 'page.campaign.php',
+					'compare' => 'LIKE'
+					)) ) );
+
+/*echo '<pre>';
+print_r($query);
+echo '</pre>';
+*/
+// The Loop
+if ( $query->have_posts() ) {
+	while ( $query->have_posts() ) {
+		$query->the_post();
+		echo '<div class="videowidget">';
+		echo the_post_thumbnail();
+		echo '<div class="campaignwidget"><a href="#">' . get_the_title() . '</a><br></div><p>'.$query->post->post_excerpt.'</p></div>';
+	}
+} else {
+	echo "no posts found";
+}
+		echo $after_widget;
+	}
+
+	/**
+	 * Back-end widget form.
+	 *
+	 * @see WP_Widget::form()
+	 *
+	 * @param array $instance Previously saved values from database.
+	 */
+	public function form( $instance ) {
+		if ( isset( $instance[ 'title' ] ) ) {
+			$title = $instance[ 'title' ];
+		}
+		else {
+			$title = __( 'New title', 'text_domain' );
+		}
+		?>
+		<p>
+		<label for="<?php echo $this->get_field_name( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
+		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+		</p>
+		<?php 
+	}
+
+	/**
+	 * Sanitize widget form values as they are saved.
+	 *
+	 * @see WP_Widget::update()
+	 *
+	 * @param array $new_instance Values just sent to be saved.
+	 * @param array $old_instance Previously saved values from database.
+	 *
+	 * @return array Updated safe values to be saved.
+	 */
+	public function update( $new_instance, $old_instance ) {
+		$instance = array();
+		$instance['title'] = ( !empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+
+		return $instance;
+	}
+
+} // class Campaign_Widget
+
+// register Campaign_Widget widget
+add_action( 'widgets_init', function() { register_widget( 'Campaign_Widget' ); } );
