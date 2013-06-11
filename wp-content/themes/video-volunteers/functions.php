@@ -48,7 +48,25 @@ function output_header_bar() {
 	echo '<a href="'. get_bloginfo('url') .'/about-videovolunteers/impact/"><img src="'. get_bloginfo('stylesheet_directory') .'/images/impact.png" alt="Video Volunteers" /></a>';
 	echo '</div>';
 	echo '<div class="impact-desc">';
-	echo '<p>If I were you, I would try to stick a gnome in sideways so Sally can sell sea shells by the sea shore. Westside.</p><a href="'. get_bloginfo('url') .'/about-videovolunteers/impact/" class="more-link"><i class="icon-plus"></i>&nbsp;More</a>';
+	
+	// Get Latest Impact Post
+		$args = array (
+			'cat' => 4212,
+			'posts_per_page' => 1,
+		);
+		$query = new WP_Query( $args );
+		while ( $query->have_posts() ) : $query->the_post();
+			$snippet = substr( get_the_excerpt(), 0, 100 );
+			echo '<h6>';
+			echo the_title();
+			echo '</h6>';
+			echo '<p>';
+			echo $snippet;
+			echo '...</p>';
+			echo '<a href="'. get_permalink() .'" class="more-link"><i class="icon-plus"></i>&nbsp;More</a>';
+		endwhile;
+		wp_reset_postdata();
+		
 	echo '</div>';
 	echo '</div></div></div></div></div>';
 }
