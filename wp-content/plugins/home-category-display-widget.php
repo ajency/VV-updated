@@ -13,7 +13,7 @@ class HomeCatDisplayWidget extends WP_Widget
 {
   function HomeCatDisplayWidget()
   {
-    $widget_ops = array('classname' => 'HomeCatDisplayWidget', 'description' => 'Displays aa box with 3 categories and category titles' );
+    $widget_ops = array('classname' => 'HomeCatDisplayWidget', 'description' => 'Displays a box with 3 categories and category titles' );
     $this->WP_Widget('HomeCatDisplayWidget', 'Home Page Category Display Widget', $widget_ops);
   }
  
@@ -129,7 +129,7 @@ class HomeCatDisplayWidget extends WP_Widget
 				</div>
 			</div>
 			<div class="info row-fluid">
-				<div class="span9">
+				<div class="span12">
 					<h4><a href="<?php echo get_category_link($instance["cat"]); ?>"><?php echo $instance["title"]; ?></a></h4>
 				</div>
 			</div>
