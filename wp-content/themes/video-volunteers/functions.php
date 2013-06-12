@@ -1270,7 +1270,7 @@ if ( $query->have_posts() ) {
 		$query->the_post();
 		echo '<div class="videowidget">';
 		echo the_post_thumbnail();
-		echo '<div class="campaignwidget"><a href="#">' . get_the_title() . '</a><br></div><p>'.$query->post->post_excerpt.'</p></div>';
+		echo '<div class="campaignwidget"><a href="'.$query->post->guid.'">' . get_the_title() . '</a><br></div><p>'.$query->post->post_excerpt.'</p></div>';
 	}
 } else {
 	echo "no posts found";
@@ -1321,3 +1321,175 @@ if ( $query->have_posts() ) {
 
 // register Campaign_Widget widget
 add_action( 'widgets_init', function() { register_widget( 'Campaign_Widget' ); } );
+
+
+
+function agc_campaign_video_meta_box() 
+{
+	add_meta_box(
+			'campaign_video_box', // $id
+			'video - For this Campaign', // $title
+			'show_campaign_video_box', // $callback
+			'page', // $page
+			'normal', // $context
+			'high'); // $priority
+}
+
+add_action('add_meta_boxes','agc_campaign_video_meta_box');
+/**
+ * Add video.
+ */
+function show_campaign_video_box($event)
+{
+	$nonce 		= wp_create_nonce('agc_video_campaign');
+	$videos 	= get_post_meta($event->ID, 'agc_video_campaign', true);
+	/*echo '<pre>';
+	print_r($videos);
+	echo '</pre>';*/
+
+	?>
+    
+<div class="videofeild">
+<?php
+if($videos == "")
+{
+	?>
+    <input type="hidden" id="agc_video_campaign_nonce"	name="agc_video_campaign_nonce" value="<?php echo $nonce;?>">
+<table width="100%">
+		<tbody>
+			<tr>
+				<td class="agc-time-date-label"><span class="agc-time-date-title"><?php echo "Video Title"; ?>
+				</span>
+				</td>
+				<td> <input type="text" name="txtname[]" size="50" value="<?php echo (isset($val['name']))? $val['name'] :''?>" />
+					
+				</td>
+
+				<td class="agc-time-date-label"><span class="agc-time-date-title"><?php echo "Type";?>
+				</span>
+				</td>
+				<td><input type="text" name="txttype[]" size="50" value="CampaignVideo" readonly=readonly />
+					
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="agc-time-date-label"><span class="agc-time-date-title"><?php echo "Video link";?>
+				</span></td>
+				<td colspan="3" class="agc-time-date-label"><span class="agc-time-date-title"><textarea name="video[]" rows="2" cols="60"><?php echo (isset($val['videolink']))? $val['videolink'] :''?></textarea>
+				</span>
+				</td>
+				
+				
+			</tr>
+			<tr>
+				<td class="agc-time-date-label"><span class="agc-time-date-title"><?php echo "Video Description";?>
+				</span></td>
+				<td colspan="3" class="agc-time-date-label"><span class="agc-time-date-title">
+                <textarea name="video-description[]" rows="4" cols="60"><?php echo (isset($val['video-description']))? $val['video-description'] :''?></textarea>
+				</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+    <?php
+}
+	else
+	{
+foreach($videos as $val)
+{ 
+?>
+<input type="hidden" id="agc_video_campaign_nonce"	name="agc_video_campaign_nonce" value="<?php echo $nonce;?>">
+<table width="100%">
+		<tbody>
+			<tr>
+				<td class="agc-time-date-label"><span class="agc-time-date-title"><?php echo "Video Title"; ?>
+				</span>
+				</td>
+				<td> <input type="text" name="txtname[]" size="50" value="<?php echo (isset($val['name']))? $val['name'] :''?>" />
+					
+				</td>
+
+				<td class="agc-time-date-label"><span class="agc-time-date-title"><?php echo "Type";?>
+				</span>
+				</td>
+				<td><input type="text" name="txttype[]" size="50" value="CampaignVideo" readonly=readonly />
+					
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="agc-time-date-label"><span class="agc-time-date-title"><?php echo "Video link";?>
+				</span></td>
+				<td colspan="3" class="agc-time-date-label"><span class="agc-time-date-title"><textarea name="video[]" rows="2" cols="60"><?php echo (isset($val['videolink']))? $val['videolink'] :''?></textarea>
+				</span>
+				</td>
+				
+				
+			</tr>
+			<tr>
+				<td class="agc-time-date-label"><span class="agc-time-date-title"><?php echo "Video Description";?>
+				</span></td>
+				<td colspan="3" class="agc-time-date-label"><span class="agc-time-date-title">
+                <textarea name="video-description[]" rows="4" cols="60"><?php echo (isset($val['video-description']))? $val['video-description'] :''?></textarea>
+				</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+    <?php }
+	}?>
+</div>
+
+<input type="button" id="addvideo" value="Add Video" />
+<script>
+jQuery("#addvideo").click(function()
+{
+	jQuery(".videofeild").append("<table width='100%'><tbody><tr><td class='agc-time-date-label'><span class='agc-time-date-title'><?php echo 'Video Title'; ?></span></td><td> <input type='text' name='txtname[]' size='50' value='<?php echo (isset($videos['title']))? $videos['title'] :''?>' /></td><td class='agc-time-date-label'><span class='agc-time-date-title'><?php echo 'Type';?></span></td><td><input type='text' name='txttype[]' size='50' value='CampaignVideo' readonly=readonly /></td></tr><tr><td class='agc-time-date-label'><span class='agc-time-date-title'><?php echo 'Video link';?></span></td><td colspan='3' class='agc-time-date-label'><span class='agc-time-date-title'><textarea name='video[]' rows='2' cols='60'><?php echo (isset($videos['videolink']))? $videos['videolink'] :''?></textarea></span></td></tr><tr><td class='agc-time-date-label'><span class='agc-time-date-title'><?php echo 'Video Description';?>			</span></td><td colspan='3' class='agc-time-date-label'><span class='agc-time-date-title'><textarea name='video-description[]' rows='4' cols='60'><?php echo (isset($videos['video-description']))? $videos['video-description'] :''?></textarea></span></td></tr></tbody></table>");});
+</script>
+
+
+<?php
+}
+
+add_action( 'save_post', 'agc_video_campaign_box_save',10 );
+function agc_video_campaign_box_save( $event_id ) {
+
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		return;
+
+	if ( !wp_verify_nonce( $_POST['agc_video_campaign_nonce'],'agc_video_campaign' ) )
+		return;
+
+	// Check permissions
+	if ( 'page' == $_POST['post_type'] )
+	{
+		if ( !current_user_can( 'edit_page', $event_id ) )
+			return;
+	}
+	else
+	{
+		if ( !current_user_can( 'edit_post', $event_id ) )
+			return;
+	}
+	/*$data = array(array(
+			'title' => $_POST['txtname'],
+			'type' => $_POST['txttype'],
+			'videolink' => $_POST['video'],
+			'video-description' => $_POST['video-description']
+	));*/
+	$data=array();
+	$i=0;
+	foreach($_POST['txtname'] as $name)
+	{
+		$items=array();
+		$items["name"]=$name;
+		$items["videolink"]= $_POST['video'][$i];
+		$items["type"]= $_POST['txttype'][$i];
+		$items["video-description"]= $_POST['video-description'][$i];
+		$data[]=$items;
+		$i++;
+	}
+	update_post_meta($event_id, 'agc_video_campaign', $data);
+}
+

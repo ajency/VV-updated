@@ -43,20 +43,29 @@ class VVCampaign extends PageLinesSection {
 						</div>
 						<div class="campaign-video-list">
 							<?php
-								$campaign_vids = get_post_custom_values('CampaignVideo', $post->ID);
+								//$campaign_vids = get_post_custom_values('agc_video_campaign', $post->ID);
+								$nonce 		= wp_create_nonce('agc_video_campaign');
+								$campaign_vids 	= get_post_meta($post->ID, 'agc_video_campaign', true);
+								/*echo '<pre>';
+								print_r($campaign_vids);
+								echo '</pre>';*/
 							?>
 							<ul class="videos clearfix">
-								<?php 
+								<?php if($campaign_vids!='')
+								{
 									foreach ( $campaign_vids as $c_vid ) { 
 									
-									$videoID = youtube_id_from_url($c_vid);
+									 $videoID = youtube_id_from_url($c_vid['videolink']);
 								?>
 								<li>
+                                <div class="videotitle"><?php echo $c_vid['name']?></div>
 									<div class="vid-thumb">
 										<?php echo do_shortcode('[pl_video type="youtube" id="'.$videoID.'"]'); ?>
 									</div>
+                                    <div class="videodesc"><?php echo $c_vid['video-description']?></div>
 								</li>
-								<?php } ?>
+								<?php } 
+								}?>
 							</ul>
 						</div>
 					</div>
@@ -141,6 +150,39 @@ class VVCampaign extends PageLinesSection {
 						</ol>
 						<?php } ?>
 					</div>
+                    
+                    <div class="campaign-single-pagewidget">
+                    <?php
+					$pageid=$post->ID;
+					// The Query
+$query = new WP_Query(	array('post_type' => 'page', 'posts_per_page' => 3, 'orderby' => 'menu_order', 'meta_query' => array(array(
+					'value' => 'page.campaign.php',
+					'compare' => 'LIKE'
+					)) ) );
+
+/*echo '<pre>';
+print_r($query);
+echo '</pre>';*/
+
+// The Loop
+echo '<h3 class="widget-title">CAMPAIGNS</h3>';
+if ( $query->have_posts() ) {
+	while ( $query->have_posts() ) {
+		$query->the_post();
+		if($query->post->ID!=$pageid)
+		{
+		echo '<div class="videowidget"><div class="img">';
+		echo the_post_thumbnail();
+		echo '</div><div class="campaignwidget"><a href="'.$query->post->guid.'">' . get_the_title() . '</a><br></div><p>'.$query->post->post_excerpt.'</p></div>';
+		}
+	}
+} else {
+	echo "no posts found";
+}
+	
+					?>
+                    </div>
+                    
 				</div>
 			</div>
 		</div>

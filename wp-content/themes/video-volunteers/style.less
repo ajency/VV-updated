@@ -1604,7 +1604,10 @@ div.testimonials-slider-quotecontainer {
 					}
 				}
 			}
+			
 		}
+		
+		
 	}
 	.vid-pagination {
 		clear: both;
@@ -2439,6 +2442,11 @@ margin-bottom: -37px;
 			}
 		}
 	}
+	.campaign-single-pagewidget
+	{
+		display:none;
+	}
+	
 	#list_sb_home_cats 
 	{
 		li
@@ -2518,6 +2526,19 @@ margin-bottom: -37px;
 		#list_sb_home li:last-child
 		{
 			margin:auto;
+		}
+		
+		.campaign-video-list 
+		{
+			.videos
+			{		
+				li 
+					{
+						width: 72% !important;
+						float: none!important;
+						margin: 0 auto 7px!important;
+					}
+			}
 		}
 		
 }
@@ -2669,7 +2690,57 @@ margin-bottom: -37px;
 				background: #ccc;
 				.box-shadow(0 0 5px @grey-regular);
 			}
+			.videotitle
+		{
+			color: #2B6A78;
+			font-weight: bold;
+			padding-bottom: 6px;
+			font-size: 15px;
 		}
+		
+		.videodesc
+		{
+			color: #aaaaaa;
+			margin-top: 7px;
+		}
+			
+		}
+	}
+}
+
+.campaign-single-pagewidget
+{
+padding-bottom: 9px;
+
+	.videowidget
+	{
+		padding: 7px 13px;
+		background: #F2F2F2;
+		display: table;
+		min-width: 93%;
+			img
+			{
+				width: 40%;
+				float: left;
+				padding-right: 13px;
+			}
+			
+			.campaignwidget
+			{
+				width: 40%;
+				float: left;
+				padding-top: 0px;
+			}
+			p
+			{
+				margin:0;
+			}
+			
+			.img
+			{
+				min-width: 40%;
+			}
+		
 	}
 }
 
