@@ -498,6 +498,15 @@ class PageLinesFeatures extends PageLinesSection {
 												?>
 										</div>
 									</div>
+									<script>
+										// Pause/Play on Hover
+										jQuery('#cycle .fcontainer').mouseenter(function () {
+											jQuery('#cycle').cycle('pause');
+										});
+										jQuery('#cycle .fcontainer').mouseleave(function () {
+											jQuery('#cycle').cycle('resume');
+										});
+									</script>
 									<?php pagelines_register_hook( 'pagelines_feature_after', $this->id ); // Hook ?>
 									<div class="clear"></div>
 								</div>

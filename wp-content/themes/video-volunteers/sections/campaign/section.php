@@ -105,6 +105,7 @@ class VVCampaign extends PageLinesSection {
 								<a>|</a>
 								<span id="change_Start">Start a <a href="http://www.change.org/petition" target="_blank">Petition</a> &raquo;</span>
 							</div>
+							<?php //var_dump($petition_id); ?>
 							<script type="text/javascript" src="http://e.change.org/flash_petitions_widget.js?width=300&color=F26B26&petition_id=<?php echo $petition_id; ?>"></script>
 						</div>
 					<?php } ?>
