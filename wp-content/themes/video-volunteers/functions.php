@@ -174,8 +174,9 @@ function page_readmore_script() {
 	if ( is_page() ) {
 	$post = get_post();
 	$children = get_pages('child_of='.$post->ID);
+	$vv_after_loop = did_action( 'pagelines_content_before_maincolumn' );
 		
-		if( count( $children ) != 0 ) { 
+		if( count( $children ) != 0 && $vv_after_loop == 1 ) { 
 			?>
 				<style type="text/css">#post-<?php echo $post->ID; ?> {display: none;}</style>
 				<div class="post-meta">
