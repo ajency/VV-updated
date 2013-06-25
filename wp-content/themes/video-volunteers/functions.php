@@ -728,15 +728,17 @@ function output_category_info() {
 add_action('pagelines_before_videoloop', 'output_category_info',1);
 
 /****Check if is Page or Child****/
-function has_parent($post, $post_id) {
-	if ($post->ID == $post_id) return true;
-	else if ($post->post_parent == 0) return false;
-	else return has_parent(get_post($post->post_parent),$post_id);
-}
+function is_tree($pid) {      // $pid = The ID of the page we're looking for pages underneath
+	global $post;         // load details about this page
+	if(is_page()&&($post->post_parent==$pid||is_page($pid))) 
+        return true;   // we're at the page or at a sub page
+	else 
+        return false;  // we're elsewhere
+};
 
 /****Display Sticky Post on Blog Page****/
 function display_blog_sticky() {
-	if ( is_front_page() || is_single() || is_category( 'videos' ) || ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) || has_parent($wp_query->post, 8333 ) ) {
+	if ( is_front_page() || is_single() || is_category( 'videos' ) || ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) || is_tree('8333') || ($post->ancestors && in_array( '8333', $post->ancestors) ) ) {
 		//Do Nothing
 	}
 	else {
