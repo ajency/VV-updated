@@ -727,9 +727,18 @@ function output_category_info() {
 
 add_action('pagelines_before_videoloop', 'output_category_info',1);
 
+/****Check if is Page or Child****/
+function is_tree($pid) {      // $pid = The ID of the page we're looking for pages underneath
+	global $post;         // load details about this page
+	if(is_page()&&($post->post_parent==$pid||is_page($pid))) 
+        return true;   // we're at the page or at a sub page
+	else 
+        return false;  // we're elsewhere
+};
+
 /****Display Sticky Post on Blog Page****/
 function display_blog_sticky() {
-	if ( is_single() || is_category( 'videos' ) || ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) ) {
+	if ( is_single() || is_category( 'videos' ) || ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) || is_tree( 8333 ) ) {
 		//Do Nothing
 	}
 	else {
@@ -757,7 +766,7 @@ function display_blog_sticky() {
 	}
 }
 
-//add_action('pagelines_content_before_columns', 'display_blog_sticky',1);
+add_action('pagelines_content_before_columns', 'display_blog_sticky',1);
 
 /****Register Author Sidebar****/
 register_sidebar(array(
