@@ -736,7 +736,7 @@ function has_parent($post, $post_id) {
 
 /****Display Sticky Post on Blog Page****/
 function display_blog_sticky() {
-	if ( is_front_page() || is_single() || is_category( 'videos' ) || ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) || has_parent( 8333 ) ) {
+	if ( is_front_page() || is_single() || is_category( 'videos' ) || ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) || has_parent($wp_query->post), 8333) ) {
 		//Do Nothing
 	}
 	else {
