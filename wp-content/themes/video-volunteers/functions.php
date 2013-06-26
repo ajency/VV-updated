@@ -749,26 +749,29 @@ function display_blog_sticky() {
 		//Do Nothing
 	}
 	else {
+		$sticky = get_option( 'sticky_posts' );
 		$args = array(
 			'posts_per_page' => 1,
-			'post__in'  => get_option( 'sticky_posts' ),
+			'post__in'  => $sticky,
 			'ignore_sticky_posts' => 1
 		);
 		query_posts( $args );
-			while ( have_posts() ) : the_post(); ?>
-				<div id="sticky-post-div">
-					<div class="pad">
-						<?php if ( has_post_thumbnail() ) { ?>
-							<a href="<?php the_permalink(); ?>"><?php echo the_post_thumbnail( array(600,450) ); ?></a>
-						<?php } ?>
-						<h2>
-							<a href="<?php the_permalink(); ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a>
-						</h2>
-						<p><?php the_excerpt(); ?></p>
-						<div class="clearfix"></div>
+			if ( $sticky[0] ) {
+				while ( have_posts() ) : the_post(); ?>
+					<div id="sticky-post-div">
+						<div class="pad">
+							<?php if ( has_post_thumbnail() ) { ?>
+								<a href="<?php the_permalink(); ?>"><?php echo the_post_thumbnail( array(600,450) ); ?></a>
+							<?php } ?>
+							<h2>
+								<a href="<?php the_permalink(); ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+							</h2>
+							<p><?php the_excerpt(); ?></p>
+							<div class="clearfix"></div>
+						</div>
 					</div>
-				</div>
-			<?php endwhile;
+				<?php endwhile;
+			}
 		wp_reset_query();
 	}
 }
@@ -911,8 +914,7 @@ add_action('pagelines_before_videoloop', 'output_blog_cats',1);
 	$html=ob_get_clean();
 	echo json_encode(array('html'=>$html,'success'=>true));
 	die;
-  
-  }
+}
 add_action('wp_ajax_abc_get_posts','abc_get_posts');
 add_action('wp_ajax_nopriv_abc_get_posts','abc_get_posts');
 
