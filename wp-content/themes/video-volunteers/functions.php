@@ -45,7 +45,7 @@ function output_header_bar() {
 	echo '<a href="'. get_bloginfo('url') .'" class="logo-link"><img src="'. get_bloginfo('stylesheet_directory') .'/images/site-logo.png" alt="Video Volunteers" /></a>';
 	echo '<div class="impact fix">';
 	echo '<div class="impact-image">';
-	echo '<a href="'. get_bloginfo('url') .'/category/videos/impact-indiaunheard/"><img src="'. get_bloginfo('stylesheet_directory') .'/images/impact.png" alt="Video Volunteers" /></a>';
+	echo '<a href="'. get_bloginfo('url') .'/category/blog/videovolunteers-impact/"><img src="'. get_bloginfo('stylesheet_directory') .'/images/impact.png" alt="Video Volunteers" /></a>';
 	echo '</div>';
 	echo '<div class="impact-desc">';
 	
