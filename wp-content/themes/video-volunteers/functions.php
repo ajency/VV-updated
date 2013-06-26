@@ -850,7 +850,8 @@ add_action('pagelines_before_videoloop', 'output_blog_cats',1);
  		$args = array (
 			'cat' => (get_query_var('cat')),
 			'posts_per_archive_page' => 12,
-			'category__in' => 16
+			'category__in' => 16,
+			'paged' => get_query_var('paged')
 		);
  		$query = new WP_Query($args);
  	}
@@ -859,7 +860,8 @@ add_action('pagelines_before_videoloop', 'output_blog_cats',1);
 		$args = array (
 			'cat' => (get_query_var('cat')),
 			'posts_per_archive_page' => 12,
-			'category__in' => array($_POST['cat_id'] )
+			'category__in' => array($_POST['cat_id'] ),
+			'paged' => get_query_var('paged')
 		);
  		$query = new WP_Query($args);
  	} 		

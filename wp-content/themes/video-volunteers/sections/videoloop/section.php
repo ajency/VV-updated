@@ -22,7 +22,7 @@ class PageLinesVideoLoop extends PageLinesSection {
 	*/
    function section_template() {
 		
-		if ( is_category( 'videos' ) ) {
+		if ( is_category( 'videos-ajax' ) ) { //CHANGED TO IMPLEMENT NO AJAX DEFAULT
 			
 			$filter = array(
 				'hide_empty' => 0, 
@@ -42,7 +42,7 @@ class PageLinesVideoLoop extends PageLinesSection {
 			</div>
 			<script type="text/javascript">
 				jQuery(document).ready(function(){ 
-						get_cat_post('');
+					get_cat_post('');
 				});
 				
 				var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
@@ -84,18 +84,36 @@ class PageLinesVideoLoop extends PageLinesSection {
 			{
 				$args = array (
 					'author_name' => (get_query_var('author_name')),
-					'posts_per_page' => 9
+					'posts_per_page' => 9,
+					'paged' => get_query_var('paged')
 				);
 			}
 			elseif ( is_category() )
 			{
 				$args = array (
 					'cat' => (get_query_var('cat')),
-					'posts_per_archive_page' => 12
+					'posts_per_archive_page' => 12,
+					'paged' => get_query_var('paged')
 				);
 			}
 			$theposts = new WP_Query();
-			$theposts -> query($args); ?>
+			$theposts -> query($args);
+			
+			// No AJAX Videos
+			if ( is_category( 'videos' ) ) {
+			?>
+			<form action="<?php bloginfo('url'); ?>/" method="get" class="form-inline">
+				<?php
+					$select = wp_dropdown_categories('show_option_none=All&orderby=name&echo=0&child_of=16');
+					$select = preg_replace("#<select([^>]*)>#", "<select$1 onchange='return this.form.submit()'>", $select);
+					echo $select;
+				?>
+				<noscript><button type="submit" name="submit" class="btn"><i class="icon-arrow-right"></i></button></noscript>
+			</form>
+			<?php
+			} // end No AJAX Videos
+			
+			?>
 				<div class="video-list">
 					<?php if ( is_author() )
 					{
