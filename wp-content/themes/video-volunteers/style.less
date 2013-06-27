@@ -820,6 +820,12 @@ div.testimonials-slider-quotecontainer {
 	padding: 0.6em !important;
 	line-height: 20px;
 	margin: 0 0 5px !important;
+	a {
+		color: @logo-color !important;
+		&:hover {
+			color: @orange !important;
+		}
+	}
 }
 
 /****Featured Campaign & Featured Community Correspondent****/
@@ -3013,6 +3019,26 @@ padding-bottom: 9px;
 				&>a {
 					text-transform: uppercase;
 				}
+			}
+		}
+	}
+}
+
+/****Impact Sidebar Styles****/
+.impact-assessment {
+	ol {
+		list-style: decimal outside none;
+		padding: 0 0 0 1em;
+		font-family: 'Museo300Regular', serif;
+		color: @orange;
+		font-size: 2em;
+		li {
+			margin: 0 0 10px;
+			p {
+				font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				color: lighten(@grey-regular, 10%);
+				font-size: 0.5em;
+				margin: 0;
 			}
 		}
 	}
