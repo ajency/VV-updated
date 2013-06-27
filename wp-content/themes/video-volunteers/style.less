@@ -858,6 +858,9 @@ div.testimonials-slider-quotecontainer {
 			&.auth-avatar {
 				height: 220px;
 				overflow: hidden;
+				img {
+					width: auto;
+				}
 			}
 		}
 		p {
@@ -2162,7 +2165,7 @@ div.testimonials-slider-quotecontainer {
 
 @media (max-width: 480px) { 
 #features {
-margin-bottom: -37px;
+	margin-bottom: -37px;
 }
 
 .issue-list {
@@ -2180,32 +2183,26 @@ margin-bottom: -37px;
 	}
 }
 
-.content
-	{
-		 .content-pad
-		 {
-			.tag-line
-			{
-				font-size:0.4em !important;
-			}
+.content {
+	.content-pad {
+		.tag-line {
+			font-size:0.4em !important;
 		}
 	}
+}
 	
-	.vv_widget_text, .vv_widget_boxes_container img
-	{
-		display:none;
-	}
-	
-	.vv_widget_boxes_container
-	{
-		padding-bottom:5px;
-	}
-	
-	#list_sb_home li.widget
-	{
-		margin-bottom:-9px;
-		width:100%;
-	}
+.vv_widget_text, .vv_widget_boxes_container img {
+	display:none;
+}
+
+.vv_widget_boxes_container {
+	padding-bottom:5px;
+}
+
+#list_sb_home li.widget {
+	margin-bottom:-9px;
+	width:100%;
+}
 
 }
 
@@ -3027,18 +3024,22 @@ padding-bottom: 9px;
 /****Impact Sidebar Styles****/
 .impact-assessment {
 	ol {
-		list-style: decimal outside none;
-		padding: 0 0 0 1em;
-		font-family: 'Museo300Regular', serif;
+		list-style: decimal inside;
+		padding: 0 0 0 0.33em;
+		font-family: 'Museo300Regular', serif !important;
 		color: @orange;
 		font-size: 2em;
 		li {
-			margin: 0 0 10px;
+			margin: 0 0 20px;
 			p {
 				font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 				color: lighten(@grey-regular, 10%);
 				font-size: 0.5em;
 				margin: 0;
+				display: inline;
+				&:before {
+					display: inline;
+				}
 			}
 		}
 	}
