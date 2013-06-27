@@ -71,7 +71,7 @@ class FeatCCWidget extends WP_Widget
 			$auth_desc = substr(get_the_author_meta( 'description', $user->ID ), 0, 200);
 			?>
 				<div class="featured-cc">
-					<a href="<?php echo get_author_posts_url( $user->ID ); ?>" class="auth-avatar"><?php echo get_avatar( $user->ID , 512 ); ?></a>
+					<a href="<?php echo get_author_posts_url( $user->ID ); ?>" class="auth-avatar"><?php echo get_avatar( $user->ID , 384 ); ?></a>
 					<a href="<?php echo get_author_posts_url( $user->ID ); ?>"><?php echo get_the_author_meta( 'display_name', $user->ID ); ?></a>
 					<p><?php echo $auth_desc; ?> ... <a href="<?php echo get_author_posts_url( $user->ID ); ?>" class="read-more">read more<i class="icon-double-angle-right"></i></a></p>
 				</div>

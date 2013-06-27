@@ -709,7 +709,7 @@ function output_category_info() {
 		//Do Nothing!
 	}
 	else {
-		if ( ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) )
+		if ( is_category( 'videos' ) || post_is_in_descendant_category( 16 ) )
 		{
 			?>
 				<div class="issue-section">
@@ -721,6 +721,17 @@ function output_category_info() {
 					<?php } ?>
 				</div>
 			<?php
+		}
+		else {
+			if ( is_category( 'blog' ) ) { 
+				// Do Nothing
+			} else { ?>
+				<div class="issue-section">
+					<h1><span>Read: </span><?php echo $cat_name; ?></h1>
+					<p><?php echo $cat_desc; ?></p>
+				</div>
+			<?php
+			}
 		}
 	}
 }
