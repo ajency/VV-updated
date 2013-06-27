@@ -25,8 +25,15 @@ class ImpactPageSidebar extends PageLinesSection {
 	/**
 	* Section template.
 	*/
-   function section_template() {
-	 	 pagelines_draw_sidebar($this->id, $this->name);
+	
+	function section_template() {
+		if ( is_category( 'Impact' ) ) {
+			pagelines_draw_sidebar($this->id, $this->name);
+		}
+		else {
+			// Do Nothing
+		}
 	}
+	
 
 }
