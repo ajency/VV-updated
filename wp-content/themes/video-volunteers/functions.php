@@ -564,7 +564,7 @@ function output_single_author_bio() {
 			<h1>Community Correspondent</h1>
 			<div class="row-fluid">
 				<div class="span3">
-					<?php echo get_avatar( $curauth, 512 ); ?>
+					<?php echo get_avatar( $curauth->ID, 512 ); ?>
 				</div>
 				<div class="span9">
 					<div class="details">
