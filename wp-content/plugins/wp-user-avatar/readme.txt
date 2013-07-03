@@ -4,8 +4,8 @@ Contributors: bangbay
 Donate link: http://siboliban.org/donate
 Tags: author image, author photo, author avatar, avatar, bbPress, profile avatar, profile image, user avatar, user image, user photo
 Requires at least: 3.4
-Tested up to: 3.5.1
-Stable tag: 1.5
+Tested up to: 3.5.2
+Stable tag: 1.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,7 +29,7 @@ This plugin uses the Media uploader introduced in WordPress 3.5, but is also bac
 == Installation ==
 
 1. Download, install, and activate the WP User Avatar plugin.
-2. On your edit profile page, click "Edit WP User Avatar".
+2. On your profile edit page, click "Edit WP User Avatar".
 3. Choose an image, then click "Set WP User Avatar".
 4. Click "Update Profile".
 5. Upload your own Default Avatar in your WP User Avatar settings (optional). You can also allow Contributors & Subscribers to upload avatars and disable Gravatar.
@@ -225,12 +225,20 @@ Outputs:
 
 1. WP User Avatar admin settings.
 2. WP User Avatar lets you upload your own Default Avatar.
-3. WP User Avatar adds a field to your edit profile page.
+3. WP User Avatar adds a field to your profile edit page.
 4. After you've chosen a WP User Avatar image, you will see the option to remove it.
 5. WP User Avatar adds a button to insert the [avatar] shortcode in the Visual Editor.
 6. Options for the [avatar] shortcode.
 
 == Changelog ==
+
+= 1.5.2 =
+* Bug Fix: Ability to disable scripts in front pages
+
+= 1.5.1 =
+* Add: Ability to disable scripts in front pages
+* Update: Uninstall options
+* Update: Translations
 
 = 1.5 =
 * Add: Ability to disable Gravatar avatars
