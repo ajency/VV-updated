@@ -132,7 +132,7 @@ class PageLinesVideoLoop extends PageLinesSection {
 							<li>
 								<div class="thumb">
 									<a href="<?php the_permalink(); ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
-										<img src="http://indiaunheard.videovolunteers.org<?php echo $thumb; ?>" alt="<?php the_title_attribute(); ?>" />
+										<img src="<?php echo site_url('/'); ?><?php echo $thumb; ?>" alt="<?php the_title_attribute(); ?>" />
 									</a>
 								</div>
 								<div class="info">

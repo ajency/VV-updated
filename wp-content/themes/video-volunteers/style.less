@@ -2083,6 +2083,11 @@ div.testimonials-slider-quotecontainer {
 	p {
 		color: @grey-regular;
 		font-size: 0.9em;
+		.clearfix;
+		img {
+			float: left;
+			margin: 0 10px 5px 0;
+		}
 	}
 }
 
@@ -3007,12 +3012,16 @@ padding-bottom: 9px;
 				font-size: 1.1em;
 			}
 			.children {
+				.children {
+					display: none;
+				}
 				.current_page_item {
 					a {
 						font-weight: bold;
 						color: @orange;
 					}
 					.children {
+						display: block;
 						li a {
 							color: #225E9B;
 							font-weight: normal;
@@ -3023,6 +3032,9 @@ padding-bottom: 9px;
 			&.current_page_parent {
 				&>a {
 					text-transform: uppercase;
+				}
+				.children {
+					display: block;
 				}
 			}
 		}

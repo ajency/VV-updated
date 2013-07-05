@@ -77,15 +77,28 @@ class PagesTree extends WP_Widget
 			foreach ($pages as $page) {
 				$pageids[]= $page->ID;
 			}
+			global $post; $thispage = $post->ID; // grabs the current post id from global  
+			$pagekids = get_pages("child_of=".$thispage."&sort_column=menu_order"); // gets a list of page that are sub pages of the current page 
 
-			$args=array(
-				'title_li' => '',
-				'include' =>  $parent . ',' . implode(",", $pageids)
-			);
+			if ($pagekids) {
+				$args=array(
+					'title_li' => '',
+					'include' =>  $parent . ',' . implode(",", $pageids),
+					'depth' => 2,
+				);
+			}
+			else {
+				$args=array(
+					'title_li' => '',
+					'include' =>  $parent . ',' . implode(",", $pageids),
+					'depth' => 3,
+				);
+			}
+			
 			
 			echo '<ul>';
 			wp_list_pages($args);
-			echo '</ul>';
+			echo '</ul>'; 
 		}
  
     echo '</div>';

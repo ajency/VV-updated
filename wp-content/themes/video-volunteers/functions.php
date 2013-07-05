@@ -56,10 +56,9 @@ function output_header_bar() {
 		);
 		$query = new WP_Query( $args );
 		while ( $query->have_posts() ) : $query->the_post();
-			$snippet = substr( get_the_excerpt(), 0, 100 );
-			echo '<h6>';
-			echo the_title();
-			echo '</h6>';
+			$impact_title = substr( get_the_title(), 0, 36 );
+			$snippet = substr( get_the_excerpt(), 0, 90 );
+			echo '<h6>'. $impact_title .'...</h6>';
 			echo '<p>';
 			echo $snippet;
 			echo '...</p>';
@@ -131,7 +130,19 @@ function insertSocial($content) {
 		// Twitter Tweet Button
 		$content_new.= '<div class="social-button"><a href="http://twitter.com/share?url='. urlencode(get_permalink()) .'&via=videovolunteers&count=vertical" class="twitter-share-button">Tweet</a></div>';
 		// Facebook Button
-		$content_new.= '<div class="social-button"><iframe src="//www.facebook.com/plugins/like.php?href='. urlencode(get_permalink()) .'&amp;send=false&amp;layout=box_count&amp;width=45&amp;show_faces=false&amp;font=arial&amp;colorscheme=light&amp;action=like&amp;height=65" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:45px; height:65px;" allowTransparency="true"></iframe></div>';
+		$content_new.= '<div id="fb-root" style="margin: 0;"></div>
+        <script>
+			window.fbAsyncInit = function() {
+				FB.init({appId: "379592158829471", status: true, cookie: true, xfbml: true});
+			};
+			(function() {
+				var e = document.createElement("script"); e.async = true;
+				e.src = document.location.protocol +
+				"//connect.facebook.net/en_US/all.js";
+				document.getElementById("fb-root").appendChild(e);
+			}());
+		</script>';
+		$content_new.= '<div class="social-button"><fb:like href="'. get_permalink() .'" send="false" layout="box_count" width="45" show_faces="false" font="arial"></fb:like></div>';
 		// Google+ Button
 		$content_new.= '<div class="social-button"><g:plusone size="tall" href="'. urlencode(get_permalink()) .'"></g:plusone></div>';
 
@@ -361,6 +372,7 @@ function output_single_video() {
 							</div>
 							<div class="vid-con">
 								<?php echo do_shortcode('[pl_video type="youtube" id="'.youtube_id_from_url($video).'"] '); ?>
+								<?php //$video_id = youtube_id_from_url($video); var_dump($video_id); ?>
 							</div>
 						</div>
 					</div>
@@ -378,13 +390,25 @@ function output_single_video() {
 								<a class="more-link" href="#"><i class="icon-plus"></i>&nbsp;Email This</a>
 								-->
 								<div class="share-button">
-									<a href="http://twitter.com/share?url='. urlencode(get_permalink()) .'&via=videovolunteers&count=horizontal" class="twitter-share-button">Tweet</a>
+									<a href="http://twitter.com/share?url=<?php urlencode(get_permalink()); ?>&via=videovolunteers&count=horizontal" class="twitter-share-button">Tweet</a>
 								</div>
 								<div class="share-button">
-									<iframe src="//www.facebook.com/plugins/like.php?href=<?php echo urlencode(get_permalink()); ?>&amp;send=false&amp;layout=standard&amp;width=300&amp;show_faces=false&amp;font=arial&amp;colorscheme=light&amp;action=like&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:35px;" allowTransparency="true"></iframe>
+									<div id="fb-root_top"></div>
+									<script>
+										window.fbAsyncInit = function() {
+											FB.init({appId: "379592158829471", status: true, cookie: true, xfbml: true});
+										};
+										(function() {
+											var e = document.createElement("script"); e.async = true;
+											e.src = document.location.protocol +
+											"//connect.facebook.net/en_US/all.js";
+											document.getElementById("fb-root_top").appendChild(e);
+										}());
+									</script>
+									<fb:like href="<?php get_permalink(); ?>" send="false" layout="button_count" width="300" show_faces="false" font="arial"></fb:like>
 								</div>
 								<div class="share-button">
-									<g:plusone href="'. urlencode(get_permalink()) .'"></g:plusone>
+									<g:plusone href="<?php urlencode(get_permalink()); ?>"></g:plusone>
 								</div>
 							</div>
 							<?php
@@ -516,7 +540,7 @@ function output_single_video_author() {
 								// setTimeout(window.location = $('#redirect_to').val(), 5000); 
 							}
 						}
-					}
+					});
 				</script>
 			</div>
 
@@ -544,7 +568,7 @@ function output_single_video_thumbnail() {
 				.entry_content p, .entry_content div {font-size: 0.9em;} 
 			</style>
 			<div class="thumb-image">
-				<img src="http://indiaunheard.videovolunteers.org<?php echo $thumb_img; ?>" alt="<?php the_title_attribute(); ?>" />
+				<img src="<?php echo site_url('/'); ?><?php echo $thumb_img; ?>" alt="<?php the_title_attribute(); ?>" />
 			</div>
 		<?php
 		}
@@ -715,9 +739,10 @@ function output_category_info() {
 				<div class="issue-section">
 					<?php if ( is_category( 'videos' ) ) { ?>
 						<h1><?php echo $cat_name; ?></h1>
-					<?php } else { ?>
+					<?php } else { 
+						$image_src = s8_get_taxonomy_image( get_term($cat, 'category'), 'thumbnail'); ?>
 						<h1><span>Issue: </span><?php echo $cat_name; ?></h1>
-						<p><?php echo $cat_desc; ?></p>
+						<p><?php echo $image_src; echo $cat_desc; ?></p>
 					<?php } ?>
 				</div>
 			<?php
@@ -755,7 +780,7 @@ function is_tree($pid) {
 
 /****Display Sticky Post on Blog Page****/
 function display_blog_sticky() {
-	if ( is_front_page() || is_single() || is_category( 'videos' ) || ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) || is_tree('8333') || is_search() )
+	if ( is_front_page() || is_single() || is_category( 'videos' ) || ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) || is_tree('8333') || is_tree('8743') || is_search() )
 	{
 		//Do Nothing
 	}
@@ -892,7 +917,7 @@ add_action('pagelines_before_videoloop', 'output_blog_cats',1);
 				<li>
 					<div class="thumb">
 						<a href="<?php the_permalink(); ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
-							<img src="http://indiaunheard.videovolunteers.org<?php echo $thumb; ?>" alt="<?php the_title_attribute(); ?>" />
+							<img src="<?php echo site_url('/'); ?><?php echo $thumb; ?>" alt="<?php the_title_attribute(); ?>" />
 						</a>
 					</div>
 					<div class="info">
@@ -1525,3 +1550,41 @@ function agc_video_campaign_box_save( $event_id ) {
 	update_post_meta($event_id, 'agc_video_campaign', $data);
 }
 
+// Facebook Open Graph Tags - add to head
+add_action('wp_head', 'add_fb_open_graph_tags');
+function add_fb_open_graph_tags() {
+	if (is_single()) {
+		global $post;
+		if(get_the_post_thumbnail($post->ID, 'thumbnail')) {
+			$thumbnail_id = get_post_thumbnail_id($post->ID);
+			$thumbnail_object = get_post($thumbnail_id);
+			$image = $thumbnail_object->guid;
+		} else {
+			$upload_dir = wp_upload_dir(); 
+			$path=$upload_dir['url']."/blank.png";
+			$image = $path; // Change this to the URL of the logo you want beside your links shown on Facebook
+		}
+		
+		$post_id=get_the_ID();
+		$post_type=$post->post_type;
+		?>
+		<meta property="fb:app_id" content="379592158829471" />
+		<meta property="og:url" content="<?php the_permalink(); ?>" /> 
+		<meta property="og:title" content="<?php the_title(); ?>" /> 
+		<meta property="og:image" content="<?php echo $image; ?>" /> 
+		<meta property="og:description" content="<?php echo stripslashes(get_the_content()); ?>" /> 
+		<?php 
+		switch ($post_type)
+		{
+			case "post":
+			?>
+				<meta property="og:type" content="article" /> 
+			<?php
+			break;
+			default:
+			?>
+				<meta property="og:type" content="website" /> 
+			<?php                 
+		}
+	}
+}
