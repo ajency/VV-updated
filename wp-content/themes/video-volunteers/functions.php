@@ -812,7 +812,16 @@ function output_category_info() {
 						<h1><?php echo $cat_name; ?></h1>
 					<?php } else { 
 						$image_src = s8_get_taxonomy_image( get_term($cat, 'category'), 'thumbnail'); ?>
-						<h1><span>Issue: </span><?php echo $cat_name; ?></h1>
+						<h1>
+							<?php if ( post_is_in_descendant_category( 16 ) ) { ?>
+								<span>Issue: </span>
+							<?php 
+							}
+							else { 
+								//Do Nothing!
+							} ?>
+							<?php echo $cat_name; ?>
+						</h1>
 						<p><?php echo $image_src; echo $cat_desc; ?></p>
 					<?php } ?>
 				</div>
