@@ -14,12 +14,13 @@
     *zoom: 1;
 }
 
-.frp-categories .frp-all-categories {
+.frp-taxonomies .frp-all-categories {
     display: block;
 }
 
-.frp-categories .categorychecklist {
+.frp-taxonomies .categorychecklist {
     margin-left: 18px;
+    margin-top: 0;
 }
 
 .frp-form-group {
@@ -31,10 +32,30 @@
     margin: 0 0 2px 0;
 }
 
-.frp-form-help {
+.frp-form-help, .frp-form-toggle-taxonomies {
     vertical-align: top;
     margin-left: 4px;
+}
+
+.frp-form-help {
     cursor: help;
+}
+
+.frp-form-toggle-taxonomies {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background-image: url(../images/custom-taxonomies.png);
+    background-position: 0 0;
+    cursor: pointer;
+}
+
+.frp-form-toggle-taxonomies.visible {
+    background-position: 0 16px;
+}
+
+.frp-taxonomies-all.hidden {
+    display: none;
 }
 
 .frp-template-icons {
@@ -75,7 +96,7 @@
 }
 
 .frp-form-theme:hover, .frp-form-themes .frp-active {
-    background-color: #f5f5f5;
+    background-color: #ececec;
 }
 
 .frp-widget-flattr-button {
@@ -83,33 +104,27 @@
     margin-top: 4px;
 }
 
-.frp-form-theme-preview, .frp-form-theme-info {
-    float: left;
-    width: 150px;
-    height: 75px;
-}
-
 .frp-form-theme-preview {
+    float: left;
     text-align: center;
     vertical-align: middle;
     line-height: 75px;
     font-size: 24px;
     border: 1px solid #dfdfdf;
     border-radius: 3px;
-}
-
-.frp-form-theme-info {
-    margin-left: 10px;
+    width: 150px;
+    height: 75px;
+    margin-right: 10px;
 }
 
 .frp-form-themes-button {
     float: right;
     margin: 2px 1px 4px;
-    font: 12px/18px Arial,Helvetica,sans-serif normal;
+    font: 12px/18px Arial, Helvetica, sans-serif normal;
     display: inline-block;
     min-width: 26px;
     padding: 2px 4px;
-    font: 12px/18px Arial,Helvetica,sans-serif normal;
+    font: 12px/18px Arial, Helvetica, sans-serif normal;
     color: #464646;
     border: 1px solid #C3C3C3;
     -webkit-border-radius: 3px;

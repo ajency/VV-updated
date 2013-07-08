@@ -39,23 +39,33 @@
 	<label
 		for="<?php print $this->get_field_id( 'all_posts_link_footer' ); ?>"><?php print __( 'Show after all posts', 'frp' ); ?></label>
 </p>
-<h4 class="frp-form-group-title"><?php print __( 'Categories' ); ?><img
-	src="<?php print $plugin_dir . 'images/help.png'; ?>" title="<?php _e( 'Posts categories', 'frp' ); ?>"
-	class="frp-form-help" alt="<?php _e( 'Help', 'frp' ); ?>"></h4>
-<div class="categorydiv frp-categories frp-form-group">
-	<label class="selectit frp-all-categories">
-		<input type="checkbox" <?php print checked( $instance['all_categories'], true, false ); ?>
-			   id="<?php print $this->get_field_id( 'all_categories' ); ?>"
-			   name="<?php print $this->get_field_name( 'all_categories' ); ?>"
-			   value="1"> <?php print __( 'All categories', 'frp' ); ?>
+<h4 class="frp-form-group-title"><?php print __( 'Terms' ); ?><span
+		title="<?php _e( 'Toggle all taxonomies list', 'frp' ); ?>"
+		class="frp-form-toggle-taxonomies<?php echo ( $instance['taxonomy'] != 'category' ) ? ' visible' : ''; ?>"></span><img
+		src="<?php print $plugin_dir . 'images/help.png'; ?>" title="<?php _e( 'Posts terms', 'frp' ); ?>"
+		class="frp-form-help" alt="<?php _e( 'Help', 'frp' ); ?>"></h4>
+<div class="categorydiv frp-taxonomies frp-form-group">
+	<?php foreach ($all_taxonomies_html as $name => $taxonomy): ?>
+	<label class="selectit frp-all-taxonomies">
+		<input
+			type="checkbox"<?php print checked( $taxonomy['checked'], true, false ); ?>
+			name="<?php print $this->get_field_name( 'taxonomy' ); ?>"
+			value="<?php print $name; ?>"> <?php print $taxonomy['all_items']; ?>
 	</label>
 	<ul class="list:category categorychecklist form-no-clear">
-		<?php print $categories; ?>
+		<?php print $taxonomy['html_terms']; ?>
 	</ul>
+	<?php if ($name == 'category'): ?>
+	<div class="frp-taxonomies-all<?php echo ( $instance['taxonomy'] == 'category' ) ? ' hidden' : ''; ?>">
+		<?php endif; ?>
+		<?php endforeach; ?>
+	</div>
+	<input type="hidden" class="frp-taxonomy" name="<?php print $this->get_field_name( 'taxonomy' ); ?>"
+		   value="<?php print $instance['taxonomy']; ?>">
 </div>
 <h4 class="frp-form-group-title"><?php print __( 'Template' ); ?><img
-	src="<?php print $plugin_dir . 'images/help.png'; ?>" title="<?php _e( 'Template for each post', 'frp' ); ?>"
-	class="frp-form-help" alt="<?php _e( 'Help', 'frp' ); ?>"></h4>
+		src="<?php print $plugin_dir . 'images/help.png'; ?>" title="<?php _e( 'Template for each post', 'frp' ); ?>"
+		class="frp-form-help" alt="<?php _e( 'Help', 'frp' ); ?>"></h4>
 <div class="frp-form-group">
 	<div class="frp-template-icons">
 		<div class="wp_themeSkin frp-form-button-title frp-form-button" title="<?php _e( 'Title' ); ?>">
@@ -89,7 +99,8 @@
 			</a>
 		</div>
 	</div>
+
 	<textarea name="<?php print $this->get_field_name( 'template' ); ?>"
 			  id="<?php print $this->get_field_id( 'template' ); ?>" cols="20" rows="16"
-			  class="widefat"><?php print $template; ?></textarea>
+			  class="widefat frp-user-modified"><?php print $template; ?></textarea>
 </div>

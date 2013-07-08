@@ -3,10 +3,10 @@ Contributors: TheSteelRat
 Donate link: https://flattr.com/thing/646464
 Tags: recent, post, posts, widget, template, flexible, universal
 Requires at least: 3.0
-Tested up to: 3.3.2
-Stable tag: 0.3
+Tested up to: 3.5.2
+Stable tag: 1.0.0
 
-Displays recent posts using flexible template system. Define template for each post entry, set needed categories and much more.
+Displays recent posts using flexible template system. Define template for each post entry, set needed taxonomy and much more.
 
 == Description ==
 
@@ -16,7 +16,7 @@ Flexible Recent Posts (FRP) plugin gives you possibility to add widget to your b
 
 * **Template** for each post in widget. You can write your HTML-template or overwrite default in widget form.
 * **Shortcodes** support in template. You can use built-in shortcodes to insert info related to current post in widget: `title`, `featured image`, `excerpt`, `date`, `permalink`.
-* **Restrict categories** from which you want to display posts. Display posts from all categories or from selected only.
+* **Restrict terms** from which you want to display posts. Display posts from all terms or from selected only.
 * **Number of posts** to display. Set number of latest posts that will be displayed in widget.
 * **All posts links**. Select option to display link near the title or/and after all posts that will open selected posts category page. Set link title or custom link URL.
 
@@ -94,6 +94,11 @@ Displays name of the post's author. Set `link` parameter to 0 if you want to dis
 *Examples*: `[frp_author]`, `[frp_author link="1"]`, `[frp_author link="0"]`
 
 == Changelog ==
+
+= 1.0.0 =
+* Added taxonomies and custom posts support. Now you can use not only categories and regular posts, but custom taxonomies and custom posts.
+* More native posts querying procedure.
+* Fixed [bug](http://wordpress.org/support/topic/author-not-shown-when-on-search-results-page) when author was not shown on search results page.
 
 = 0.3 =
 * Added `[frp_author]` shortcode.
