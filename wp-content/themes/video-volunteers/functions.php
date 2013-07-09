@@ -385,7 +385,7 @@ function youtube_id_from_url($link){
 			)?                          # End older embed code group
 		)?                              # End embed code groups
 		(?:                             # Group youtube url
-			https?:\/\/                 # Either http or https
+			(?:https?://)?              # Optional http or https
 			(?:[\w]+\.)*                # Optional subdomains
 			(?:                         # Group host alternatives.
 			youtu\.be/                  # Either youtu.be,
