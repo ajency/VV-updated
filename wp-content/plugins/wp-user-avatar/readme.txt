@@ -3,9 +3,9 @@
 Contributors: bangbay
 Donate link: http://siboliban.org/donate
 Tags: author image, author photo, author avatar, avatar, bbPress, profile avatar, profile image, user avatar, user image, user photo
-Requires at least: 3.4
-Tested up to: 3.5.2
-Stable tag: 1.5.2
+Requires at least: 3.5
+Tested up to: 3.6-beta4-24640
+Stable tag: 1.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,13 +24,11 @@ WP User Avatar also lets you:
 * Allow Contributors and Subscribers to upload their own avatars.
 * Limit upload file size for Contributors and Subscribers.
 
-This plugin uses the Media uploader introduced in WordPress 3.5, but is also backwards-compatible to WordPress 3.4. It is also compatible with WordPress Multisite.
-
 == Installation ==
 
 1. Download, install, and activate the WP User Avatar plugin.
-2. On your profile edit page, click "Edit WP User Avatar".
-3. Choose an image, then click "Set WP User Avatar".
+2. On your profile edit page, click "Edit Image".
+3. Choose an image, then click "Select Image".
 4. Click "Update Profile".
 5. Upload your own Default Avatar in your WP User Avatar settings (optional). You can also allow Contributors & Subscribers to upload avatars and disable Gravatar.
 6. Choose a theme that has avatar support. In your theme, manually replace <code>get_avatar</code> with <code>get_wp_user_avatar</code> or leave <code>get_avatar</code> as-is. [Read about the differences here](http://wordpress.org/extend/plugins/wp-user-avatar/faq/).
@@ -232,6 +230,12 @@ Outputs:
 
 == Changelog ==
 
+= 1.5.3 =
+* Add: Swedish translation
+* Remove: Option to disable scripts in front pages
+* Update: Load media upload scripts only on profile and avatar admin pages
+* Update: Translations
+
 = 1.5.2 =
 * Bug Fix: Ability to disable scripts in front pages
 
@@ -356,6 +360,9 @@ Outputs:
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.5.3 =
+* Notice: WP User Avatar 1.5.3 only supports WordPress 3.5 and above. If you are using an older version of WordPress, please upgrade your version of WordPress first.
 
 = 1.5 =
 * New Feature: Ability to disable Gravatar avatars
