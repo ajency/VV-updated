@@ -3072,3 +3072,34 @@ padding-bottom: 9px;
 
 /****Fix Avatar Images****/
 body .content img {width: auto;}
+
+/****Author Gallery Styles****/
+.author-gallery {
+	list-style-type: none !important;
+	margin: 20px 0 !important;
+	li {
+		border: 1px solid lighten(@grey-regular, 40%);
+		.border-radius(3px);
+		width: 21%;
+		float: left;
+		padding: 1%;
+		margin: 0 1% 10px 0;
+		min-height: 200px;
+		max-height: 200px;
+		text-align: center;
+		.author-pic {
+			display: block;
+			min-height: 150px;
+		}
+		h6 {
+			text-transform: capitalize;
+			a {
+				color: @orange;
+			}
+		}
+		&:hover {
+			background: lighten(@grey-regular, 50%);
+			border: 1px solid @orange;
+		}
+	}
+}
