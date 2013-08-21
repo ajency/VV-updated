@@ -569,8 +569,21 @@ function output_single_video_author() {
 				wp_mail($ToEmail2, $EmailSubject, $MESSAGE_BODY, "From: videovolunteers.org");
 				global $post ;
 				?> 
-					<input type="text" name="redirect_to" id="redirect_to" value="<?php echo site_url().$post->slug;?>">
-					<input type="text" name="hdn_mail_sent" id="hdn_mail_sent" value="Your message was sent">
+					<div class="alert alert-success">Your message was sent! <a class="close" data-dismiss="alert" href="#">&times;</a></div>
+					<input type="hidden" name="redirect_to" id="redirect_to" value="<?php echo site_url().$post->slug;?>/author/<?php echo get_query_var('author_name') ?>/">
+					<input type="hidden" name="hdn_mail_sent" id="hdn_mail_sent" value="Your message was sent">
+					<script>
+						jQuery(document).ready(function($){
+						alert ("hi");
+							if(jQuery("#hdn_mail_sent").length)
+							{
+								if(jQuery("#hdn_mail_sent").val()=="Your message was sent")
+								{
+									setTimeout(window.location = jQuery('#redirect_to').val(), 5000); 
+								}
+							}
+						}
+					</script>
 				<?php 
 			} 
 			else { 
