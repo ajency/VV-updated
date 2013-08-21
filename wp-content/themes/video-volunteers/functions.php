@@ -1405,26 +1405,22 @@ class Campaign_Widget extends WP_Widget {
 		if ( ! empty( $title ) )
 			echo $before_title . $title . $after_title;
 		// The Query
-$query = new WP_Query(	array('post_type' => 'page', 'posts_per_page' => 1, 'orderby' => 'menu_order', 'meta_query' => array(array(
+		$query = new WP_Query(	array('post_type' => 'page', 'posts_per_page' => 1, 'orderby' => 'menu_order', 'meta_query' => array(array(
 					'value' => 'page.campaign.php',
 					'compare' => 'LIKE'
 					)) ) );
 
-/*echo '<pre>';
-print_r($query);
-echo '</pre>';
-*/
-// The Loop
-if ( $query->have_posts() ) {
-	while ( $query->have_posts() ) {
-		$query->the_post();
-		echo '<div class="videowidget">';
-		echo the_post_thumbnail();
-		echo '<div class="campaignwidget"><a href="'.$query->post->guid.'">' . get_the_title() . '</a><br></div><p>'.$query->post->post_excerpt.'</p></div>';
-	}
-} else {
-	echo "no posts found";
-}
+		// The Loop
+		if ( $query->have_posts() ) {
+			while ( $query->have_posts() ) {
+				$query->the_post();
+				echo '<div class="videowidget">';
+				echo the_post_thumbnail();
+				echo '<div class="campaignwidget"><a href="'.get_permalink($query->post->ID).'">' . get_the_title() . '</a><br></div><p>'.$query->post->post_excerpt.'</p></div>';
+			}
+		} else {
+			echo "No campaigns found.";
+		}
 		echo $after_widget;
 	}
 
