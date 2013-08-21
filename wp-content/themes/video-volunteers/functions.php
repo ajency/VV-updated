@@ -1415,8 +1415,8 @@ class Campaign_Widget extends WP_Widget {
 			while ( $query->have_posts() ) {
 				$query->the_post();
 				echo '<div class="videowidget">';
-				echo the_post_thumbnail();
-				echo '<div class="campaignwidget"><a href="'.get_permalink($query->post->ID).'">' . get_the_title() . '</a><br></div><p>'.$query->post->post_excerpt.'</p></div>';
+				echo the_post_thumbnail($query->post->ID);
+				echo '<div class="campaignwidget"><a href="'.get_permalink($query->post->ID).'">' . get_the_title($query->post->ID) . '</a><br></div><p>'.$query->post->post_excerpt.'</p></div>';
 			}
 		} else {
 			echo "No campaigns found.";
