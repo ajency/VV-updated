@@ -1,7 +1,7 @@
 <?php
 /**
  * @package WP User Avatar
- * @version 1.5.3
+ * @version  1.5.7
  */
 /*
 Plugin Name: WP User Avatar
@@ -9,7 +9,7 @@ Plugin URI: http://wordpress.org/plugins/wp-user-avatar/
 Description: Use any image from your WordPress Media Library as a custom user avatar. Add your own Default Avatar.
 Author: Bangbay Siboliban
 Author URI: http://siboliban.org/
-Version: 1.5.3
+Version: 1.5.7
 Text Domain: wp-user-avatar
 Domain Path: /lang/
 */
@@ -20,24 +20,24 @@ if(!defined('ABSPATH')){
 }
 
 // Define paths and variables
-define('WPUA_VERSION', '1.5.3');
+define('WPUA_VERSION', ' 1.5.7');
 define('WPUA_FOLDER', basename(dirname(__FILE__)));
 define('WPUA_ABSPATH', trailingslashit(str_replace('\\', '/', WP_PLUGIN_DIR.'/'.WPUA_FOLDER)));
 define('WPUA_URLPATH', trailingslashit(plugins_url(WPUA_FOLDER)));
 
 // Define global variables
 $avatar_default = get_option('avatar_default');
-$wpua_avatar_default = get_option('avatar_default_wp_user_avatar');
 $show_avatars = get_option('show_avatars');
-$wpua_tinymce = get_option('wp_user_avatar_tinymce');
 $wpua_allow_upload = get_option('wp_user_avatar_allow_upload');
+$wpua_avatar_default = get_option('avatar_default_wp_user_avatar');
 $wpua_disable_gravatar = get_option('wp_user_avatar_disable_gravatar');
+$wpua_edit_avatar = get_option('wp_user_avatar_edit_avatar');
+$wpua_tinymce = get_option('wp_user_avatar_tinymce');
 $mustache_original = WPUA_URLPATH.'images/wp-user-avatar.png';
 $mustache_medium = WPUA_URLPATH.'images/wp-user-avatar-300x300.png';
 $mustache_thumbnail = WPUA_URLPATH.'images/wp-user-avatar-150x150.png';
 $mustache_avatar = WPUA_URLPATH.'images/wp-user-avatar-96x96.png';
 $mustache_admin = WPUA_URLPATH.'images/wp-user-avatar-32x32.png';
-$ssl = is_ssl() ? 's' : "";
 
 // Check for updates
 $wpua_default_avatar_updated = get_option('wp_user_avatar_default_avatar_updated');
@@ -76,7 +76,7 @@ if((bool) $wpua_tinymce == 1){
 }
 
 // Load translations
-load_plugin_textdomain('wp-user-avatar', '', WPUA_FOLDER.'/lang');
+load_plugin_textdomain('wp-user-avatar', "", WPUA_FOLDER.'/lang');
 
 // Initialize default settings
 register_activation_hook(WPUA_ABSPATH.'wp-user-avatar.php', 'wpua_options');
@@ -89,6 +89,7 @@ function wpua_options(){
   add_option('avatar_default_wp_user_avatar', "");
   add_option('wp_user_avatar_allow_upload', '0');
   add_option('wp_user_avatar_disable_gravatar', '0');
+  add_option('wp_user_avatar_edit_avatar', '1');
   add_option('wp_user_avatar_tinymce', '1');
   add_option('wp_user_avatar_upload_size_limit', '0');
 }
@@ -159,17 +160,6 @@ if((bool) $wpua_allow_upload == 1){
   }
   add_action('user_edit_form_tag', 'wpua_add_edit_form_multipart_encoding');
 
-  // Add enctype with JavaScript as backup
-  function wpua_add_edit_form_multipart_encoding_js(){ ?>
-    <script type="text/javascript">
-      jQuery(function(){
-        jQuery('#your-profile').attr('enctype', 'multipart/form-data');
-      });
-    </script>
-  <?php
-  }
-  add_action('wp_head', 'wpua_add_edit_form_multipart_encoding_js');
-
   // Check user role
   function check_user_role($role, $user_id=null){
     global $current_user;
@@ -179,16 +169,6 @@ if((bool) $wpua_allow_upload == 1){
     }
     return in_array($role, (array) $user->roles);
   }
-
-  // Give subscribers edit_posts capability
-  function wpua_subscriber_add_cap(){
-    global $blog_id, $wpdb;
-    $wp_user_roles = $wpdb->get_blog_prefix($blog_id).'user_roles';
-    $user_roles = get_option($wp_user_roles);
-    $user_roles['subscriber']['capabilities']['edit_posts'] = true;
-    update_option($wp_user_roles, $user_roles);
-  }
-  add_action('admin_init', 'wpua_subscriber_add_cap');
 
   // Remove menu items
   function wpua_subscriber_remove_menu_pages(){
@@ -224,8 +204,12 @@ if((bool) $wpua_allow_upload == 1){
 
   // Restrict access to pages
   function wpua_subscriber_offlimits(){
-    global $current_user, $pagenow;
-    $offlimits = array('edit.php', 'post-new.php', 'edit-comments.php', 'tools.php');
+    global $current_user, $pagenow, $wpua_edit_avatar;
+    if((bool) $wpua_edit_avatar == 1){
+      $offlimits = array('edit.php', 'edit-comments.php', 'post-new.php', 'tools.php');
+    } else {
+      $offlimits = array('edit.php', 'edit-comments.php', 'post.php', 'post-new.php', 'tools.php');
+    }
     if(check_user_role('subscriber', $current_user->ID)){
       if(in_array($pagenow, $offlimits)){
         do_action('admin_page_access_denied');
@@ -234,6 +218,18 @@ if((bool) $wpua_allow_upload == 1){
     }
   }
   add_action('admin_init', 'wpua_subscriber_offlimits');
+}
+
+if((bool) $wpua_allow_upload == 1 && (bool) $wpua_edit_avatar == 1){
+  // Give subscribers edit_posts capability
+  function wpua_subscriber_add_cap(){
+    global $blog_id, $wpdb;
+    $wp_user_roles = $wpdb->get_blog_prefix($blog_id).'user_roles';
+    $user_roles = get_option($wp_user_roles);
+    $user_roles['subscriber']['capabilities']['edit_posts'] = true;
+    update_option($wp_user_roles, $user_roles);
+  }
+  add_action('admin_init', 'wpua_subscriber_add_cap');
 }
 
 // Remove subscribers edit_posts capability
@@ -260,19 +256,19 @@ if(!class_exists('wp_user_avatar')){
       global $current_screen, $current_user, $pagenow, $show_avatars, $wpua_allow_upload, $wpua_upload_size_limit;
       // Add WPUA to profile
       if(current_user_can('upload_files') || ((bool) $wpua_allow_upload == 1 && is_user_logged_in())){
-        add_action('show_user_profile', array('wp_user_avatar', 'wpua_action_show_user_profile'));
-        add_action('edit_user_profile', array($this, 'wpua_action_show_user_profile'));
-        add_action('personal_options_update', array($this, 'wpua_action_process_option_update'));
-        add_action('edit_user_profile_update', array($this, 'wpua_action_process_option_update'));
         // For themes that use this function
         if(!function_exists('get_current_screen')){
           require_once(ABSPATH.'wp-admin/includes/screen.php');
         }
-        // Load scripts only on profile pages
+        // Profile functions and scripts
+        add_action('show_user_profile', array('wp_user_avatar', 'wpua_action_show_user_profile'));
+        add_action('edit_user_profile', array($this, 'wpua_action_show_user_profile'));
+        add_action('personal_options_update', array($this, 'wpua_action_process_option_update'));
+        add_action('edit_user_profile_update', array($this, 'wpua_action_process_option_update'));
         add_action('show_user_profile', array($this, 'wpua_media_upload_scripts'));
         add_action('edit_user_profile', array($this, 'wpua_media_upload_scripts'));
-        // Add scripts to admin
-        if($pagenow == 'options-discussion.php' || ($pagenow == 'options-general.php' && $_GET['page'] == 'wp-user-avatar')){
+        // Admin scripts
+        if($pagenow == 'options-discussion.php' || ($pagenow == 'options-general.php' && isset($_GET['page']) && $_GET['page'] == 'wp-user-avatar')){
           add_action('admin_enqueue_scripts', array($this, 'wpua_media_upload_scripts'));
         }
         // Prefilter upload size
@@ -283,7 +279,7 @@ if(!class_exists('wp_user_avatar')){
         add_action('admin_menu', 'wpua_admin');
         add_filter('plugin_action_links', array($this, 'wpua_plugin_settings_links'), 10, 2);
         // Hide column in Users table if default avatars are enabled
-        if(is_admin() && (bool) $show_avatars == 0){
+        if((bool) $show_avatars == 0 && is_admin()){
           add_filter('manage_users_columns', array($this, 'wpua_add_column'), 10, 1);
           add_filter('manage_users_custom_column', array($this, 'wpua_show_column'), 10, 3);
         }
@@ -292,7 +288,7 @@ if(!class_exists('wp_user_avatar')){
 
     // Add to edit user profile
     function wpua_action_show_user_profile($user){
-      global $blog_id, $current_user, $post, $show_avatars, $wpdb, $wpua_allow_upload, $wpua_upload_size_limit_with_units;
+      global $blog_id, $current_user, $post, $show_avatars, $wpdb, $wpua_allow_upload, $wpua_edit_avatar, $wpua_upload_size_limit_with_units;
       // Get WPUA attachment ID
       $wpua = get_user_meta($user->ID, $wpdb->get_blog_prefix($blog_id).'user_avatar', true);
       // Show remove button if WPUA is set
@@ -328,7 +324,7 @@ if(!class_exists('wp_user_avatar')){
           <br />
           <?php _e('Allowed Files'); ?>: <?php _e('<code>jpg jpeg png gif</code>'); ?>
         </p>
-      <?php elseif(!current_user_can('upload_files') && has_wp_user_avatar($current_user->ID) && wpua_author($wpua, $current_user->ID)) : // Edit button ?>
+      <?php elseif((bool) $wpua_edit_avatar == 1 && !current_user_can('upload_files') && has_wp_user_avatar($current_user->ID) && wpua_author($wpua, $current_user->ID)) : // Edit button ?>
         <?php $edit_attachment_link = add_query_arg(array('post' => $wpua, 'action' => 'edit'), admin_url('post.php')); ?>
         <p><button type="button" class="button" id="wpua-edit" name="wpua-edit" onclick="window.open('<?php echo $edit_attachment_link; ?>', '_self');"><?php _e('Edit Image'); ?></button></p>
       <?php endif; ?>
@@ -349,13 +345,12 @@ if(!class_exists('wp_user_avatar')){
           </tr>
         </table>
       <?php endif; ?>
-      <?php echo wpua_js($user->display_name, $avatar_medium_src); // Add JS ?>
     <?php
     }
 
     // Set upload size limit for users without upload_files capability
     function wpua_handle_upload_prefilter($file){
-      global $wpua_upload_size_limit, $wpua_upload_size_limit_with_units;
+      global $wpua_upload_size_limit;
       $size = $file['size'];
       if($size > $wpua_upload_size_limit){
         $file['error'] = __('The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.');
@@ -392,12 +387,10 @@ if(!class_exists('wp_user_avatar')){
           }
           $name = $_FILES['wp-user-avatar-file']['name'];
           $file = wp_handle_upload($_FILES['wp-user-avatar-file'], array('test_form' => false));
-          $type = $file['type'];
-          // Allow only JPG, GIF, PNG
-          if($file['error'] || !preg_match('/(jpe?g|gif|png)$/i', $type)){
-            if($file['error']){
-              wp_die($file['error']);
-            } else {
+          if(isset($_FILES['wp-user-avatar-file']['type'])){
+            $type = $_FILES['wp-user-avatar-file']['type'];
+            // Allow only JPG, GIF, PNG
+            if(!preg_match('/(jpe?g|gif|png)$/i', $type)){
               wp_die(__('Sorry, this file type is not permitted for security reasons.'));
             }
           }
@@ -417,7 +410,8 @@ if(!class_exists('wp_user_avatar')){
           $attachment = array(
             'guid'           => $url,
             'post_mime_type' => $type,
-            'post_title'     => $title
+            'post_title'     => $title,
+            'post_content'     => ""
           );
           // This should never be set as it would then overwrite an existing attachment
           if(isset($attachment['ID'])){
@@ -473,38 +467,40 @@ if(!class_exists('wp_user_avatar')){
     }
 
     // Media uploader
-    function wpua_media_upload_scripts(){
-      global $pagenow;
+    function wpua_media_upload_scripts($user=""){
+      global $mustache_admin, $pagenow, $show_avatars, $wpua_upload_size_limit;
       wp_enqueue_script('jquery');
       if(current_user_can('upload_files')){
         wp_enqueue_script('admin-bar');
         wp_enqueue_media();
+        wp_enqueue_script('wp-user-avatar', WPUA_URLPATH.'js/wp-user-avatar.js', array('jquery'), WPUA_VERSION, true);
+      } else {
+        wp_enqueue_script('wp-user-avatar', WPUA_URLPATH.'js/wp-user-avatar-user.js', array('jquery'), WPUA_VERSION, true);
       }
-      wp_enqueue_script('wp-user-avatar', WPUA_URLPATH.'js/wp-user-avatar.js', array('jquery'), WPUA_VERSION);
       wp_enqueue_style('wp-user-avatar', WPUA_URLPATH.'css/wp-user-avatar.css', "", WPUA_VERSION);
-      if($pagenow == 'options-general.php' && $_GET['page'] == 'wp-user-avatar'){
+      // Admin scripts
+      if($pagenow == 'options-discussion.php' || ($pagenow == 'options-general.php' && isset($_GET['page']) && $_GET['page'] == 'wp-user-avatar')){
+        // Size limit slider
         wp_enqueue_script('jquery-ui-slider');
         wp_enqueue_style('wp-user-avatar-jqueryui', WPUA_URLPATH.'css/jquery.ui.slider.css', "", null);
+        // Remove/edit settings
+        $wpua_custom_scripts = array('section' => __('Default Avatar'), 'edit_image' => __('Edit Image'), 'select_image' => __('Select Image'), 'avatar_thumb' => $mustache_admin);
+        wp_localize_script('wp-user-avatar', 'wpua_custom', $wpua_custom_scripts);
+        // Settings control
+        wp_enqueue_script('wp-user-avatar-admin', WPUA_URLPATH.'js/wp-user-avatar-admin.js', array('wp-user-avatar'), WPUA_VERSION, true);
+        $wpua_admin_scripts = array('upload_size_limit' => $wpua_upload_size_limit, 'max_upload_size' => wp_max_upload_size());
+        wp_localize_script('wp-user-avatar-admin', 'wpua_admin', $wpua_admin_scripts);
+      } else {
+        // User remove/edit settings
+        $avatar_medium_src = (bool) $show_avatars == 1 ? wpua_get_avatar_original($user->user_email, 96) : includes_url().'images/blank.gif';
+        $wpua_custom_scripts = array('section' => $user->display_name, 'edit_image' => __('Edit Image'), 'select_image' => __('Select Image'), 'avatar_thumb' => $avatar_medium_src);
+        wp_localize_script('wp-user-avatar', 'wpua_custom', $wpua_custom_scripts);
       }
     }
   }
 
-  // Uploader scripts
-  function wpua_js($section, $avatar_thumb){ ?>
-    <script type="text/javascript">
-      jQuery(function(){
-        <?php if(current_user_can('upload_files')) : ?>
-          wpuaMediaUploader('<?php echo $section; ?>', "<?php _e('Edit Image'); ?>", "<?php _e('Select Image'); ?>");
-        <?php endif; ?>
-        wpuaRemoveAvatar('<?php echo htmlspecialchars_decode($avatar_thumb); ?>');
-      });
-    </script>
-  <?php
-  }
-
   // Returns true if user has Gravatar-hosted image
   function wpua_has_gravatar($id_or_email, $has_gravatar=false, $user="", $email=""){
-    global $ssl;
     if(!is_object($id_or_email) && !empty($id_or_email)){
       // Find user by ID or e-mail address
       $user = is_numeric($id_or_email) ? get_user_by('id', $id_or_email) : get_user_by('email', $id_or_email);
@@ -512,12 +508,15 @@ if(!class_exists('wp_user_avatar')){
       $email = !empty($user) ? $user->user_email : "";
     }
     // Check if Gravatar image returns 200 (OK) or 404 (Not Found)
-    if(!empty($email)){
-      $hash = md5(strtolower(trim($email)));
-      $gravatar = 'http'.$ssl.'://www.gravatar.com/avatar/'.$hash.'?d=404';
-      $headers = @get_headers($gravatar);
-      $has_gravatar = !preg_match("|200|", $headers[0]) ? false : true;
+    $hash = md5(strtolower(trim($email)));
+    $gravatar = 'http://www.gravatar.com/avatar/'.$hash.'?d=404';
+    $data = wp_cache_get($hash);
+    if(false === $data){
+      $response = wp_remote_head($gravatar);
+      $data = is_wp_error($response) ? 'not200' : $response['response']['code'];
+      wp_cache_set($hash, $data, $group="", $expire=60*5);
     }
+    $has_gravatar = ($data == '200') ? true : false;
     return $has_gravatar;
   }
 
@@ -536,7 +535,7 @@ if(!class_exists('wp_user_avatar')){
   }
 
   // Replace get_avatar only in get_wp_user_avatar
-  function wpua_get_avatar_filter($avatar, $id_or_email, $size="", $default="", $alt=""){
+  function wpua_get_avatar_filter($avatar, $id_or_email="", $size="", $default="", $alt=""){
     global $avatar_default, $comment, $mustache_admin, $mustache_avatar, $mustache_medium, $mustache_original, $mustache_thumbnail, $post, $wpua_avatar_default, $wpua_disable_gravatar;
     // User has WPUA
     if(is_object($id_or_email)){
@@ -549,7 +548,7 @@ if(!class_exists('wp_user_avatar')){
       if(has_wp_user_avatar($id_or_email)){
         $avatar = get_wp_user_avatar($id_or_email, $size, $default, $alt);
       // User has Gravatar and Gravatar is not disabled
-      } elseif(wpua_has_gravatar($id_or_email) && $wpua_disable_gravatar != 1){
+      } elseif((bool) $wpua_disable_gravatar != 1 && wpua_has_gravatar($id_or_email)){
         $avatar = $avatar;
       // User doesn't have WPUA or Gravatar and Default Avatar is wp_user_avatar, show custom Default Avatar
       } elseif($avatar_default == 'wp_user_avatar'){
@@ -788,7 +787,7 @@ if(!class_exists('wp_user_avatar')){
       $hide_remove = ' class="wpua-hide"';
     }
     // Default Avatar is wp_user_avatar, check the radio button next to it
-    $selected_avatar = ($avatar_default == 'wp_user_avatar' || (bool) $wpua_disable_gravatar == 1) ? ' checked="checked" ' : "";
+    $selected_avatar = ((bool) $wpua_disable_gravatar == 1 || $avatar_default == 'wp_user_avatar') ? ' checked="checked" ' : "";
     // Wrap WPUA in div
     $avatar_thumb_img = '<div id="wpua-preview"><img src="'.$avatar_thumb.'" width="32" /></div>';
     // Add WPUA to list
@@ -799,8 +798,7 @@ if(!class_exists('wp_user_avatar')){
     $wpua_list .= '<a href="#" id="wpua-remove"'.$hide_remove.'>'.__('Remove').'</a></p>';
     $wpua_list .= '<input type="hidden" id="wp-user-avatar" name="avatar_default_wp_user_avatar" value="'.$wpua_avatar_default.'">';
     $wpua_list .= '<p id="wpua-message">'.sprintf(__('Click %s to save your changes', 'wp-user-avatar'), '&ldquo;'.__('Save Changes').'&rdquo;').'</p>';
-    $wpua_list .= wpua_js(__('Default Avatar'), $mustache_admin);
-    if($wpua_disable_gravatar != 1){
+    if((bool) $wpua_disable_gravatar != 1){
       return $wpua_list.'<div id="wp-avatars">'.$avatar_list.'</div>';
     } else {
       return $wpua_list;
@@ -850,13 +848,12 @@ if(!class_exists('wp_user_avatar')){
 
   // Admin page
   function wpua_options_page(){
-    global $show_avatars, $upload_size_limit_with_units, $wpua_allow_upload, $wpua_disable_gravatar, $wpua_tinymce, $wpua_upload_size_limit, $wpua_upload_size_limit_with_units;
+    global $show_avatars, $upload_size_limit_with_units, $wpua_allow_upload, $wpua_disable_gravatar, $wpua_edit_avatar, $wpua_tinymce, $wpua_upload_size_limit, $wpua_upload_size_limit_with_units;
     // Give subscribers edit_posts capability
-    if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true' && empty($wpua_allow_upload)){
+    if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true' && (empty($wpua_allow_upload) || empty($wpua_edit_avatar))){
       wpua_subscriber_remove_cap();
     }
-    $hide_size = ($wpua_allow_upload != 1) ? ' class="wpua-hide"' : "";
-    
+    $hide_size = (bool) $wpua_allow_upload != 1 ? ' class="wpua-hide"' : "";
   ?>
     <div class="wrap">
       <?php screen_icon(); ?>
@@ -870,15 +867,17 @@ if(!class_exists('wp_user_avatar')){
             <td>
               <fieldset>
                 <legend class="screen-reader-text"><span><?php _e('Settings'); ?></span></legend>
-                <label for="wp_user_avatar_tinymce" class="wpua_label">
+                <label for="wp_user_avatar_tinymce">
                   <input name="wp_user_avatar_tinymce" type="checkbox" id="wp_user_avatar_tinymce" value="1" <?php checked($wpua_tinymce, 1); ?> />
                   <?php _e('Add avatar button to Visual Editor', 'wp-user-avatar'); ?>
                 </label>
-                <label for="wp_user_avatar_allow_upload" class="wpua_label">
+                <br />
+                <label for="wp_user_avatar_allow_upload">
                   <input name="wp_user_avatar_allow_upload" type="checkbox" id="wp_user_avatar_allow_upload" value="1" <?php checked($wpua_allow_upload, 1); ?> />
                   <?php _e('Allow Contributors & Subscribers to upload avatars', 'wp-user-avatar'); ?>
                 </label>
-                <label for="wp_user_avatar_disable_gravatar" class="wpua_label">
+                <br />
+                <label for="wp_user_avatar_disable_gravatar">
                   <input name="wp_user_avatar_disable_gravatar" type="checkbox" id="wp_user_avatar_disable_gravatar" value="1" <?php checked($wpua_disable_gravatar, 1); ?> />
                   <?php _e('Disable Gravatar and use only local avatars', 'wp-user-avatar'); ?>
                 </label>
@@ -887,7 +886,7 @@ if(!class_exists('wp_user_avatar')){
           </tr>
           <tr id="wpua-size-limit" valign="top"<?php echo $hide_size; ?>>
             <th scope="row">
-              <label for="wp_user_avatar_upload_size_limit" class="wpua_label">
+              <label for="wp_user_avatar_upload_size_limit">
                 <?php _e('Upload Size Limit (only for Contributors & Subscribers)', 'wp-user-avatar'); ?>
               </label>
              </th>
@@ -896,9 +895,14 @@ if(!class_exists('wp_user_avatar')){
                 <legend class="screen-reader-text"><span><?php _e('Upload Size Limit (only for Contributors & Subscribers)', 'wp-user-avatar'); ?></span></legend>
                 <input name="wp_user_avatar_upload_size_limit" type="text" id="wp_user_avatar_upload_size_limit" value="<?php echo $wpua_upload_size_limit; ?>" class="regular-text" />
                 <span id="wpua-readable-size"><?php echo $wpua_upload_size_limit_with_units; ?></span>
-                <span id="wpua-readable-size-error"><?php printf(__('%s exceeds the maximum upload size for this site.'), ''); ?></span>
+                <span id="wpua-readable-size-error"><?php printf(__('%s exceeds the maximum upload size for this site.'), ""); ?></span>
                 <div id="wpua-slider"></div>
-               <span class="description"><?php printf(__('Maximum upload file size: %d%s.'), esc_html(wp_max_upload_size()), esc_html(' bytes ('.$upload_size_limit_with_units.')')); ?></span>
+                <span class="description"><?php printf(__('Maximum upload file size: %d%s.'), esc_html(wp_max_upload_size()), esc_html(' bytes ('.$upload_size_limit_with_units.')')); ?></span>
+                <br />
+                <label for="wp_user_avatar_edit_avatar">
+                  <input name="wp_user_avatar_edit_avatar" type="checkbox" id="wp_user_avatar_edit_avatar" value="1" <?php checked($wpua_edit_avatar, 1); ?> />
+                  <?php _e('Allow users to edit avatars', 'wp-user-avatar'); ?>
+                </label>
               </fieldset>
             </td>
           </tr>
@@ -952,66 +956,20 @@ if(!class_exists('wp_user_avatar')){
         <?php submit_button(); ?>
       </form>
     </div>
-  <?php
-    add_action('admin_footer', 'wpua_options_page_scripts');
-  }
-
-  // Admin page scripts
-  function wpua_options_page_scripts(){
-    global $wpua_upload_size_limit;
-  ?>
-    <script type="text/javascript">
-      jQuery(function(){
-        // Show size info only if allow uploads is checked
-        jQuery('#wp_user_avatar_allow_upload').change(function(){
-          jQuery('#wpua-size-limit').toggle(jQuery('#wp_user_avatar_allow_upload').is(':checked'));
-        });
-        // Hide Gravatars if disable Gravatars is checked
-        jQuery('#wp_user_avatar_disable_gravatar').change(function(){
-          if(jQuery('#wp-avatars').length){
-            jQuery('#wp-avatars').toggle(!jQuery('#wp_user_avatar_disable_gravatar').is(':checked'));
-            jQuery('#wp_user_avatar_radio').trigger('click');
-          }
-          jQuery('#wpua-message').show();
-        });
-        // Add size slider
-        jQuery('#wpua-slider').slider({
-          value: <?php echo $wpua_upload_size_limit; ?>,
-          min: 0,
-          max: <?php echo wp_max_upload_size(); ?>,
-          step: 1,
-          slide: function(event, ui){
-            jQuery('#wp_user_avatar_upload_size_limit').val(ui.value);
-            jQuery('#wpua-readable-size').html(Math.floor(ui.value / 1024) + 'KB');
-            jQuery('#wpua-readable-size-error').hide();
-            jQuery('#wpua-readable-size').removeClass('wpua-error');
-          }
-        });
-        // Update readable size on keyup
-        jQuery('#wp_user_avatar_upload_size_limit').keyup(function(){
-          var wpua_upload_size_limit = jQuery(this).val();
-          wpua_upload_size_limit = wpua_upload_size_limit.replace(/\D/g, '');
-          jQuery(this).val(wpua_upload_size_limit);
-          jQuery('#wpua-readable-size').html(Math.floor(wpua_upload_size_limit / 1024) + 'KB');
-          jQuery('#wpua-readable-size-error').toggle(wpua_upload_size_limit > <?php echo wp_max_upload_size(); ?>);
-          jQuery('#wpua-readable-size').toggleClass('wpua-error', wpua_upload_size_limit > <?php echo wp_max_upload_size(); ?>);
-        });
-        jQuery('#wp_user_avatar_upload_size_limit').val(jQuery('#wpua-slider').slider('value'));
-      });
-    </script>
-  <?php
+    <?php
   }
 
   // Whitelist settings
   function wpua_admin_settings(){
-    register_setting('wpua-settings-group', 'wp_user_avatar_tinymce', 'intval');
-    register_setting('wpua-settings-group', 'wp_user_avatar_allow_upload', 'intval');
-    register_setting('wpua-settings-group', 'wp_user_avatar_disable_gravatar', 'intval');
-    register_setting('wpua-settings-group', 'wp_user_avatar_upload_size_limit', 'intval');
-    register_setting('wpua-settings-group', 'show_avatars', 'intval');
     register_setting('wpua-settings-group', 'avatar_rating');
     register_setting('wpua-settings-group', 'avatar_default');
     register_setting('wpua-settings-group', 'avatar_default_wp_user_avatar', 'intval');
+    register_setting('wpua-settings-group', 'show_avatars', 'intval');
+    register_setting('wpua-settings-group', 'wp_user_avatar_tinymce', 'intval');
+    register_setting('wpua-settings-group', 'wp_user_avatar_allow_upload', 'intval');
+    register_setting('wpua-settings-group', 'wp_user_avatar_disable_gravatar', 'intval');
+    register_setting('wpua-settings-group', 'wp_user_avatar_edit_avatar', 'intval');
+    register_setting('wpua-settings-group', 'wp_user_avatar_upload_size_limit', 'intval');
   }
 
   // Add options page and settings

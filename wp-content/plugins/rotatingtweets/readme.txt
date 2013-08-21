@@ -3,8 +3,8 @@ Contributors: mpntod
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9XCNM4QSVHYT8
 Tags: shortcode,widget,twitter,rotating,rotate,rotator,tweet,tweets,animation,jquery,jquery cycle,cycle,multilingual,responsive
 Requires at least: 2.6
-Tested up to: 3.5.1
-Stable tag: 1.4.7
+Tested up to: 3.6
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Twitter widget and shortcode to show your latest tweets one at a time an animate
 
 == Description ==
 * **Replaces a [shortcode](http://codex.wordpress.org/Shortcode) such as `[rotatingtweets screen_name='your_twitter']`, or a [widget](http://codex.wordpress.org/WordPress_Widgets), with a rotating display of your most recent tweets**
-* **Supports v 1.1 of the Twitter API** - yes! it will keep working after [May 2013](https://dev.twitter.com/calendar)
+* **Supports v 1.1 of the Twitter API** - yes! it will keep working after [June 11, 2013](https://dev.twitter.com/blog/api-v1-is-retired)
 * **Space efficient** - instead of showing all your tweets at once, shows one at a time and then smoothly replaces it with the next one. After showing all your tweets, loops back to the beginning again.
 * **Reliable** - keeps showing your latest Tweets even if the Twitter website is down.
 * **Customisable** - you decide whose tweets to show, how many to show, whether to include retweets and replies, and whether to show a follow button. You can also decide how quickly the tweets rotate and what type of animation to use.
@@ -31,7 +31,7 @@ Currently the following languages are available:
 * German *(basic tweet display only)*
 * Spanish *(basic tweet display only)*
 * Italian *(basic tweet display only)*
-* Dutch *(basic tweet display only)*
+* Dutch *(public facing translation complete - many thanks to Natasja Weijer for her help on this)*
 * French *(almost complete - many thanks to [Alexandre Trudel](http://wordpress.org/support/profile/alexandretrudel) for his help on this)*
 
 If you have made the plug-in work in your language, please send the translations you'd like to see or, even better, the relevant [gettext PO and MO files](http://codex.wordpress.org/I18n_for_WordPress_Developers) to [me](http://www.martintod.org.uk/contact-martin/) and I will then share them with everyone else. You can download [the latest POT file](http://plugins.svn.wordpress.org/rotatingtweets/trunk/languages/rotatingtweets.pot), and [PO files in each language](http://plugins.svn.wordpress.org/rotatingtweets/trunk/languages/) from this site. You may find [Poedit](http://www.poedit.net/) rather useful for translation and creation of PO and MO files - although the PO files themselves are quite simple text files and can be edited in Notepad or [Notepad++](http://notepad-plus-plus.org/).
@@ -108,7 +108,7 @@ Try something like:
 `<?php echo do_shortcode( "[rotatingtweets screen_name='your_twitter']" ) ?>`
 
 = How can I pull information from two accounts into one widget =
-The easiest way is to use a search term like `'from:account1 OR from:account2'`.
+The easiest way is to use a search term like `'from:account1 OR from:account2'`.  There's a list of advanced Twitter search options at https://support.twitter.com/articles/71577-using-advanced-search
 
 = How often does the plug-in call Twitter =
 In most cases, each use (or "instance") of this plug-in gets data from Twitter every 2 minutes. The exception is when two or more instances share the same settings (screen name etc.), in which case they share the same data rather than each calling it separately.
@@ -162,10 +162,25 @@ into your CSS - changing `123px;` to the width you're aiming at - either via put
 You can do this by going to the `rotatingtweets/css` directory and renaming `rotatingtweets-sample.css` to `rotatingtweets.css` and putting it in the `wp-content/uploads/` directory.  This displays a Twitter bird to the left of your tweets.  Any CSS you put into `rotatingtweets.css` won't be overwritten when the plug-in is upgraded to the latest version.
 
 == Upgrade notice ==
-= 1.4.7 =
-* HTML5 compliance and improved rate-limiting. If you are using a version before 0.700, you will need to upgrade to a more recent version for Rotating Tweets to keep accessing Twitter after May 7, 2013.
+= 1.5.1 =
+* Includes Carousel rotation. Enforces rules on replies and retweets even if the Twitter API doesn't.
 
 == Changelog ==
+= 1.5.1 =
+* Enforce rules on replies and retweets even if the Twitter API doesn't
+* Fixed problem with [Magazino template](http://wordpress.org/themes/magazino)
+* Fixed incorrect message on settings page
+
+= 1.5.0 =
+* Added `Carousel` rotation option and beta support for [version 2 of JQuery Cycle](http://jquery.malsup.com/cycle2/)
+* Added `link_all_text` shortcode tag and functionality
+* Added richer debug information
+* Corrected API expiry date
+* Added missing `alt` tag
+* Kept CSS permanently in the header to maintain HTML capability
+* Public facing Dutch translation complete - many thanks to Natasja Weijer for her help on this
+* Attempt to fix clash with [Avada](http://themeforest.net/item/avada-responsive-multipurpose-theme/2833226) and [Gleam](http://www.elegantthemes.com/gallery/gleam/) themes
+
 = 1.4.7 =
 * HTML5 compliance
 * Improved rate-limiting
