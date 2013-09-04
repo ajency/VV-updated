@@ -38,7 +38,7 @@ class FeatCCWidget extends WP_Widget
     extract($args, EXTR_SKIP);
  
     echo '<li class="widget fix">';
-    echo '<div class="widget-pad">';
+    echo '<div class="widget-pad"><a href="'. site_url('/about/indiaunheard/community-correspondent-profiles/') .'">';
     $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
  
     if (!empty($title))
@@ -65,7 +65,7 @@ class FeatCCWidget extends WP_Widget
 	remove_action( 'pre_user_query', $randomize_func );
 	
 	// Start Code	
-	echo '<div class="feat-cc-widget">';
+	echo '</a><div class="feat-cc-widget">';
 	foreach ( $users as $user ) 
 		{
 			$auth_desc = substr(get_the_author_meta( 'description', $user->ID ), 0, 200);

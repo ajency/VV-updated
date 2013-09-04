@@ -114,7 +114,7 @@ class HomeAuthorDisplayWidget extends WP_Widget
 			</div>
 			<div class="info row-fluid">
 				<div class="span12">
-					<h4><?php echo $instance["title"]; ?></h4>
+					<h4><a href="<?php echo site_url('/about/indiaunheard/community-correspondent-profiles/'); ?>"><?php echo $instance["title"]; ?></a></h4>
 				</div>
 			</div>
 		<?php

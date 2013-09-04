@@ -104,7 +104,7 @@ class PageLinesVideoLoop extends PageLinesSection {
 			?>
 			<form action="<?php bloginfo('url'); ?>/" method="get" class="form-inline">
 				<?php
-					$select = wp_dropdown_categories('show_option_none=All&orderby=name&echo=0&child_of=16');
+					$select = wp_dropdown_categories('show_option_none=Videos by Issue&orderby=name&echo=0&child_of=16');
 					$select = preg_replace("#<select([^>]*)>#", "<select$1 onchange='return this.form.submit()'>", $select);
 					echo $select;
 				?>
