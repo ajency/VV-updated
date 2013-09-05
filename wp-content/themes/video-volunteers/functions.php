@@ -1403,7 +1403,7 @@ class Campaign_Widget extends WP_Widget {
 
 		echo $before_widget;
 		if ( ! empty( $title ) )
-			echo $before_title . $title . $after_title;
+			echo $before_title .'<a href="'. site_url('/all-campaigns/') .'">'. $title .'</a>'. $after_title;
 		// The Query
 		$query = new WP_Query(	array('post_type' => 'page', 'posts_per_page' => 1, 'orderby' => 'menu_order', 'meta_query' => array(array(
 					'value' => 'page.campaign.php',
