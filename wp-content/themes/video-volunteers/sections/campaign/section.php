@@ -34,7 +34,7 @@ class VVCampaign extends PageLinesSection {
 							Posted on <b><?php the_time('F j, Y'); ?></b>
 						</div>
 						<div class="meta-share">
-								<a href="http://twitter.com/share?url='. urlencode(get_permalink()) .'&via=videovolunteers&count=horizontal" class="twitter-share-button">Tweet</a>
+								<a href="http://twitter.com/share?url=<?php urlencode(get_permalink()); ?>&via=videovolunteers&count=horizontal" class="twitter-share-button">Tweet</a>
 								<iframe src="//www.facebook.com/plugins/like.php?href=<?php echo urlencode(get_permalink()); ?>&amp;send=false&amp;layout=standard&amp;show_faces=false&amp;font=arial&amp;colorscheme=light&amp;action=like&amp;height=25" scrolling="no" frameborder="0" style="border:none; overflow:hidden;  height:25px;" allowTransparency="true"></iframe>
 								<g:plusone href="'. urlencode(get_permalink()) .'"></g:plusone>
 						</div>

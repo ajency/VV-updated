@@ -2836,6 +2836,60 @@ padding-bottom: 9px;
 }
 }
 
+/****All Campaigns Page Styles****/
+#all-campaigns-page {
+	.stream-header {
+		color: @logo-color;
+		text-transform: uppercase;
+		font-size: 2.2em;
+		border-bottom: 1px solid lighten(@grey-regular, 10%);
+		margin: 0 0 10px;
+	}
+	.excerpt {
+		color: lighten(@grey-regular, 10%);
+		margin: 0 0 10px;
+	}
+	.campaign-list {
+		.list-title {
+			margin: 0 0 10px;
+			color: @orange;
+			font-style: italic;
+			border-bottom: 1px dotted lighten(@grey-regular, 40%);
+		}
+		.campaign {
+			margin: 0 1% 20px;
+			width: 48%;
+			float: left;
+			h3 {
+				padding: 0 0 5px;
+				margin: 0 0 5px;
+				border-bottom: 1px dotted lighten(@grey-regular, 20%);
+				a {
+					font-size: 1em;
+					color: @logo-color;
+					text-transform: capitalize;
+				}
+			}
+			.img {
+				img {
+					border: 1px solid lighten(@grey-regular, 30%);
+					padding: 0.5%;
+					width: 98.5%;
+				}
+			}
+			.excerpt {
+				p {
+					margin: 5px 0;
+				}
+			}
+			.read-more {
+				color: @orange;
+				font-style: italic;
+			}
+		}
+	}
+}
+
 /****Single Post Styles****/
 #postloop {
 	.post-meta {
