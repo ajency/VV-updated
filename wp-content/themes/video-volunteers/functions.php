@@ -116,6 +116,45 @@ add_action('pagelines_inside_bottom_boxes', 'output_homepage_titles',1);
 function add_social_scripts() {
 	echo '<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>';
 	echo '<script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>';
+	echo '<script type="text/javascript" src="'. get_stylesheet_directory_uri() .'/js/jquery.jcarousel.min.js"></script>';
+	?>
+	<script>
+		jQuery(document).ready(function () {
+			jQuery('.jcarousel').jcarousel({
+				wrap: 'circular',
+				'animation': {
+					'duration': 800,
+					'easing':   'linear'
+				}
+			})
+			.jcarouselAutoscroll({
+				'interval': 1000
+			});
+			
+			jQuery('.jcarousel-control-prev')
+				.on('active.jcarouselcontrol', function() {
+					jQuery(this).removeClass('inactive');
+				})
+				.on('inactive.jcarouselcontrol', function() {
+					jQuery(this).addClass('inactive');
+				})
+				.jcarouselControl({
+					target: '-=1'
+				});
+
+			jQuery('.jcarousel-control-next')
+				.on('active.jcarouselcontrol', function() {
+					jQuery(this).removeClass('inactive');
+				})
+				.on('inactive.jcarouselcontrol', function() {
+					jQuery(this).addClass('inactive');
+				})
+				.jcarouselControl({
+					target: '+=1'
+				});
+		});
+	</script>
+	<?php
 }
 add_action('wp_footer', 'add_social_scripts');
 
