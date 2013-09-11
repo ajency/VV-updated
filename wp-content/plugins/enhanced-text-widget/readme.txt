@@ -4,7 +4,7 @@ Donate link: http://pomelodesign.com/donate/
 Tags: widget, clickable, linkable, linked title, text, php, javascript, flash, linked title text, linked, text widget, php widget, link widget title, bare widget, widget shortcodes
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,6 +59,9 @@ This adds a CSS class parameter to each widget.
 This is the initial release.
 
 == Changelog ==
+
+= 1.4.3 =
+* Adds Italian translation
 
 = 1.4.2 =
 * Removes widget caching

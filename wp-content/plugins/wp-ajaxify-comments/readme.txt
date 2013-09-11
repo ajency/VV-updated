@@ -4,7 +4,7 @@ Donate link: http://janjonas.net/donate
 Tags: AJAX, comments, comment, themes, theme
 Requires at least: 3.1.3
 Tested up to: 3.6
-Stable tag: 0.16.1
+Stable tag: 0.17.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,8 +28,8 @@ Some features of the plugin:
 * Actively developed and supported
 * Validating and adding comments without (complete) page reloads
 * Seamless integration in almost every theme (default options should work with most themes)
-* i18n support
-* Included localizations for ar, ca, da-DK, de-DE, es-ES, fa-IR, fr-FR, he-IL, hu-HU, nl-NL, pl-PL, pt-BR, ru-RU, sk-SK, tr-TR, uk, vi-VN, zh-CN (thanks to all contributors)
+* i18n support (included localizations for ar, ca, da-DK, de-DE, es-ES, fa-IR, fr-FR, he-IL, hu-HU, nl-NL, pl-PL, pt-BR, ru-RU, sk-SK, tr-TR, uk, vi-VN, zh-CN)
+* Support for customizing (default) WordPress messages
 * Support for threaded comments
 * Support for comments that await moderation
 * Compatibility with comment spam protection plugins and other plugins that extend/manipulate the comment form
@@ -107,6 +107,7 @@ The debug mode can be enabled on the plugin's settings page (Settings > WP-Ajaxi
 The plugin provides some JavaScript callback options that can be used to add custom JavaScript code that is executed on client-side when certain (wp-ajaxify-comments related) events occure. Please note, that these callbacks client-side callbacks, i.e. you cannot execute any PHP code using this callback options.
 
 In detail, the following callbacks are supported:
+
 * OnBeforeSelectElements: Called before the plugin selects any DOM elements. The DOM tree the plugin is currently working on is passed as parameter `dom`.
 * OnBeforeSubmitComment: Called before a (new) comment is submitted.
 * OnBeforeUpdateComments: Called before the plugin replaces the comments.
@@ -141,6 +142,11 @@ There are known incompatibilities to the following plugins:
 * WP-reCAPTCHA (tested with WP-reCAPTCHA 3.1.6)
 
 == Changelog ==
+
+= 0.17.0 =
+* Added options to customize (default) WordPress messages
+* Disabled (auto) scrolling when comments are updated by "Auto update idle time"
+* Fixed compatibility to jQuery "no conflict mode"
 
 = 0.16.1 =
 * Bugfix for cross-domain scripting detection
@@ -234,6 +240,7 @@ There are known incompatibilities to the following plugins:
 
 = 0.5.2 =
 * Added localization for fa-IR (thanks to rezach4)
+
 = 0.5.1 =
 * Updated localization for zh-CN (thanks to Liberty Pi)
 * Updated jQuery blockUI to 2.42 (thanks to Mexalim)
@@ -302,6 +309,9 @@ There are known incompatibilities to the following plugins:
 * Initial release
 
 == Upgrade Notice ==
+
+= 0.17.0 =
+Options to customize (default) WordPress messages, Disabled (auto) scrolling when comments are updated by "Auto update idle time", Fixed compatibility to jQuery "no conflict mode"
 
 = 0.16.1 =
 Bugfix for cross-domain scripting detection
