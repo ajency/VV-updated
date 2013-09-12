@@ -122,13 +122,20 @@ function add_social_scripts() {
 		jQuery(document).ready(function () {
 			jQuery('.jcarousel').jcarousel({
 				wrap: 'circular',
+				'center': true,
 				'animation': {
 					'duration': 800,
 					'easing':   'linear'
 				}
 			})
 			.jcarouselAutoscroll({
-				'interval': 1000
+				'interval': 4000,
+				'create': jQuery('.jcarousel').hover(function() {
+					jQuery(this).jcarouselAutoscroll('stop');
+				},
+				function() {
+					jQuery(this).jcarouselAutoscroll('start');
+				})
 			});
 			
 			jQuery('.jcarousel-control-prev')
