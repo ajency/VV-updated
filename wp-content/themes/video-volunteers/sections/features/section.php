@@ -480,6 +480,7 @@ class PageLinesFeatures extends PageLinesSection {
 													);
 
 												pagelines_register_hook( 'pagelines_fcontent_after', $this->id ); // Hook ?>
+												<a id="iu-link" href="http://www.videovolunteers.org/about/indiaunheard/" title="India Unheard"><img src="<?php echo get_stylesheet_directory_uri();?>/images/IU.png" /></a>
 										</div>
 									</div>
 

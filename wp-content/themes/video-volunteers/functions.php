@@ -112,10 +112,12 @@ function output_homepage_titles() {
 
 add_action('pagelines_inside_bottom_boxes', 'output_homepage_titles',1);
 
-/****Plus One Script****/
+/****Scripts****/
 function add_social_scripts() {
 	echo '<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>';
 	echo '<script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>';
+	
+	// jCarousel Script
 	echo '<script type="text/javascript" src="'. get_stylesheet_directory_uri() .'/js/jquery.jcarousel.min.js"></script>';
 	?>
 	<script>
