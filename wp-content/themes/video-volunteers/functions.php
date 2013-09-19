@@ -996,7 +996,7 @@ function save_featured_auth_field( $user_id ) {
 
 /****Function to output Blog Sub-categories****/
 function output_blog_cats() {
-	if ( is_category( 'videos' ) || ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) ) {
+	if ( is_category( 'videos' ) || ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) || is_author() ) {
 		//Do Nothing
 	}
 	else {
