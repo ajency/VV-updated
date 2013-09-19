@@ -50,10 +50,10 @@ class VVAllCampaigns extends PageLinesSection {
 									if($query->post->ID!=$pageid)
 									{
 										echo '<div class="campaign">';
-										echo '<h3><a href="'.$query->post->guid.'">' . get_the_title() . '</a></h3><div class="img">';
+										echo '<h3><a href="'.get_permalink($query->post->ID).'">' . get_the_title() . '</a></h3><div class="img">';
 										echo the_post_thumbnail();
 										echo '</div><div class="excerpt"><p>'.$query->post->post_excerpt.'</p></div>';
-										echo '<a href="'.$query->post->guid.'" class="read-more">Read More &rarr;</a></div>';
+										echo '<a href="'.get_permalink($query->post->ID).'" class="read-more">Read More &rarr;</a></div>';
 									}
 								}
 							} else {
