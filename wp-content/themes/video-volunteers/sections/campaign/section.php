@@ -173,7 +173,7 @@ if ( $query->have_posts() ) {
 		{
 		echo '<div class="videowidget"><div class="img">';
 		echo the_post_thumbnail();
-		echo '</div><div class="campaignwidget"><a href="'.$query->post->guid.'">' . get_the_title() . '</a><br></div><p>'.$query->post->post_excerpt.'</p></div>';
+		echo '</div><div class="campaignwidget"><a href="'.get_permalink($query->post->ID).'">' . get_the_title() . '</a><br></div><p>'.$query->post->post_excerpt.'</p></div>';
 		}
 	}
 } else {
