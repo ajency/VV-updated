@@ -1709,7 +1709,7 @@ function add_fb_open_graph_tags() {
 		<meta property="og:url" content="<?php the_permalink(); ?>" /> 
 		<meta property="og:title" content="<?php the_title(); ?>" /> 
 		<meta property="og:image" content="<?php echo $image; ?>" /> 
-		<meta property="og:description" content="<?php echo stripslashes(get_the_content()); ?>" /> 
+		<meta property="og:description" content="<?php echo strip_tags( get_the_excerpt() ); ?>" /> 
 		<?php 
 		switch ($post_type)
 		{
