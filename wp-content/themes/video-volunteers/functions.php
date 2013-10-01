@@ -1725,3 +1725,27 @@ function add_fb_open_graph_tags() {
 		}
 	}
 }
+
+/****Show Custom Fields in Dropdown Admin****/
+add_action( 'admin_footer-post-new.php', 'vv_dd_script' );
+add_action( 'admin_footer-post.php', 'vv_dd_script' );
+
+function vv_dd_script()
+{
+    if ( ! isset ( $GLOBALS['post'] ) )
+        return;
+
+    $post_type = get_post_type( $GLOBALS['post'] );
+
+    if ( ! post_type_supports( $post_type, 'custom-fields' ) )
+        return;
+    ?>
+<script>
+	var options = [ 'Video', 'Thumbnail', 'Featured Image' ];
+	jQuery.each(options, function() {
+		if ( jQuery( '[value=" '+ this +' "]' ).length < 1 ) // avoid duplication
+			jQuery( '#metakeyselect').append( '<option value=" '+ this +' "> '+ this +' </option>' );
+	});
+</script>
+    <?php
+}
