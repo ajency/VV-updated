@@ -244,12 +244,13 @@ function page_readmore_script() {
 				<div class="excerpt-spl entry_content">
 					<p><?php echo $post->post_excerpt; ?></p>
 				</div>
-				<a class="read-full-content btn btn-mini" href="#"><i class="icon-caret-up"></i> / <i class="icon-caret-down"></i></a>
+				<a class="read-full-content btn btn-mini" href="#">Read More <i class="icon-caret-down"></i></a>
 				<script>
 					jQuery('.read-full-content').click(function() {
 					  jQuery('#post-<?php echo $post->ID; ?>').slideToggle('slow', function() {
 						// Animation complete.
 						jQuery('.excerpt-spl').slideToggle('slow');
+						jQuery('.read-full-content').html(jQuery(this).is(':visible') ? 'Read Less  <i class="icon-caret-up"></i>' : 'Read More  <i class="icon-caret-down"></i>');
 					  });
 					  return false;
 					});
