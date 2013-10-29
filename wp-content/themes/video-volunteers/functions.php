@@ -858,14 +858,13 @@ function output_category_info() {
                         <?php
                         if (post_is_in_descendant_category(16)) {
                             if (post_is_in_descendant_category(11)) {                             
-                               if (is_category('blog')) {
-                                        // Do Nothing
-                                   echo 'in blog';
-                                 }
-                                
+                               if (is_category('blog')) { ?>
+                                    <span>Read: </span> 
+                                  
+                               <?php   } else {                              
                                 ?>
                                 <span>State: </span>
-                            <?php
+                                 <?php }
                             } else {
                                 ?>
                                 <span>Issue: </span>
