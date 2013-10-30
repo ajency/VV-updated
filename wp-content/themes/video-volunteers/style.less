@@ -3143,14 +3143,29 @@ padding-bottom: 9px;
 		margin: 0 0 0 10px;
 		li {
 			display: block;
-			padding: 5px 0;
+			padding: 0;
 			a {
 				font-size: 1.1em;
-                                color: @logo-color;
+                color: @logo-color;
 			}
 			.children {
+				padding: 0 1em;
 				.children {
 					display: none;
+				}
+				li {
+					&:before {
+						content: "";
+						border-color: transparent @logo-color;
+						border-style: solid;
+						border-width: 0.35em 0 0.35em 0.45em;
+						display: block;
+						height: 0;
+						width: 0;
+						left: -1em;
+						top: 1.2em;
+						position: relative;
+					}
 				}
 				.current_page_item {
 					a {
@@ -3163,6 +3178,9 @@ padding-bottom: 9px;
 							color: #225E9B;
 							font-weight: normal;
 						}
+					}
+					&:before {
+						border-color: transparent @orange;
 					}
 				}
 			}
