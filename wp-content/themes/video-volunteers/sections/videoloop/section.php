@@ -22,6 +22,11 @@ class PageLinesVideoLoop extends PageLinesSection {
 	*/
    function section_template() {
 		
+		if ( is_category( 'blog' ) ) { 
+			//Run Regular Post Loop
+			$theposts = new PageLinesPosts();
+			$theposts->load_loop();
+		}
 		if ( is_category( 'videos-ajax' ) ) { //CHANGED TO IMPLEMENT NO AJAX DEFAULT
 			
 			$filter = array(
