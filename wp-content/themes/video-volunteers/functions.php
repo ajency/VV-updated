@@ -49,12 +49,10 @@ function output_header_bar() {
     $query = new WP_Query($args);
     while ($query->have_posts()) : $query->the_post();
         $impact_title = substr(get_the_title(), 3, 60);
-        //$snippet = substr( get_the_excerpt(), 0, 120 );
-        $snippet = explode(".", get_the_excerpt());
+        $snippet = substr( get_the_excerpt(), 0, 200 );
+        //$snippet = explode('.', get_the_excerpt());
         echo '<h6>' . $impact_title . '</h6>';
-        echo '<p>';
-        echo $snippet[0];
-        echo '.</p>';
+        echo '<p>' . $snippet . '...</p>';
         echo '<a href="' . get_permalink() . '" class="more-link"><i class="icon-plus"></i>&nbsp;More</a>';
     endwhile;
     wp_reset_postdata();
