@@ -164,7 +164,7 @@ function insertSocial($content) {
     if (is_single() && in_the_loop()) {
         $content = trim($content);
         $content_array = explode(">", $content);
-        $content_new = '<div class="social-bar">';
+        $content_new = '<div class="clearfix" style="margin:0;"></div><div class="social-bar">';
         $content_new.= '<h4>Think this issue needs more voices? <small>Help spread the word, Share this story.</small></h4>';
         $content_new.= '<div class="social-buttons">';
         // Twitter Tweet Button

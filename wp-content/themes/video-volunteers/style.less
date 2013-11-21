@@ -2825,7 +2825,7 @@ padding-bottom: 9px;
 			
 			.campaignwidget
 			{
-				width: 40%;
+				width: 55%;
 				float: left;
 				padding-top: 0px;
 			}
@@ -2994,9 +2994,18 @@ padding-bottom: 9px;
 		}
 	}
 	.entry_content {
+		color: darken(@grey-regular, 20%);
+		font-size: 0.9em;
+		h1, h2, h3, h4, h5, h6 {
+			color: @logo-color;
+		}
 		p, div {
-			color: darken(@grey-regular, 20%);
 			margin: 0 0 1.6em;
+			font-size: 1em;
+			&.wp-caption {
+				margin-right: 0.5em;
+				margin-bottom: 0.5em;
+			}
 		}
 		.img {
 			margin: 0 0 5px 5px;
