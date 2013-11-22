@@ -1746,3 +1746,18 @@ function vv_dd_script() {
     </script>
     <?php
 }
+
+/****Featured Image on Pages****/
+function vv_page_featured_image() {
+	if (!is_single()) {
+		if ( has_post_thumbnail() ) { // check if the post has a Post Thumbnail assigned to it.
+			?>
+			<div class="featured-image-header">
+				<?php the_post_thumbnail('full'); ?>
+			</div>
+		<?php
+		} 
+	}
+}
+
+add_action('pagelines_loop_before_post_content', 'vv_page_featured_image');
