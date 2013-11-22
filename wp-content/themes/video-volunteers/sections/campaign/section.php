@@ -27,6 +27,13 @@ class VVCampaign extends PageLinesSection {
 			<div class="row-fluid">
 				<div class="span8">
 					<div id="campaign-page">
+						<div class="featured-image-header">
+							<?php 
+							if ( has_post_thumbnail() ) { // check if the post has a Post Thumbnail assigned to it.
+							  the_post_thumbnail('full');
+							} 
+							?>
+						</div>
 						<h1 class="stream-header">
 							<?php the_title(); ?>
 						</h1>
