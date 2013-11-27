@@ -29,9 +29,40 @@ function output_css_js() {
 
 add_action('pagelines_head_last', 'output_css_js', 10);
 
+/****New Excerpt Script That Works on Archive Pages****/
+function get_new_excerpt($id=false) {
+	global $post;
+
+	$old_post = $post;
+	if ($id != $post->ID) {
+		$post = get_page($id);
+	}
+
+	if (!$excerpt = trim($post->post_excerpt)) {
+		$excerpt = $post->post_content;
+		$excerpt = strip_shortcodes( $excerpt );
+		$excerpt = apply_filters('the_content', $excerpt);
+		$excerpt = str_replace(']]>', ']]&gt;', $excerpt);
+		$excerpt = strip_tags($excerpt);
+		$excerpt_length = apply_filters('excerpt_length', 55);
+		$excerpt_more = apply_filters('excerpt_more', ' ' . '[...]');
+
+		$words = preg_split("/[\n\r\t ]+/", $excerpt, $excerpt_length + 1, PREG_SPLIT_NO_EMPTY);
+		if ( count($words) > $excerpt_length ) {
+			array_pop($words);
+			$excerpt = implode(' ', $words);
+			$excerpt = $excerpt . $excerpt_more;
+		} else {
+			$excerpt = implode(' ', $words);
+		}
+	}
+
+	$post = $old_post;
+
+	return $excerpt;
+}
 
 /* * **Header Bar Output*** */
-
 function output_header_bar() {
     echo '<div class="texture"><div class="content"><div class="content-pad"><div class="logo-bar fix">';
     echo '<a href="' . get_bloginfo('url') . '" class="logo-link"><img src="' . get_bloginfo('stylesheet_directory') . '/images/site-logo.png" alt="Video Volunteers" /></a>';
@@ -47,15 +78,21 @@ function output_header_bar() {
         'posts_per_page' => 1,
     );
     $query = new WP_Query($args);
+	if ( $query->have_posts() ) :
+	
     while ($query->have_posts()) : $query->the_post();
         $impact_title = substr(get_the_title(), 3, 60);
-        $snippet = substr( get_the_excerpt(), 0, 200 );
+        $snippet = substr( get_new_excerpt(), 0, 180 );
         //$snippet = explode('.', get_the_excerpt());
         echo '<h6>' . $impact_title . '</h6>';
         echo '<p>' . $snippet . '...</p>';
         echo '<a href="' . get_permalink() . '" class="more-link"><i class="icon-plus"></i>&nbsp;More</a>';
     endwhile;
     wp_reset_postdata();
+	
+	else:  ?>
+	  <p><?php _e( 'Sorry, no posts matched your criteria.' ); ?></p>
+	<?php endif; 
 
     echo '</div>';
     echo '</div></div></div></div></div>';
@@ -306,10 +343,10 @@ function append_child_pages() {
             $html .= "<div class='" . $class . "'>\n";
 
             // Link the thumbnail image to the child page.
-            $html .=
+            /*$html .=
                     "<a href='" . $permalink . "' rel='bookmark' title='" . $cp->post_title . "'>" .
                     $th .
-                    "</a><br/>\n";
+                    "</a><br/>\n";*/
 
             // Might as well link the page title to the page as well.
             $html .= "<h5 class='child_entry-title'>" .
@@ -780,7 +817,7 @@ function output_single_author_bio() {
                             <?php
                             $video = $curauth->wpum_video_profile;
                             ?>
-                            <?php if ($video != NULL) { ?>
+                            <?php if (trim($video) != ''){ ?>
 
                                 <div id="x-video-0" class="video-player">
                                     <object width="400" height="405" standby="Introducing VideoPress for WordPress.com" style="visibility: visible; ">
