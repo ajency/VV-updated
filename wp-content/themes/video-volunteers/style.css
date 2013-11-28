@@ -111,10 +111,7 @@ Themes follow the basic WordPress themes header scheme with the following additi
 .page_excerpt span{ font-size: 12px;
                     color: #7E7878;}
 .page_excerpt{}
-.child
-{
-    margin-bottom:0 !important;
-}
+
 .continue_reading_link {
     color: #F26B26;
     display: block;
