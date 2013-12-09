@@ -20,7 +20,7 @@ class FRP_Walker_Category_Checklist extends Walker_Category_Checklist
 		$this->terms_disabled = $params['terms_disabled'];
 	}
 
-	function start_el( &$output, $category, $depth, $args, $id = 0 ) {
+	function start_el( &$output, $category, $depth = 0, $args = array(), $id = 0 ) {
 		extract( $args );
 		if ( empty( $taxonomy ) )
 			$taxonomy = 'category';

@@ -5,7 +5,7 @@ Plugin URI: http://wordpress.org/extend/plugins/wp-ajaxify-comments/
 Description: WP-Ajaxify-Comments hooks into your current theme and adds AJAX functionality to the comment form.
 Author: Jan Jonas
 Author URI: http://janjonas.net
-Version: 0.17.0
+Version: 0.19.0
 License: GPLv2
 Text Domain: wpac
 */ 
@@ -242,44 +242,43 @@ function wpac_get_config() {
 				),
 				'textErrorTypeComment' => array(
 						'type' => 'string',
-						'default' => __(WPAC_WP_ERROR_PLEASE_TYPE_COMMENT),
-						'label' => __('Error "Please type a comment"', WPAC_DOMAIN),
+						'default' => str_replace(array('<', '>'), array('&lt;', '&gt;'), __(WPAC_WP_ERROR_PLEASE_TYPE_COMMENT)),
+						'label' => __("Error 'Please type a comment'", WPAC_DOMAIN),
 						'specialOption' => true,
 				),
 				'textErrorCommentsClosed' => array(
 						'type' => 'string',
-						'default' => __(WPAC_WP_ERROR_COMMENTS_CLOSED),
+						'default' => str_replace(array('<', '>'), array('&lt;', '&gt;'), __(WPAC_WP_ERROR_COMMENTS_CLOSED)),
 						'label' => __("Error 'Comments closed'", WPAC_DOMAIN),
 						'specialOption' => true,
 				),
 				'textErrorMustBeLoggedIn' => array(
 						'type' => 'string',
-						'default' => __(WPAC_WP_ERROR_MUST_BE_LOGGED_IN),
+						'default' => str_replace(array('<', '>'), array('&lt;', '&gt;'), __(WPAC_WP_ERROR_MUST_BE_LOGGED_IN)),
 						'label' => __("Error 'Must be logged in'", WPAC_DOMAIN),
 						'specialOption' => true,
 				),
 				'textErrorFillRequiredFields' => array(
 						'type' => 'string',
-						'default' => __(WPAC_WP_ERROR_FILL_REQUIRED_FIELDS),
+						'default' => str_replace(array('<', '>'), array('&lt;', '&gt;'), __(WPAC_WP_ERROR_FILL_REQUIRED_FIELDS)),
 						'label' => __("Error 'Fill in required fields'", WPAC_DOMAIN),
 						'specialOption' => true,
 				),
 				'textErrorInvalidEmailAddress' => array(
 						'type' => 'string',
-						'default' => __(WPAC_WP_ERROR_INVALID_EMAIL_ADDRESS),
+						'default' => str_replace(array('<', '>'), array('&lt;', '&gt;'), __(WPAC_WP_ERROR_INVALID_EMAIL_ADDRESS)),
 						'label' => __("Error 'Invalid email address'", WPAC_DOMAIN),
 						'specialOption' => true,
 				),
 				'textErrorPostTooQuickly' => array(
 						'type' => 'string',
-						'default' => __(WPAC_WP_ERROR_POST_TOO_QUICKLY),
+						'default' => str_replace(array('<', '>'), array('&lt;', '&gt;'), __(WPAC_WP_ERROR_POST_TOO_QUICKLY)),
 						'label' => __("Error 'Post too quickly'", WPAC_DOMAIN),
 						'specialOption' => true,
 				),
-					
 				'textErrorDuplicateComment' => array(
 						'type' => 'string',
-						'default' => __(WPAC_WP_ERROR_DUPLICATE_COMMENT),
+						'default' => str_replace(array('<', '>'), array('&lt;', '&gt;'), __(WPAC_WP_ERROR_DUPLICATE_COMMENT)),
 						'label' => __("Error 'Duplicate comment'", WPAC_DOMAIN),
 						'specialOption' => true,
 				),
@@ -306,24 +305,47 @@ function wpac_get_config() {
 					'default' => '',
 					'label' => sprintf(__("'%s' callback", WPAC_DOMAIN), 'OnBeforeUpdateComments'),
 					'specialOption' => true,
+					'description' => __('Parameter: newDom (jQuery DOM element)', WPAC_DOMAIN)
 				),
 				'callbackOnAfterUpdateComments' => array(
 					'type' => 'multiline',
 					'default' => '',
 					'label' => sprintf(__("'%s' callback", WPAC_DOMAIN), 'OnAfterUpdateComments'),
 					'specialOption' => true,
+					'description' => __('Parameter: newDom (jQuery DOM element)', WPAC_DOMAIN)
 				),
 				'asyncCommentsThreshold' => array(
 					'type' => 'int',
 					'label' => __('Load comments async threshold', WPAC_DOMAIN),
 					'pattern' => '/^[0-9]*$/',
-					'description' => __('Load comments asynchronously with secondary AJAX request if more than the specified number of comments exist. Leave empty to disable this feature.', WPAC_DOMAIN),
+					'description' => __('Load comments asynchronously with secondary AJAX request if more than the specified number of comments exist (0 for always load comments asynchronously). Leave empty to disable this feature.', WPAC_DOMAIN),
 					'specialOption' => true,
+				),
+				'asyncLoadTrigger' => array(
+					'type' => 'select',
+					'label' => __('Trigger to load comments async', WPAC_DOMAIN),
+					'default' => 'DomReady',
+					'pattern' => 'Viewport|None',
+					'description' => __("Trigger to load comments asynchronously ('DomReady': Load comments immediately, 'Viewport': Load comments when comments container is in viewport, 'None': Comment loading is triggered manually).", WPAC_DOMAIN),
 				),
 				'disableUrlUpdate' => array(
 					'type' => 'boolean',
 					'default' => '0',
 					'label' => __('Disable URL updating', WPAC_DOMAIN),
+				),
+				'useUncompressedScripts' => array(
+					'type' => 'boolean',
+					'default' => '0',
+					'label' => __('Use uncompressed scripts', WPAC_DOMAIN),
+					'description' => __('By default a compressed (and merged) JavaScript file is used, check to use uncompressed JavaScript files. Please note: If debug mode is enabled, uncompressed JavaScript files are used.', WPAC_DOMAIN),
+					'specialOption' => true,
+				),
+				'alwaysIncludeScripts' => array(
+					'type' => 'boolean',
+					'default' => '0',
+					'label' => __('Always include scripts', WPAC_DOMAIN),
+					'description' => __('By default JavaScript files are only included on pages where comments are enabled, check to include JavaScript files on every page. Please note: If debug mode is enabled, JavaScript files are included on every pages.', WPAC_DOMAIN),
+					'specialOption' => true,
 				),
 			)
 		)
@@ -331,11 +353,23 @@ function wpac_get_config() {
 }
 	
 function wpac_enqueue_scripts() {
+
+	// Skip if comments and debug mode are disabled and alwaysIncludeScripts option is false
+	$debug = wpac_get_option('debug');
+	if (!wpac_comments_enabled() && !wpac_get_option('alwaysIncludeScripts') && !$debug) return;
+	
 	$version = wpac_get_version();
-	wp_enqueue_script('jsuri', WP_PLUGIN_URL.'/wp-ajaxify-comments/jsuri-1.1.1.js', array(), $version);
-	wp_enqueue_script('jQueryBlockUi', WP_PLUGIN_URL.'/wp-ajaxify-comments/jquery.blockUI.js', array('jquery'), $version);
-	wp_enqueue_script('jQueryIdleTimer', WP_PLUGIN_URL.'/wp-ajaxify-comments/idle-timer.js', array('jquery'), $version);
-	wp_enqueue_script('wpAjaxifyComments', WP_PLUGIN_URL.'/wp-ajaxify-comments/wp-ajaxify-comments.js', array('jquery', 'jQueryBlockUi', 'jsuri', 'jQueryIdleTimer'), $version);
+	$jsPath = WP_PLUGIN_URL.'/wp-ajaxify-comments/js/';
+	
+	if ($debug || wpac_get_option('useUncompressedScripts')) {
+		wp_enqueue_script('jsuri', $jsPath.'jsuri-1.1.1.js', array(), $version);
+		wp_enqueue_script('jQueryBlockUi', $jsPath.'jquery.blockUI.js', array('jquery'), $version);
+		wp_enqueue_script('jQueryIdleTimer', $jsPath.'idle-timer.js', array('jquery'), $version);
+		wp_enqueue_script('waypoints', $jsPath.'waypoints.js', array('jquery'), $version);
+		wp_enqueue_script('wpAjaxifyComments', $jsPath.'wp-ajaxify-comments.js', array('jquery', 'jQueryBlockUi', 'jsuri', 'jQueryIdleTimer', 'waypoints'), $version);
+	} else {
+		wp_enqueue_script('wpAjaxifyComments', $jsPath.'wp-ajaxify-comments.min.js', array('jquery'), $version);
+	}
 }
 
 function wpac_get_version() {
@@ -406,14 +440,22 @@ function wpac_save_options() {
 	update_option(WPAC_OPTION_KEY, $wpac_options);
 }
 
+function wpac_comments_enabled() {
+	global $post;
+	return (is_page() || is_single()) && comments_open($post->ID);
+}
+
 function wpac_initialize() {
 
 	if (wpac_get_option('enable')) {
 
-		// Skip JavaScript options output if request is a WPAC-AJAX request
-		if (wpac_is_ajax_request()) return;
+		$commentsEnabled = wpac_comments_enabled();
 		
-		global $post;
+		// Skip JavaScript options output if 
+		// - comments and debug mode are disabled and alwaysIncludeScripts option is false, or
+		// - request is a WPAC-AJAX request		
+		if (!$commentsEnabled && !wpac_get_option('alwaysIncludeScripts') && !wpac_get_option('debug')) return;
+		if (wpac_is_ajax_request()) return;
 		
 		echo '<script type="text/javascript">';
 
@@ -435,15 +477,15 @@ function wpac_initialize() {
 				}
 			}
 		}
-		echo 'commentsEnabled:'.((is_page() || is_single()) && comments_open($post->ID) ? 'true' : 'false').',';
+		echo 'commentsEnabled:'.($commentsEnabled ? 'true' : 'false').',';
 		echo 'version:"'.wpac_get_version().'"};';
 
 		// Callbacks
 		echo 'WPAC._Callbacks = {';
 		echo '"onBeforeSelectElements": function(dom) {'.wpac_get_option('callbackOnBeforeSelectElements').'},';
-		echo '"onBeforeUpdateComments": function() {'.wpac_get_option('callbackOnBeforeUpdateComments').'},';
-		echo '"onAfterUpdateComments": function() {'.wpac_get_option('callbackOnAfterUpdateComments').'},';
-		echo '"onBeforeSubmitComment": function() {'.wpac_get_option('callbackOnBeforeSubmitComment').'},';
+		echo '"onBeforeUpdateComments": function(newDom) {'.wpac_get_option('callbackOnBeforeUpdateComments').'},';
+		echo '"onAfterUpdateComments": function(newDom) {'.wpac_get_option('callbackOnAfterUpdateComments').'},';
+		echo '"onBeforeSubmitComment": function() {'.wpac_get_option('callbackOnBeforeSubmitComment').'}';
 		echo '};';
 		
 		echo '</script>';
@@ -540,7 +582,11 @@ function wpac_option_page() {
 				$type = $wpac_config[$section]['options'][$optionName]['type'];
 				
 				if (strlen($value) > 0) {
-					$error = $pattern ? (preg_match($pattern, $value) !== 1) : null;
+					$error = $pattern ? 
+						(($type == 'select') ? 
+							!in_array($value, explode('|', $pattern)) 
+							: (preg_match($pattern, $value) !== 1)) 
+						: null;
 					if ($error) {
 						$errors[] = $optionName;
 					} else {
@@ -597,6 +643,13 @@ function wpac_option_page() {
 					if ($option['type'] == 'boolean') {
 						echo '<input type="hidden" name="'.$name.'" value="">';
 						echo '<input type="checkbox" name="'.$name.'" id="'.$optionName.'" '.($value ? 'checked="checked"' : '').' value="1"/>';
+					} else if ($option['type'] == 'select') {
+						echo '<select name="'.$name.'">';
+						echo '<option '.($value == $option['default'] ? 'selected="selected"' : '').' value="">'.$option['default'].'</option>';
+						foreach (explode('|', $option['pattern']) as $select) {
+							echo '<option '.($value == $select ? 'selected="selected"' : '').' value="'.$select.'">'.$select.'</option>';
+						}
+						echo '</select>';
 					} else {
 						$escapedValue = htmlentities($value, ENT_COMPAT | ENT_HTML401, 'UTF-8');
 						if ($option['type'] == 'multiline') {
@@ -605,8 +658,8 @@ function wpac_option_page() {
 							echo '<input type="text" name="'.$name.'" id="'.$optionName.'" value="'.$escapedValue.'" style="width: 300px; color: '.$color.'"/>';
 						} 
 						if (isset($option['default']) && $option['default']) echo '<br/>'.sprintf(__('Leave empty for default value %s', WPAC_DOMAIN), '<em>'.$option['default'].'</em>');
-						if (isset($option['description']) && $option['description']) echo '<br/><em style="width:300px; display: inline-block">'.$option['description'].'</em>';
 					}
+					if (isset($option['description']) && $option['description']) echo '<br/><em style="width:300px; display: inline-block">'.$option['description'].'</em>';
 					echo '</td></tr>';
 				}
 				$section++;
@@ -664,7 +717,7 @@ function wpac_admin_menu() {
 
 function comments_query_filter($query) {
 	// No comment filtering if request is a fallback or WPAC-AJAX request  
-	if ($_REQUEST['WPACFallback'] || wpac_is_ajax_request()) return $query;
+	if ((isset($_REQUEST['WPACFallback']) && $_REQUEST['WPACFallback']) || wpac_is_ajax_request()) return $query;
 	
 	// Test asyncCommentsThreshold 
 	$asyncCommentsThreshold = wpac_get_option('asyncCommentsThreshold');
@@ -700,13 +753,10 @@ if (!is_admin() && !wpac_is_login_page()) {
 	if (wpac_get_option('enable')) {
 		add_filter('comments_array', 'comments_query_filter');
 		add_action('wp_head', 'wpac_initialize');
-		add_action('init', 'wpac_enqueue_scripts');
+		add_action('wp_enqueue_scripts', 'wpac_enqueue_scripts');
 		add_filter('gettext', 'wpac_filter_gettext', 20, 3);
 	}
 } else {
-	require_once(ABSPATH.'/wp-admin/includes/plugin.php');
-	require_once(ABSPATH.'/wp-admin/includes/template.php');
-	require_once(ABSPATH.WPINC.'/pluggable.php');
 	add_action('admin_menu', 'wpac_admin_menu');
 }
 

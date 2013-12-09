@@ -67,8 +67,6 @@ class RecentPostsWidget extends WP_Widget
 	}
 
 	function widget( $args, $instance ) {
-		global $wp_query;
-
 		extract( $args );
 
 		$instance = $this->parse_instance_args( $instance );
@@ -77,8 +75,6 @@ class RecentPostsWidget extends WP_Widget
 		$instance['all_posts_title'] = htmlspecialchars( $instance['all_posts_title'] );
 
 		if ( ! empty( $instance['taxonomy'] ) || ! empty( $instance['terms'] ) ) {
-			$tmp_wp_query = $wp_query;
-
 			if ( empty( $instance['terms'] ) ) {
 				$instance['terms'] = get_terms( $instance['taxonomy'], array( 'fields' => 'ids' ) );
 			}
@@ -103,7 +99,8 @@ class RecentPostsWidget extends WP_Widget
 				require( 'templates/recent-posts-widget.php' );
 			}
 
-			$wp_query = $tmp_wp_query;
+			// Return back to main loop.
+			wp_reset_query();
 		}
 	}
 

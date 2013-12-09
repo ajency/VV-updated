@@ -51,54 +51,6 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    /*$contentWrapper.on('click', '.frp-taxonomies .frp-all-taxonomies input', function () {
-     $list = $(this).parent().next('ul');
-     $terms = $('li input', $list);
-
-     // If taxonomy has terms.
-     if ($terms.length != 0) {
-     if ($(this).is(':checked')) {
-     $terms.attr({
-     'disabled':true,
-     'checked':true
-     });
-     } else {
-     $terms.attr({
-     'disabled':false,
-     'checked':false
-     });
-     }
-     }
-
-     disableTaxonomies($list, true);
-     });
-
-     function disableTaxonomies(childTerm, isList) {
-     $list = $(childTerm);
-
-     if (!isList) {
-     $list = $list.parents('ul');
-     }
-
-     $elems = $.merge($list.nextAll(), $list.prev().prevAll()).find('input');
-
-     if ($('li input:checked', $list).length == 0) {
-     $elems.attr({
-     'disabled':false,
-     'checked':false
-     });
-     } else {
-     $elems.attr({
-     'disabled':true,
-     'checked':false
-     });
-     }
-     }
-
-     $contentWrapper.on('click', '.frp-taxonomies .categorychecklist input', function () {
-     disableTaxonomies(this);
-     });*/
-
     $contentWrapper.on('click', '.frp-form-themes-button', function () {
         $(this).next('.frp-form-themes').slideToggle();
     });

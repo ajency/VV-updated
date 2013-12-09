@@ -3,7 +3,7 @@
 Plugin Name: Flexible Recent Posts
 Plugin URI: http://steelrat.info/
 Description: Displays recent posts using flexible template system.
-Version: 1.0.0
+Version: 1.0.2
 Author: SteelRat
 Author URI: http://steelrat.info/
 License: GPLv2 or later
@@ -38,36 +38,36 @@ add_shortcode( 'frp_excerpt', 'frp_excerpt' );
 add_shortcode( 'frp_date', 'frp_date' );
 add_shortcode( 'frp_link', 'frp_link' );
 add_shortcode( 'frp_author', 'frp_author' );
+add_shortcode( 'frp_comments', 'frp_comments' );
 
 add_filter( 'plugin_row_meta', 'frp_plugin_row_meta', 10, 2 );
 
-$frp_options = array(
-	'version' => '1.0.0',
-	'faq_page' => 'http://wordpress.org/extend/plugins/flexible-recent-posts/faq/',
-	'feature_request_page' => 'http://frp.idea.informer.com/',
-	'flattr_page' => 'https://flattr.com/thing/646464',
-	'themes_url' => plugin_dir_url( __FILE__ ) . 'themes/',
-	'themes_dir' => plugin_dir_path( __FILE__ ) . 'themes/'
+$frp_global = array(
+	'options' => array(
+		'version' => '1.0.2',
+		'faq_page' => 'http://wordpress.org/extend/plugins/flexible-recent-posts/faq/',
+		'feature_request_page' => 'http://frp.idea.informer.com/',
+		'themes_url' => plugin_dir_url( __FILE__ ) . 'themes/',
+		'themes_dir' => plugin_dir_path( __FILE__ ) . 'themes/'
+	),
+	'themes' => array(),
+	'state' => array()
 );
-
-$frp_themes = array();
 
 require_once( 'class-recent-posts-widget.php' );
 
 function frp_plugin_row_meta( $plugin_meta, $plugin_file ) {
-	global $frp_options;
+	global $frp_global;
 
 	if ( strpos( $plugin_file, basename( __FILE__ ) ) ) {
-		$plugin_meta[] = '<a href="' . $frp_options['feature_request_page'] . '" title="' . __( 'Visit feature request page', 'frp' ) . '">' . __( 'Feature request', 'frp' ) . '</a>';
-		$plugin_meta[] = '<a href="' . $frp_options['faq_page'] . '" title="' . __( 'Visit FAQ page', 'frp' ) . '">' . __( 'FAQ', 'frp' ) . '</a>';
+		$plugin_meta[] = '<a href="' . $frp_global['options']['feature_request_page'] . '" title="' . __( 'Visit feature request page', 'frp' ) . '">' . __( 'Feature request', 'frp' ) . '</a>';
+		$plugin_meta[] = '<a href="' . $frp_global['options']['faq_page'] . '" title="' . __( 'Visit FAQ page', 'frp' ) . '">' . __( 'FAQ', 'frp' ) . '</a>';
 	}
 
 	return $plugin_meta;
 }
 
 function frp_admin_print_scripts_widgets() {
-	global $frp_options;
-
 	wp_enqueue_script( 'rangyinputs', plugins_url( '', __FILE__ ) . '/scripts/textinputs_jquery.js', array( 'jquery' ) );
 	wp_enqueue_script( 'frp', plugins_url( '', __FILE__ ) . '/scripts/frp.min.js', array( 'jquery', 'rangyinputs' ) );
 
@@ -79,8 +79,8 @@ function frp_admin_print_scripts_widgets() {
 			'date' => '[frp_date format="d.m.Y"]',
 			'link' => '[frp_link]',
 			'author' => '[frp_author]',
+			'comments' => '[frp_comments]',
 		),
-		'flattrLink' => $frp_options['flattr_page'],
 		'confirmReplace' => __( "Do you want to replace current template with theme's one?", 'frp' )
 	);
 
@@ -104,20 +104,97 @@ function frp_title() {
 	return get_the_title();
 }
 
-function frp_excerpt() {
-	global $pages, $page;
+/**
+ * Gets comments number for current post in the Loop.
+ *
+ * @param array $atts Parameters:<ul>
+ * <li>bool <b>no_text</b> <tt>true</tt> to return only number without text ("1" instead "1 Comment"), <tt>false</tt>
+ * otherwise.
+ * </ul>
+ * @return string Number of comments.
+ */
+function frp_comments( $atts ) {
+	$atts = shortcode_atts( array(
+		'no_text' => false,
+	), $atts );
 
-	// Replacing current pages with our widget's page to make filter work properly.
-	$temp_pages = $pages;
-	$temp_page = $page;
-	$page = 1;
-	$pages[0] = $GLOBALS['post']->post_content;
+	ob_start();
+	if ( $atts['no_text'] ) {
+		comments_number( '0', '1', '%' );
+	} else {
+		comments_number();
+	}
+	$number = ob_get_clean();
+
+	return $number;
+}
+
+/**
+ * Sets global plugin state variable.
+ *
+ * @param string $name State name.
+ * @param mixed $state State value.
+ */
+function frp_state_set( $name, $state ) {
+	global $frp_global;
+
+	$frp_global[$name] = $state;
+}
+
+/**
+ * Unsets global plugin state variable.
+ *
+ * @param string $name State name.
+ */
+function frp_state_unset( $name ) {
+	global $frp_global;
+
+	unset( $frp_global[$name] );
+}
+
+/**
+ * Gets global plugin state variable.
+ *
+ * @param string $name State name.
+ * @return mixed State value.
+ */
+function frp_state_get( $name ) {
+	global $frp_global;
+
+	return $frp_global[$name];
+}
+
+/**
+ * Gets excerpt length currently set via state.
+ *
+ * @return int Excerpt length.
+ */
+function _frp_excerpt_length() {
+	return frp_state_get( 'excerpt_length' );
+}
+
+/**
+ * Gets excerpt of post that is currently in Loop.
+ *
+ * @param array $atts Shortcodes and their attributes.
+ * @return string Excerpt.
+ */
+function frp_excerpt( $atts ) {
+	$atts = shortcode_atts( array(
+		'length' => '',
+	), $atts );
+
+	if ( ! empty( $atts['length'] ) ) {
+		frp_state_set( 'excerpt_length', $atts['length'] );
+		add_filter( 'excerpt_length', '_frp_excerpt_length' );
+	}
 
 	$excerpt = get_the_excerpt();
 
-	// Restore current pages.
-	$page = $temp_page;
-	$pages = $temp_pages;
+	if ( ! empty( $atts['length'] ) ) {
+		remove_filter( 'excerpt_length', '_frp_excerpt_length' );
+		frp_state_unset( 'excerpt_length' );
+	}
 
 	return $excerpt;
 }
@@ -201,10 +278,10 @@ function frp_time_ago( $time ) {
  * @return array themes list.
  */
 function frp_get_themes() {
-	global $frp_themes, $frp_options;
+	global $frp_themes, $frp_global;
 
 	if ( empty( $frp_themes ) ) {
-		$themes_dir = glob( $frp_options['themes_dir'] . '*', GLOB_ONLYDIR );
+		$themes_dir = glob( $frp_global['options']['themes_dir'] . '*', GLOB_ONLYDIR );
 
 		foreach ( $themes_dir as $path ) {
 			$theme_name = basename( $path );
@@ -222,11 +299,11 @@ function frp_get_themes() {
  * @return array theme data.
  */
 function frp_get_theme( $theme_name ) {
-	global $frp_themes, $frp_options;
+	global $frp_themes, $frp_global;
 
 	$theme = array();
 	if ( ! isset( $frp_themes[$theme_name] ) ) {
-		$path = $frp_options['themes_dir'] . $theme_name;
+		$path = $frp_global['options']['themes_dir'] . $theme_name;
 		$json_file = $path . '/' . $theme_name . '.json';
 		$template_file = $path . '/template.php';
 
@@ -239,7 +316,7 @@ function frp_get_theme( $theme_name ) {
 					'readable_name' => $theme_info['name'],
 					'description' => $theme_info['description'],
 					'template' => $template,
-					'theme_url' => $frp_options['themes_url'] . $theme_name . '/'
+					'theme_url' => $frp_global['options']['themes_url'] . $theme_name . '/'
 				);
 
 				if ( is_file( $path . '/frp-' . $theme_name . '.css' ) ) {
@@ -269,7 +346,8 @@ function frp_get_theme( $theme_name ) {
  * Makes plugin data update on version change.
  */
 function frp_update_check() {
-	global $frp_options;
+	global $frp_global;
+
 	$options = get_option( 'frp_data' );
 	// Plugin version when there was no upgrade procedure.
 	$db_version = '0.3';
@@ -301,6 +379,6 @@ function frp_update_check() {
 		$widget->save_settings( $all_settings );
 	}
 
-	$options['version'] = $frp_options['version'];
+	$options['version'] = $frp_global['options']['version'];
 	update_option( 'frp_data', $options );
 }

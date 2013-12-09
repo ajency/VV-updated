@@ -98,6 +98,11 @@
 				<span class="mceIcon"></span>
 			</a>
 		</div>
+		<div class="wp_themeSkin frp-form-button-comments frp-form-button" title="<?php _e( 'Comments' ); ?>">
+			<a href="javascript:;" class="mceButton mceButtonEnabled">
+				<span class="mceIcon"></span>
+			</a>
+		</div>
 	</div>
 
 	<textarea name="<?php print $this->get_field_name( 'template' ); ?>"

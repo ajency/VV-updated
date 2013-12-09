@@ -3,8 +3,8 @@ Contributors: mpntod
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9XCNM4QSVHYT8
 Tags: shortcode,widget,twitter,rotating,rotate,rotator,tweet,tweets,animation,jquery,jquery cycle,cycle,multilingual,responsive
 Requires at least: 2.6
-Tested up to: 3.6
-Stable tag: 1.5.1
+Tested up to: 3.7
+Stable tag: 1.6.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,7 +28,7 @@ Currently the following languages are available:
 * US English *(complete)*
 * British English *(complete - mainly changing 'favorite' to 'favourite'!)*
 * Brazilian Portuguese *(complete - many thanks to Wilmerson Felipe for his help on this)*
-* German *(basic tweet display only)*
+* German *(almost complete - many thanks to Nils Kroneberg for his help on this)*
 * Spanish *(basic tweet display only)*
 * Italian *(basic tweet display only)*
 * Dutch *(public facing translation complete - many thanks to Natasja Weijer for her help on this)*
@@ -72,7 +72,7 @@ Possible variables for the shortcode include:
 	* `official_format` = `'1'` or `'2'` - show official format - optional - default is `'0'`
 	* `timeout` = time that each tweet is shown in milliseconds - optional - default is `'4000'` (i.e. 4 seconds)
 	* `links_in_new_window` = `'0'` or `'1'` - show links in a new tab or window - default is `'0'`
-	* `rotation_type` = any of the options listed on the [jQuery.cycle website](http://jquery.malsup.com/cycle/browser.html) - default is `'scrollUp'`
+	* `rotation_type` = If you are using version 1 of the JavaScript, you can use any of the options listed on the [jQuery.cycle website](http://jquery.malsup.com/cycle/browser.html) - default is `'scrollUp'.`  If you are using version 2 of the JavaScript, then the options are `'scrollUp'`,`'scrollDown'`,`'scrollHorz'`,`'scrollLeft'`,`'scrollRight'`,`'toss'`,`'scrollVert'`,`'fade'` and `'carousel'`
 	* `url_length` = sets the length that the URL should be trimmed to...
 	* `show_meta_timestamp` = `'0'` or `'1'` - show the time and date of each tweet - optional - default is `'1'`
 	* `show_meta_screen_name` = `'0'` or `'1'` - show who posted each tweet - optional - default is `'1'`
@@ -162,10 +162,36 @@ into your CSS - changing `123px;` to the width you're aiming at - either via put
 You can do this by going to the `rotatingtweets/css` directory and renaming `rotatingtweets-sample.css` to `rotatingtweets.css` and putting it in the `wp-content/uploads/` directory.  This displays a Twitter bird to the left of your tweets.  Any CSS you put into `rotatingtweets.css` won't be overwritten when the plug-in is upgraded to the latest version.
 
 == Upgrade notice ==
-= 1.5.1 =
-* Includes Carousel rotation. Enforces rules on replies and retweets even if the Twitter API doesn't.
+= 1.6.4 =
+* Add option to shorten default link length to 20 characters. Language update including new German translation. Bug fix.
 
 == Changelog ==
+= 1.6.4 =
+* Bug fix when user name not recognised.
+
+= 1.6.3 =
+* Add option to shorten default link length to 20 characters
+* Language update including new German translation from Nils Kroneberg
+* Updated Brazilian Portuguese translation from Wilmerson Felipe
+
+= 1.6.2 =
+* Fixing bug for PHP installations that don't support the 'u' modifier
+* Renaming v2 JavaScript to avoid clash with other plug-ins.
+* Extra diagnostics put in to solve regular expression problem
+
+= 1.6.1 =
+* Move to a more unique class name to avoid clashes with another template.
+
+= 1.6.0 = 
+* New support for reading from multiple accounts
+* Improved clean-up on uninstallation or deactivation
+* Addition of settings page option for timeout of connection to Twitter
+* Addition of settings page option for placement of JavaScript at the bottom of the page
+* Addition of settings page option for duration of cache
+* Fixed problem with hashtags and accents
+* Improved error messages for connection problems
+* Tidying up settings page text
+
 = 1.5.1 =
 * Enforce rules on replies and retweets even if the Twitter API doesn't
 * Fixed problem with [Magazino template](http://wordpress.org/themes/magazino)

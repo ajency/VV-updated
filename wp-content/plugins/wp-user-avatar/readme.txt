@@ -2,10 +2,10 @@
 
 Contributors: bangbay
 Donate link: http://siboliban.org/donate
-Tags: author avatar, author image, author photo, avatar, avatars, bbPress, user avatar, user image, user photo
+Tags: author image, author photo, author avatar, avatar, bbPress, profile avatar, profile image, user avatar, user image, user photo
 Requires at least: 3.5
-Tested up to: 3.6
-Stable tag: 1.5.8
+Tested up to: 3.7.1
+Stable tag: 1.6.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,7 +22,7 @@ WP User Avatar also lets you:
 * Disable [Gravatar](http://gravatar.com/) avatars and use only local avatars.
 * Use the <code>[avatar]</code> shortcode in your posts. The shortcode will work with any theme, whether it has avatar support or not.
 * Allow Contributors and Subscribers to upload their own avatars.
-* Limit upload file size for Contributors and Subscribers.
+* Limit upload file size and image dimensions for Contributors and Subscribers.
 
 == Installation ==
 
@@ -126,9 +126,10 @@ First, choose a theme that has avatar support. In your theme, you have a choice 
 
 1. Allows you to use the values "original", "large", "medium", or "thumbnail" for your avatar size.
 2. Doesn't add a fixed width and height to the image if you use the aforementioned values. This will give you more flexibility to resize the image with CSS.
-3. Optionally adds CSS classes "alignleft", "alignright", or "aligncenter" to position your avatar.
-4. Shows nothing if the user has no WP User Avatar image.
-5. Shows the user's [Gravatar](http://gravatar.com/) avatar or Default Avatar only if "Show Avatars" is enabled in your WP User Avatar settings.
+3. Allows you to use custom image sizes registered with [<code>add_image_size</code>](http://codex.wordpress.org/Function_Reference/add_image_size) (fixed width and height are added to the image).
+4. Optionally adds CSS classes "alignleft", "alignright", or "aligncenter" to position your avatar.
+5. Shows nothing if the user has no WP User Avatar image.
+6. Shows the user's [Gravatar](http://gravatar.com/) avatar or Default Avatar only if "Show Avatars" is enabled in your WP User Avatar settings.
 
 = get_avatar =
 
@@ -143,6 +144,33 @@ First, choose a theme that has avatar support. In your theme, you have a choice 
 = Can I create a custom Default Avatar? =
 In your WP User Avatar settings, you can upload your own Default Avatar.
 
+= Can I disable all Gravatar avatars? =
+
+In your WP User Avatar settings, you can select "Disable Gravatar — Use only local avatars" to disable all [Gravatar](http://gravatar.com/) avatars on your site and replace them with your Default Avatar. This will affect your registered users and non-registered comment authors.
+
+= Can Contributors or Subscribers choose their own WP User Avatar image? =
+Yes, if you enable "Allow Contributors & Subscribers to upload avatars" in the WP User Avatar settings. These users will see a slightly different interface because they are allowed only one image upload.
+
+= Will WP User Avatar work with comment author avatars? =
+
+Yes, for registered users. Non-registered comment authors will show their [Gravatar](http://gravatar.com/) avatars or Default Avatar.
+
+= Will WP User Avatar work with bbPress? =
+
+Yes!
+
+= Will WP User Avatar work with BuddyPress? =
+
+No, BuddyPress has its own custom avatar functions and WP User Avatar will override only some of them. It's best to use BuddyPress without WP User Avatar.
+
+= Will WP User Avatar work with WordPress Multisite? =
+
+Yes, however, each site has its own avatar settings. If you set a WP User Avatar image on one site, you have to set it again for different sites in your network.
+
+= How can I see which users have an avatar? =
+
+For Administrators, WP User Avatar adds a column with avatar thumbnails to your Users list table. If "Show Avatars" is enabled in your WP User Avatar settings, you will see avatars to the left of each username instead of in a new column.
+
 = Can I insert WP User Avatar directly into a post? =
 
 You can use the <code>[avatar]</code> shortcode in your posts. It will detect the author of the post or you can specify an author by username. You can specify a size, alignment, and link, but they are optional. For links, you can link to the original image file, attachment page, or a custom URL.
@@ -154,29 +182,6 @@ Outputs:
 `<a href="{fileURL}" class="wp-user-avatar-link wp-user-avatar-file">
   <img src="{imageURL}" width="96" height="96" class="wp-user-avatar wp-user-avatar-96 alignleft" />
 </a>`
-
-= Can Contributors or Subscribers choose their own WP User Avatar image? =
-Yes, if you enable "Allow Contributors & Subscribers to upload avatars" in the WP User Avatar settings. These users will see a slightly different interface because they are allowed only one image upload.
-
-= Will WP User Avatar work with comment author avatars? =
-
-Yes, for registered users. Non-registered comment authors will show their [Gravatar](http://gravatar.com/) avatars or Default Avatar.
-
-= Can I disable all Gravatar avatars? =
-
-In your WP User Avatar settings, you can select "Disable Gravatar — Use only local avatars" to disable all [Gravatar](http://gravatar.com/) avatars on your site and replace them with your Default Avatar. This will affect your registered users and non-registered comment authors.
-
-= Will WP User Avatar work with bbPress? =
-
-Yes!
-
-= Will WP User Avatar work with WordPress Multisite? =
-
-Yes, however, each site has its own avatar settings. If you set a WP User Avatar image on one site, you have to set it again for different sites in your network.
-
-= How can I see which users have an avatar? =
-
-For Administrators, WP User Avatar adds a column with avatar thumbnails to your Users list table. If "Show Avatars" is enabled in your WP User Avatar settings, you will see avatars to the left of each username instead of in a new column.
 
 = What CSS can I use with WP User Avatar? =
 
@@ -219,6 +224,90 @@ Outputs:
 * <code>has_wp_user_avatar</code>: checks if the user has a WP User Avatar image
 * [See example usage here](http://wordpress.org/extend/plugins/wp-user-avatar/installation/)
 
+= There's a call for donations in the WP User Avatar settings. How can I remove it? =
+I've spent countless hours developing this plugin for free. If you're able to give a donation I'd appreciate it, but it's by no means a requirement. You can remove the message by adding this to the <code>functions.php</code> file of your theme:
+
+`remove_action('wpua_donation_message', 'wpua_do_donation_message');`
+
+== Advanced Settings ==
+
+You can change the HTML structure of the WP User Avatar section on your profile edit page by using the functions <code>wpua_before_avatar</code> and <code>wpua_after_avatar</code>. By default, the avatar code is structured like this:
+
+`
+<h3>Avatar</h3>
+<table class="form-table">
+  <tr>
+    <th><label for="wp_user_avatar">Image</label></th>
+    <td>
+      <input type="hidden" name="wp-user-avatar" id="wp-user-avatar" value="{attachmentID}" />
+      <p id="wpua-add-button">
+        <button type="button" class="button" id="wpua-add" name="wpua-add">Edit Image</button>
+      </p>
+      <p id="wpua-preview">
+        <img src="{imageURL}" alt="" />
+        Original Size
+      </p>
+      <p id="wpua-thumbnail">
+        <img src="{imageURL}" alt="" />
+        Thumbnail
+      </p>
+      <p id="wpua-remove-button">
+        <button type="button" class="button" id="wpua-remove" name="wpua-remove">Remove</button>
+      </p>
+      <p id="wpua-message">
+        Click &ldquo;Update Profile&rdquo; to save your changes
+      </p>
+    </td>
+  </tr>
+</table>
+`
+
+To strip out the table, you would add the following filters to the <code>functions.php</code> file in your theme:
+
+`
+remove_action('wpua_before_avatar', 'wpua_do_before_avatar');
+remove_action('wpua_after_avatar', 'wpua_do_after_avatar');
+`
+
+To add your own wrapper, you could create something like this:
+
+`
+function my_before_avatar(){
+  echo '<div id="my-avatar">';
+}
+add_action('wpua_before_avatar', 'my_before_avatar');
+
+function my_after_avatar(){
+  echo '</div>';
+}
+add_action('wpua_after_avatar', 'my_after_avatar');
+`
+
+This would output:
+
+`
+<div id="my-avatar">
+  <input type="hidden" name="wp-user-avatar" id="wp-user-avatar" value="{attachmentID}" />
+  <p id="wpua-add-button">
+    <button type="button" class="button" id="wpua-add" name="wpua-add">Edit Image</button>
+  </p>
+  <p id="wpua-preview">
+    <img src="{imageURL}" alt="" />
+    Original Size
+  </p>
+  <p id="wpua-thumbnail">
+    <img src="{imageURL}" alt="" />
+    Thumbnail
+  </p>
+  <p id="wpua-remove-button">
+    <button type="button" class="button" id="wpua-remove" name="wpua-remove">Remove</button>
+  </p>
+  <p id="wpua-message">
+    Click &ldquo;Update Profile&rdquo; to save your changes
+  </p>
+</div>
+`
+
 == Screenshots ==
 
 1. WP User Avatar admin settings.
@@ -230,24 +319,54 @@ Outputs:
 
 == Changelog ==
 
+= 1.6.6. =
+* Add: Donation message
+* Bug Fix: Die page when image is too large
+* Bug Fix: Resize images uploaded through plugin only
+* Remove: Unused function
+* Update: Refactor JavaScript
+
+= 1.6.5 =
+* Bug Fix: Use entire comment object instead of just e-mail address
+
+= 1.6.4 =
+* Bug Fix: Correct avatar not showing in widget
+* Update: Check compatibility to 3.7.1
+
+= 1.6.3 =
+* Bug Fix: Checkbox value for "Crop avatars to exact dimensions"
+
+= 1.6.2 =
+* Bug Fix: Show Default Avatar if attachment doesn't exist
+* Bug Fix: manage_users_custom_column not returning values
+
+= 1.6.1 =
+* Bug Fix: Profile not saving without an avatar for Contributors & Subscribers
+
+= 1.6.0 =
+* Add: Filters to change profile HTML structure
+* Add: Recognition of sizes registered with add_image_size
+* Add: Resize image options for Contributors & Subscribers
+* Bug Fix: Rerrange CSS class names
+
 = 1.5.8 =
 * Bug Fix: Add function exists checks to prevent redeclare errors
 * Bug Fix: Page die if file upload is too big
 * Bug Fix: Upload file with submit
 
 = 1.5.7 =
-* Bug Fix: Separate out JavaScript for Subscribers
+* Bug Fix: Separate out JavaScript for Contributors & Subscribers
 * Bug Fix: Subscriber uploader not finding error type
 
 = 1.5.6 =
 * Update: Use cache for wpua_has_gravatar
 
 = 1.5.5 =
-* Bug Fix: Hide "Edit Image" button if Subscriber can't edit avatar
-* Bug Fix: Remove edit_posts capability if Subscriber can't edit avatar
+* Bug Fix: Hide "Edit Image" button if Contributors & Subscribers can't edit avatar
+* Bug Fix: Remove edit_posts capability if Contributors & Subscribers can't edit avatar
 
 = 1.5.4 =
-* Add: Option to enable avatar editing privilege for Subscribers
+* Add: Option to enable avatar editing privilege for Contributors & Subscribers
 * Add: Swedish translation
 * Update: Move inline JavaScript to wp-user-avatar.js and wp-user-avatar-admin.js
 * Update: Load JavaScript in footer
@@ -279,7 +398,7 @@ Outputs:
 * Bug Fix: Use wp_die for errors
 
 = 1.4 =
-* Add: Uploader for Subscribers and Contributors
+* Add: Uploader for Contributors & Subscribers
 * Add: Media states for avatar images
 * Add: Plugin admin settings
 * Update: Change support only to WP 3.4+
@@ -342,7 +461,7 @@ Outputs:
 = 1.1.7 =
 * Bug Fix: Change update_usermeta to update_user_meta
 
-= 1.1.6 =
+= 1.1.6.3 =
 * Bug Fix: Image not showing in user profile edit
 
 = 1.1.5a =

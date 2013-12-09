@@ -46,7 +46,7 @@ msgstr "Respond-Container Selektor"
 
 #: wp-ajaxify-comments.php:81
 msgid "Error container selector"
-msgstr "Fehler-Comtainer Selektor"
+msgstr "Fehler-Container Selektor"
 
 #: wp-ajaxify-comments.php:86
 msgid "Popup overlay"
@@ -224,19 +224,39 @@ msgstr ""
 msgid "Parameter: dom (jQuery DOM element)"
 msgstr "Parameter: dom (jQuery DOM Element)"
 
+msgid "Parameter: newDom (jQuery DOM element)"
+msgstr "Parameter: newDom (jQuery DOM element)"
+
 #: wp-ajaxify-comments.php:261
 msgid "Load comments async threshold"
-msgstr "Kommentare asychron laden (Grenzwert)"
+msgstr "Kommentare asynchron laden (Grenzwert)"
+
+msgid "Trigger to load comments async"
+msgstr "Kommentare asynchron laden (Trigger)"
+
+msgid "Trigger to load comments asynchronously ('DomReady': Load comments immediately, 'Viewport': Load comments when comments container is in viewport, 'None': Comment loading is triggered manually)."
+msgstr "Trigger um Kommentare asynchron geladen werden sollen ('DomReady': Kommentare sofort laden, 'Viewport': Kommentare laden sobald Kommentar-Container im Sichtfeld ist, 'None': Kommentare laden erfolgt manuell')."
 
 #: wp-ajaxify-comments.php:261
 msgid "Disable URL updating"
 msgstr "URL Aktualisierung unterbinden"
 
+msgid "Use uncompressed scripts"
+msgstr "Unkomprimierte Skripte nutzen"
+
+msgid "By default a compressed (and merged) JavaScript file is used, check to use uncompressed JavaScript files. Please note: If debug mode is enabled, uncompressed JavaScript files are used."
+msgstr "Standardmäßig wird eine komprimierte (und zusammengefasste) JavaScript Datei genutzt, anhaken um unkomprimierte JavaScript Dateien zu nutzen. Bitte beachten: Wenn der Debug-Modus aktiviert ist, werden unkomprimierte JavaScript Dateien genutzt."
+
+msgid "Always include scripts"
+msgstr "Skripte immer einbinden"
+
+msgid "By default JavaScript files are only included on pages where comments are enabled, check to include JavaScript files on every page. Please note: If debug mode is enabled, JavaScript files are included on every pages."
+msgstr "Standardmäßig werden JavaScript Dateien nur auf Seiten eingebunden, auf denen die Kommentarfunktion aktiviert ist, anhaken um die JavaScript Dateien auf allen Seiten einzubinden. Bitte beachten: Wenn der Debug-Modus aktiviert ist, werden JavaScript Dateien auf allen Seiten eingebunden."
+
 #: wp-ajaxify-comments.php:263
 msgid ""
-"Load comments asynchronously with secondary AJAX request if more than the "
-"specified number of comments exist. Leave empty to disable this feature."
-msgstr "Lade Kommentare mit einem zusätzlichen (asynchronen) AJAX request, wenn die angegebene Anzahl an Kommentaren existiert. Leerlassen, um diese Funktion zu deaktivieren."
+"Load comments asynchronously with secondary AJAX request if more than the specified number of comments exist (0 for always load comments asynchronously). Leave empty to disable this feature."
+msgstr "Lade Kommentare mit einem zusätzlichen (asynchronen) AJAX request, wenn die angegebene Anzahl an Kommentaren existiert (0 um Kommentare immer asynchron zu laden). Leerlassen, um diese Funktion zu deaktivieren."
 
 #: wp-ajaxify-comments.php:405
 msgid "%s is not enabled!"

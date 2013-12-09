@@ -3,8 +3,9 @@ Contributors: TheSteelRat
 Donate link: https://flattr.com/thing/646464
 Tags: recent, post, posts, widget, template, flexible, universal
 Requires at least: 3.0
-Tested up to: 3.5.2
-Stable tag: 1.0.0
+Tested up to: 3.7.1
+Stable tag: 1.0.2
+License: GPLv2 or later
 
 Displays recent posts using flexible template system. Define template for each post entry, set needed taxonomy and much more.
 
@@ -15,7 +16,7 @@ Flexible Recent Posts (FRP) plugin gives you possibility to add widget to your b
 **The main features are:**
 
 * **Template** for each post in widget. You can write your HTML-template or overwrite default in widget form.
-* **Shortcodes** support in template. You can use built-in shortcodes to insert info related to current post in widget: `title`, `featured image`, `excerpt`, `date`, `permalink`.
+* **Shortcodes** support in template. You can use built-in shortcodes to insert info related to current post in widget: `title`, `featured image`, `excerpt`, `date`, `permalink`, `author`, `comments`.
 * **Restrict terms** from which you want to display posts. Display posts from all terms or from selected only.
 * **Number of posts** to display. Set number of latest posts that will be displayed in widget.
 * **All posts links**. Select option to display link near the title or/and after all posts that will open selected posts category page. Set link title or custom link URL.
@@ -30,6 +31,10 @@ Flexible Recent Posts (FRP) plugin gives you possibility to add widget to your b
 **Translators:**
 
 * Russian (ru) - [Paul Annekov](http://www.steelrat.info/en/)
+
+**Licenses**
+
+* Uses [FatCow Icon Set](http://www.fatcow.com/free-icons) licensed under [Creative Commons Attribution 3.0 License](http://creativecommons.org/licenses/by/3.0/us/).
 
 == Installation ==
 
@@ -62,11 +67,12 @@ Displays post title.
 
 *Example*: `<h4>[frp_title]</h4>`
 
-**Excerpt** [frp_excerpt]
+**Excerpt** [frp_excerpt length=""]
 
 Displays post excerpt using [get_the_excerpt](http://codex.wordpress.org/Function_Reference/get_the_excerpt "Visit function reference page") function.
+You can specify excerpt length using `length` attribute. If not specified - default WordPress excerpt length used.
 
-*Example*: `<div class="excerpt">[frp_excerpt]</div>`
+*Example*: `<div class="excerpt">[frp_excerpt]</div>`, `[frp_excerpt length="15"]`
 
 **Date** [frp_date format="F j, Y" time_since="0"]
 
@@ -93,7 +99,21 @@ Displays name of the post's author. Set `link` parameter to 0 if you want to dis
 
 *Examples*: `[frp_author]`, `[frp_author link="1"]`, `[frp_author link="0"]`
 
+**Comments** [frp_comments no_text="1"]
+
+Displays the number of comments. Set `no_text` parameter to 1 if you want to disable comment text (just "23" instead of "23 Comments").
+
+*Examples*: `[frp_comments]`, `[frp_comments no_text="1"]`, `[frp_comments no_text="0"]`
+
 == Changelog ==
+
+= 1.0.2 =
+* Fixed problem with missing compressed JS file.
+
+= 1.0.1 =
+* Added [frp_comments] shortcode.
+* Fixed [bug](http://wordpress.org/support/topic/global-variable-post-and-id-clobbered) when main posts Loop was broken by widget.
+* Added `length` attribute to [frp_excerpt] shortcode.
 
 = 1.0.0 =
 * Added taxonomies and custom posts support. Now you can use not only categories and regular posts, but custom taxonomies and custom posts.

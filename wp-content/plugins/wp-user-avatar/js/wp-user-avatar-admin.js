@@ -1,15 +1,20 @@
 jQuery(function(){
   // Show size info only if allow uploads is checked
   jQuery('#wp_user_avatar_allow_upload').change(function(){
-    jQuery('#wpua-size-limit').removeClass('wpua-hide').toggle(jQuery('#wp_user_avatar_allow_upload').is(':checked'));
+    jQuery('#wpua-contributors-subscribers').slideToggle(jQuery('#wp_user_avatar_allow_upload').is(':checked'));
+  });
+  // Show resize info only if resize uploads is checked
+  jQuery('#wp_user_avatar_resize_upload').change(function(){
+     jQuery('#wpua-resize-sizes').slideToggle(jQuery('#wp_user_avatar_resize_upload').is(':checked'));
   });
   // Hide Gravatars if disable Gravatars is checked
   jQuery('#wp_user_avatar_disable_gravatar').change(function(){
     if(jQuery('#wp-avatars').length){
-      jQuery('#wp-avatars').toggle(!jQuery('#wp_user_avatar_disable_gravatar').is(':checked'));
+      jQuery('#wp-avatars').slideToggle(!jQuery('#wp_user_avatar_disable_gravatar').is(':checked'));
       jQuery('#wp_user_avatar_radio').trigger('click');
+    } else {
+      jQuery('#wpua-message').show();
     }
-    jQuery('#wpua-message').show();
   });
   // Add size slider
   jQuery('#wpua-slider').slider({
