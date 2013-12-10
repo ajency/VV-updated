@@ -10,10 +10,10 @@
 */
 
 /**
- * Video Campaign Section
+ * Homepage Videos Section
  *
  * @package PageLines Framework
- * @author PageLines
+ * @author Ajency.in
  */
 class VVHomeVideos extends PageLinesSection {
 
@@ -110,6 +110,48 @@ class VVHomeVideos extends PageLinesSection {
 						</div>
 					</div>
 				</div>
+			</div>
+			<div id="home-vid-carousel" class="jcarousel-wrapper">
+				<div class="jcarousel">
+					<ul class="covers">
+						<?php
+						// The Arguments
+						$args2 = array(
+							'category_name' => 'featured',
+							'posts_per_page' => 8
+						);
+
+						// The Query
+						$query = new WP_Query( $args2 );
+
+						// The Loop
+						if ( $query->have_posts() ) {
+							while ( $query->have_posts() ) {
+								$query->the_post();
+
+								$thumb = get_post_meta(get_the_ID(), 'Thumbnail', true);
+
+								echo '<li><div class="home-vid-container" style="background: url(http://videovolunteers.org/'. $thumb .') no-repeat;">';
+								echo '<a href="'. get_permalink() .'">';
+								echo '<div class="date">'. get_the_time('j\<\s\p\a\n\>F\<\b\r\>Y\<\/\s\p\a\n\>') .'</div>';
+								echo '<div class="play"><img src="'. get_stylesheet_directory_uri() .'/images/url.png" /></div>';
+								echo '<div class="caption">';
+								echo '<h5 class="title">'. get_the_title() .'</h5>';
+								echo '<div class="desc">'. get_the_excerpt() .'</div>';
+								echo '</div>';
+								echo '</a>';
+								echo '</div></li>';
+								
+							}
+						} else {
+							// no posts found
+						}
+						/* Restore original Post Data */
+						wp_reset_postdata();
+						?>
+					</ul>
+				</div>
+				<a class="jcarousel-control-prev" href="#">‹</a><a class="jcarousel-control-next" href="#">›</a>
 			</div>
 		<?php
 	}
