@@ -95,6 +95,7 @@ function output_header_bar() {
 	<?php endif; 
 
     echo '</div>';
+    echo '<div class="impact-phone"><a href="' . get_bloginfo('url') . '/category/blog/videovolunteers-impact/">See The VideoVolunteers Impact <i class="icon-angle-right"></i></a></div>';
     echo '</div></div></div></div></div>';
 }
 

@@ -77,6 +77,17 @@ body{font-family: 'Merriweather Sans', sans-serif !important; font-size: 13px;}
 				text-transform: uppercase;
 			}
 		}
+		.impact-phone {
+			text-align: center;
+			display: none;
+			font-size: 1.2em;
+			a {
+				color: @orange;
+				&:hover {
+					color: @logo-color;
+				}
+			}
+		}
 	}
 }
 /****Home Box Styles****/
@@ -232,7 +243,7 @@ div.testimonials-slider-quotecontainer {
 .logo-bar {
 	padding: 2%;
 	.impact {
-		padding: 20px 2% 20px;
+		padding: 10px 2% 10px;
 		border-top: 1px dashed #CCC;
 		margin-top: 20px;
 		border-bottom: 1px dashed #CCC;
@@ -241,6 +252,7 @@ div.testimonials-slider-quotecontainer {
 			width: 95%%;
 			margin: 0 auto;
 			text-align: center;
+			display: none;
 		}
 		.impact-desc {
 			float: none;
@@ -249,6 +261,10 @@ div.testimonials-slider-quotecontainer {
 			font-size: 0.8em;
 			padding: 5px 0 0;
 			border-left: none;
+			display: none;
+		}
+		.impact-phone {
+			display: block;
 		}
 	}
 }
@@ -3357,6 +3373,16 @@ body .content img { /* width: auto; */}
 	.main-video {
 		.home-vid-container {
 			min-height: 400px;
+			@media (max-width: 767px) { 
+				min-height: 200px !important;
+				.caption {
+					max-height: 38px;
+					overflow: hidden;
+					h4 {
+						font-size: 1.2em;
+					}
+				}
+			}
 		}
 	}
 	.sub-side {
@@ -3379,6 +3405,7 @@ body .content img { /* width: auto; */}
 				color: #fff;
 				text-transform: uppercase;
 				margin-bottom: 1em;
+				font-size: 1.5em;
 			}
 		}
 	}
@@ -3389,25 +3416,44 @@ body .content img { /* width: auto; */}
 			margin-left: 0;
 		}
 		.main-video {
-			max-height: 300px
+			max-height: 300px;
+			.home-vid-container {
+				min-height: 300px;
+			}
 		}
 		.sub-side {
-			margin-top: 120px;
+			margin-top: 0px;
 			.clearfix;
 			.sub-video {
 				width: 48%;
 				float: left;
 				margin: 0;
-				height: auto;
-				min-height: auto;
+				height: 160px;
+				min-height: 160px;
+				max-height: 160px;
+				.home-vid-container {
+					min-height: 160px;
+					.caption {
+						height: 30px;
+						overflow: hidden;
+						h4 {
+							font-size: 1em;
+						}
+					}
+				}
 			}
 			.sub-info {
 				width: 46%;
-				padding: 1%;
+				padding: 10px 1%;
 				float: right;
 				margin: 0;
-				height: auto;
-				min-height: auto;
+				height: 140px;
+				min-height: 140px;
+				max-height: 140px;
+				overflow: hidden;
+				h3 {
+					font-size: 1em;
+				}
 			}
 		}
 	}
@@ -3434,7 +3480,9 @@ body .content img { /* width: auto; */}
 			.home-vid-container {
 				min-height: 200px;
 				.caption {
-					max-height: 30%;
+					height: 40px;
+					right: 0;
+					left: 0;
 					overflow: hidden;
 				}
 			}
@@ -3455,6 +3503,9 @@ body .content img { /* width: auto; */}
 		&:hover {
 			background: @logo-color;
 			border-color: darken(@logo-color, 10%);
+		}
+		@media (max-width: 767px) { 
+			display: block;
 		}
 	}
 	.jcarousel-control-next {
@@ -3531,7 +3582,7 @@ body .content img { /* width: auto; */}
 					float: left;
 					margin-right: 0.7em;
 					min-height: 95px;
-					max-height: 110px;
+					max-height: 100px;
 					overflow: hidden;
 				}
 				.caption {
@@ -3555,6 +3606,123 @@ body .content img { /* width: auto; */}
 						color: @grey-regular;
 					}
 				}
+			}
+		}
+	}
+	@media (max-width: 767px) { 
+		.nav-tabs {
+			width: 100%;
+			float: none;
+			li {
+				float: left;
+				width: 33.333%;
+				text-align: center;
+				margin: 0;
+				a {
+					border: 0;
+					margin: 0;
+					min-height: 35px;
+					border-radius: 3px 3px 0 0;
+					h4 {
+						font-size: 100%;
+						word-wrap: break-word;
+					}
+					span {
+						display: none;
+					}
+				}
+				&:last-child {
+					float: right;
+				}
+			}
+		}
+		.tab-content {
+			width: 100%;
+			float: none;
+			display: block;
+			height: 350px;
+			overflow: hidden;
+			.tab-pane {
+				.home-tab-vid {
+					width: 100%;
+					float: none;
+					margin: 0 0 1em;
+					max-height: 100px;
+					overflow: hidden;
+				}
+			}
+		}
+	}
+}
+
+/****Campaign Widget Home Styles****/
+.campaign-3 {
+	width: 100% !important;
+	.widget-title {
+		background: 0;
+		box-shadow: none;
+		font-size: 2em;
+		padding: 0 !important;
+		font-weight: normal !important;
+		margin: 0 0 1em !important;
+		font-family: 'Merriweather Sans',sans-serif !important;
+		a {
+			color: @orange !important;
+			&:hover {
+				color: @logo-color;
+			}
+		}
+	}
+	.textwidget {
+		padding: 1em 0 !important;
+		background: none !important;
+		border-top: 1px solid lighten(@grey-regular, 30%);
+		.vidget {
+			.campaignwidget {
+				border: 1px solid @grey-regular;
+				background: #fff;
+				height: 133px;
+				margin: 0 0 0.5em;
+			}
+			a {
+				color: @logo-color;
+				text-transform: uppercase;
+				i {
+					color: @orange;
+				}
+			}
+			@media (max-width: 767px) { 
+				width: 100%;
+				float: none;
+				margin: 0 0 1em;
+				.campaignwidget {
+					height: auto;
+				}
+			}
+		}
+	}
+}
+
+/****Featured Box Widget Styles****/
+.vv_widget_box {
+	position: relative;
+	padding: 1em;
+	.vv_widget_title, .vv_widget_text {
+		display: none;
+	}
+	.vv_widget_excerpt {
+		position: absolute;
+		bottom: 1em;
+		right: 3em;
+		left: 1em;
+		padding: 0.5em;
+		text-align: right;
+		background: rgba(0,0,0,0.5);
+		a {
+			color: #fff;
+			text-transform: uppercase;
+			&:hover {
+				text-decoration: underline;
 			}
 		}
 	}

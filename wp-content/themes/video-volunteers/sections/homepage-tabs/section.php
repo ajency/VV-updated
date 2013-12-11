@@ -25,9 +25,9 @@ class VVHomeTabs extends PageLinesSection {
 		?>
 			<div id="home-tabs" class="tabbable tabs-left">
 			  <ul class="nav nav-tabs">
-			    <li class="active"><a href="#A"><h4>Issues</h4><span>Lorem Ipsum Dolor Sit Amet</span></a></li>
-			    <li><a href="#B"><h4>States</h4><span>Lorem Ipsum Dolor Sit Amet</span></a></li>
-			    <li><a href="#C"><h4>Community Correspondents</h4><span>Lorem Ipsum Dolor Sit Amet</span></a></li>
+			    <li class="active"><a href="#A"><h4>Issues</h4><span>Latest Videos on different Issues</span></a></li>
+			    <li><a href="#B"><h4>States</h4><span>Latest Videos from different States</span></a></li>
+			    <li><a href="#C"><h4>Community Correspondents</h4><span>Meet our Correspondents</span></a></li>
 			  </ul>
 			  <div class="tab-content">
 			    <div class="tab-pane active" id="A">

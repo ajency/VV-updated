@@ -103,7 +103,7 @@ class VVHomeVideos extends PageLinesSection {
 							?>
 						</div>
 						<div class="sub-info">
-							<h3>Lorem Ipsum Dolor Sit Amet</h3>
+							<h3>IndiaUnheard is the first ever community news service launched by Video Volunteers.</h3>
 							<a href="<?php echo home_url('/about/indiaunheard/'); ?>" title="IndiaUnheard">
 								<img src="<?php echo get_stylesheet_directory_uri(); ?>/images/IU.png" />
 							</a>
@@ -137,7 +137,6 @@ class VVHomeVideos extends PageLinesSection {
 								echo '<div class="play"><img src="'. get_stylesheet_directory_uri() .'/images/url.png" /></div>';
 								echo '<div class="caption">';
 								echo '<h5 class="title">'. get_the_title() .'</h5>';
-								echo '<div class="desc">'. get_the_excerpt() .'</div>';
 								echo '</div>';
 								echo '</a>';
 								echo '</div></li>';
