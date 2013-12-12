@@ -983,17 +983,17 @@ div.testimonials-slider-quotecontainer {
 #flexible-recent-posts-widget-3, #flexible-recent-posts-widget-5 {
 	position: relative;
 	background: #F2F2F2;
-	.border-radius(2px);
-	.box-shadow(0 0 5px lighten(@grey-regular, 10%));
 	margin: 5px;
 	.widget-title {
 		box-shadow: none !important;
 		padding: 0.3em 0 0.5em !important;
 		border-bottom: 1px solid lighten(@grey-regular, 30%);
+		font-size: 1.5em;
+		font-weight: normal;
 	}
 	.frp-all-category-news {
 		position: absolute;
-		top: 17px;
+		top: 20px;
 		right: 15px;
 		font-size: 0.8em;
 		text-transform: uppercase;
@@ -1027,13 +1027,17 @@ div.testimonials-slider-quotecontainer {
 					margin: 0;
 					font-family: 'TeXGyreHerosBold' !important;
 					text-transform: none;
-					font-size: 1em;
+					font-size: 1.2em;
 					a {
 						color: @logo-color;
 					}
 				}
-				.poster {
-					display: block;
+				.date, .poster {
+					color: lighten(@grey-regular, 5%);
+				}
+				.date {
+					font-style: italic;
+					margin-right: 5px;
 				}
 				.excerpt {
 					padding: 0.3em 0 0.2em;
@@ -1042,6 +1046,7 @@ div.testimonials-slider-quotecontainer {
 					max-height: 5.4em;
 					line-height: 1.4em;
 					overflow: hidden;
+					margin: 0.5em 0;
 				}
 			}
 		}
@@ -1120,8 +1125,9 @@ div.testimonials-slider-quotecontainer {
 				(4 * width: 150px) + (3 * margin-right: 1px) = 603px
 				*/
 				width: 603px;
+				width: 90%;
 				height: 100px;
-				left: 30px;
+				left: 5%;
 				ul {
 					width: 20000em;
 					position: absolute;
@@ -1321,12 +1327,23 @@ div.testimonials-slider-quotecontainer {
 				border-right: none;
 			}
 		}
+
 	}
 	.ajency {
 		padding: 10px 0;
 		text-align: right;
 		a {
 			color: @orange;
+		}
+	}
+	@media (max-width: 767px) { 
+		.span9, .span3 {
+			width: 100%;
+			float: none;
+			margin: 10px 0 5px;
+		}	
+		.ajency {
+			text-align: center;
 		}
 	}
 }
@@ -1926,10 +1943,10 @@ div.testimonials-slider-quotecontainer {
 
 #simple_nav {
 	#menu-footer-menu {
-		background: url('@{plChildRoot}/images/footer-logo.jpg') no-repeat  center; 
+		background: url('@{plChildRoot}/images/footer-logo.jpg') no-repeat  center top; 
 		text-align: center;
 		background-position-y: 2px;
-		padding: 40px 0 10px 0px;
+		padding: 50px 0 10px 0px;
 	}
 }
 
@@ -2011,10 +2028,10 @@ div.testimonials-slider-quotecontainer {
 
 #simple_nav {
 	#menu-footer-menu {
-		background: url('@{plChildRoot}/images/footer-logo.jpg') no-repeat  center; 
+		background: url('@{plChildRoot}/images/footer-logo.jpg') no-repeat  center top; 
 		text-align: center;
 		background-position-y: 2px;
-		padding: 40px 0 10px 0px;
+		padding: 50px 0 10px 0px;
 		
 	}
 }
