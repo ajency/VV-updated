@@ -3490,7 +3490,7 @@ body .content img { /* width: auto; */}
 		height: 200px;
 		width: 3000px;
 		li {
-			width: 350px;
+			width: 380px;
 			height: 200px;
 			margin: 0 5px;
 			float: left;
@@ -3599,11 +3599,13 @@ body .content img { /* width: auto; */}
 					float: left;
 					margin-right: 0.7em;
 					min-height: 95px;
-					max-height: 100px;
+					max-height: 95px;
 					overflow: hidden;
 				}
 				.caption {
 					padding: 0;
+					height: 95px;
+					overflow: hidden;
 					.cat {
 						font-size: 0.88em;
 						color: @logo-color;
@@ -3691,14 +3693,14 @@ body .content img { /* width: auto; */}
 		}
 	}
 	.textwidget {
-		padding: 1em 0 !important;
+		padding: 1em 0 0 !important;
 		background: none !important;
 		border-top: 1px solid lighten(@grey-regular, 30%);
 		.vidget {
+			margin-bottom: 0;
 			.campaignwidget {
 				border: 1px solid @grey-regular;
 				background: #fff;
-				height: 133px;
 				margin: 0 0 0.5em;
 			}
 			a {
@@ -3721,26 +3723,38 @@ body .content img { /* width: auto; */}
 }
 
 /****Featured Box Widget Styles****/
-.vv_widget_box {
-	position: relative;
-	padding: 1em;
-	.vv_widget_title, .vv_widget_text {
-		display: none;
-	}
-	.vv_widget_excerpt {
-		position: absolute;
-		bottom: 1em;
-		right: 3em;
-		left: 1em;
-		padding: 0.5em;
-		text-align: right;
-		background: rgba(0,0,0,0.5);
-		a {
-			color: #fff;
-			text-transform: uppercase;
-			&:hover {
-				text-decoration: underline;
+.vv_widget_boxes_container {
+	padding: 5px;
+	-webkit-box-sizing: border-box; 
+	-moz-box-sizing: border-box;  
+	box-sizing: border-box;  
+	.vv_widget_box {
+		position: relative;
+		padding: 0;
+		margin: 1em 0 0;
+		max-height: 200px;
+		overflow: hidden;
+		.vv_widget_title, .vv_widget_text {
+			display: none;
+		}
+		.vv_widget_excerpt {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			left: 0;
+			padding: 0.5em;
+			text-align: right;
+			background: rgba(0,0,0,0.5);
+			a {
+				color: #fff;
+				text-transform: uppercase;
+				&:hover {
+					text-decoration: underline;
+				}
 			}
+		}
+		img {
+			width: 100%;
 		}
 	}
 }
