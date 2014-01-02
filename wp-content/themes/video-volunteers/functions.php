@@ -153,44 +153,45 @@ function add_social_scripts() {
     ?>
     <script>
         jQuery(document).ready(function () {
-        jQuery('.jcarousel').jcarousel({
-        wrap: 'circular',
-                'center': true,
-                'animation': {
-        'duration': 800,
-                'easing':   'linear'
-        }
-        })
-                .jcarouselAutoscroll({
-        'interval': 4000,
+            jQuery('.jcarousel').jcarousel({
+                center: true,
+                wrap: 'circular',
+                animation: {
+                    'duration': 800,
+                    'easing':   'linear'
+                }
+            })
+            .jcarouselAutoscroll({
+                'interval': 4000,
                 'create': jQuery('.jcarousel').hover(function() {
-        jQuery(this).jcarouselAutoscroll('stop');
-        },
+                    jQuery(this).jcarouselAutoscroll('stop');
+                },
                 function() {
-                jQuery(this).jcarouselAutoscroll('start');
+                    jQuery(this).jcarouselAutoscroll('start');
                 })
+            });
+            jQuery('.jcarousel-control-prev')
+            .on('active.jcarouselcontrol', function() {
+                jQuery(this).removeClass('inactive');
+            })
+            .on('inactive.jcarouselcontrol', function() {
+                jQuery(this).addClass('inactive');
+            })
+            .jcarouselControl({
+                target: '-=1'
+            });
+            jQuery('.jcarousel-control-next')
+            .on('active.jcarouselcontrol', function() {
+                jQuery(this).removeClass('inactive');
+            })
+            .on('inactive.jcarouselcontrol', function() {
+                jQuery(this).addClass('inactive');
+            })
+            .jcarouselControl({
+            target: '+=1'
+            });
         });
-                jQuery('.jcarousel-control-prev')
-                .on('active.jcarouselcontrol', function() {
-        jQuery(this).removeClass('inactive');
-        })
-                .on('inactive.jcarouselcontrol', function() {
-        jQuery(this).addClass('inactive');
-        })
-                .jcarouselControl({
-        target: '-=1'
-        });
-                jQuery('.jcarousel-control-next')
-                .on('active.jcarouselcontrol', function() {
-        jQuery(this).removeClass('inactive');
-        })
-                .on('inactive.jcarouselcontrol', function() {
-        jQuery(this).addClass('inactive');
-        })
-                .jcarouselControl({
-        target: '+=1'
-        });
-        });</script>
+    </script>
     <?php
 }
 
