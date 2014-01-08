@@ -89,6 +89,7 @@ class VVCampaign extends PageLinesSection {
 						<div class="arrow"></div>
 						
 						<div class="social-actions">
+							
 							<h3>Voices of <?php the_title(); ?></h3>
 							<h5>Help Spread the word, Share a Story</h5>
 							<?php
@@ -114,58 +115,100 @@ class VVCampaign extends PageLinesSection {
 								// Set our variable
 								$tweet_count = $twitter_shares['count'];
 							?>
-							<div class="row-fluid">
-								<div class="span4">
-									<h6 class="soc-head">Facebook</h6>
-									<div class="socialcount">
-										<div class="count"><?php echo $total; ?></div>
-										<span>Likes and Shares</span>
-									</div>
-									<div class="soc-action">
-										<div class="fb-share-button" data-href="http://developers.facebook.com/docs/plugins/" data-type="button"></div>
-									</div>
-								</div>
-								<div class="span4">
-									<h6 class="soc-head">Twitter</h6>
-									<div class="socialcount">
-										<div class="count"><?php echo $tweet_count; ?></div>
-										<span>Tweets</span>
-									</div>
-									<div class="soc-action">
-										<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-count="none" data-size="medium">Tweet</a>
-										<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-									</div>
-								</div>
-								<div class="span4">
-									<h6 class="soc-head">Google+</h6>
-									<div class="socialcount">
-										<div class="count"><?php echo get_plusones($source_url); ?></div>
-										<span>PlusOnes</span>
-									</div>
-									<div class="soc-action">
-										<!-- Place this tag where you want the +1 button to render. -->
-										<div class="g-plusone" data-size="medium" data-annotation="none"></div>
+							<?php
+								//Get Change.org Petition ID
+								$change_id = get_post_meta($post->ID, 'vv_change_petition', true);
+								if (!empty($change_id)) {
+								
+									$API_KEY = '3ac98f5d260b8758b9e19a759f83bef44ab00da2cf16f0d6eb1ab336dae158b8';
+									$REQUEST_URL = 'http://api.change.org/v1/petitions/get_id';
+									$PETITION_URL = $change_id;
 
-										<!-- Place this tag after the last +1 button tag. -->
-										<script type="text/javascript">
-										  (function() {
-										    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-										    po.src = 'https://apis.google.com/js/platform.js';
-										    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-										  })();
-										</script>
+									$parameters = array(
+									  'api_key' => $API_KEY,
+									  'petition_url' => $PETITION_URL
+									);
+
+									$query_string = http_build_query($parameters);
+									$final_request_url = "$REQUEST_URL?$query_string";
+									$response = file_get_contents($final_request_url);
+
+									$json_response = json_decode($response, true);
+									$petition_id = $json_response['petition_id'];
+								
+								?>
+								
+								<div class="row-fluid">
+									<div class="span8">
+							<?php } ?>
+										<div class="row-fluid">
+											<div class="span4">
+												<h6 class="soc-head">Facebook</h6>
+												<div class="socialcount">
+													<div class="count"><?php echo $total; ?></div>
+													<span>Likes and Shares</span>
+												</div>
+												<div class="soc-action">
+													<div class="fb-share-button" data-href="http://developers.facebook.com/docs/plugins/" data-type="button"></div>
+												</div>
+											</div>
+											<div class="span4">
+												<h6 class="soc-head">Twitter</h6>
+												<div class="socialcount">
+													<div class="count"><?php echo $tweet_count; ?></div>
+													<span>Tweets</span>
+												</div>
+												<div class="soc-action">
+													<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-count="none" data-size="medium">Tweet</a>
+													<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+												</div>
+											</div>
+											<div class="span4">
+												<h6 class="soc-head">Google+</h6>
+												<div class="socialcount">
+													<div class="count"><?php echo get_plusones($source_url); ?></div>
+													<span>PlusOnes</span>
+												</div>
+												<div class="soc-action">
+													<!-- Place this tag where you want the +1 button to render. -->
+													<div class="g-plusone" data-size="medium" data-annotation="none"></div>
+
+													<!-- Place this tag after the last +1 button tag. -->
+													<script type="text/javascript">
+													  (function() {
+													    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+													    po.src = 'https://apis.google.com/js/platform.js';
+													    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+													  })();
+													</script>
+												</div>
+											</div>
+										</div>
+										<div class="ormail">
+											<h5>OR<br>share via email</h5>
+											<!-- AddThis Button BEGIN -->
+											<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+											<a class="addthis_button_email"></a>
+											</div>
+											<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=xa-52ccfe38091ce4f2"></script>
+											<!-- AddThis Button END -->
+										</div>
+							<?php
+								if (!empty($change_id)) { ?>
+									</div>
+									<div class="span4">
+										<div id="change-widget">
+											<div id="change_BottomBar">
+												<span id="change_Powered"><a href="http://www.change.org" target="_blank">Petitions</a> by Change.org</span>
+												<a>|</a>
+												<span id="change_Start">Start a <a href="http://www.change.org/petition" target="_blank">Petition</a> &raquo;</span>
+											</div>
+											<?php //var_dump($petition_id); ?>
+											<script type="text/javascript" src="http://e.change.org/flash_petitions_widget.js?width=300&color=F26B26&petition_id=<?php echo $petition_id; ?>"></script>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="ormail">
-								<h5>OR<br>share via email</h5>
-								<!-- AddThis Button BEGIN -->
-								<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
-								<a class="addthis_button_email"></a>
-								</div>
-								<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=xa-52ccfe38091ce4f2"></script>
-								<!-- AddThis Button END -->
-							</div>
+								<?php } ?>
 						</div>
 
 						<div class="grey-bg gradient">
