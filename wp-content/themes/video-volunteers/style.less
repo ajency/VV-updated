@@ -2811,6 +2811,45 @@ div.testimonials-slider-quotecontainer {
 		color: @grey-regular;
 		margin: 1em 0 0.5em;
 	}
+	.side-vid {
+		margin-top: 1em;
+	}
+	.arrow {
+		width: 0; 
+		height: 0; 
+		border-left: 20px solid transparent;
+		border-right: 20px solid transparent;
+		border-top: 20px solid lighten(@grey-regular, 40%);
+		margin: 0 auto 1em;
+	}
+	.grey-bg {
+		padding: 0 1em 1em;
+		background: lighten(@grey-regular, 40%);
+		.arrow {
+			border-top-color: #fff;
+		}
+		.goal {
+			text-align: center;
+			text-transform: uppercase;
+			color: @orange;
+		}
+		.achieve {
+			text-align: center;
+			color: @logo-color;
+			margin: 0.5em 0 1em;
+			font-size: 1.5em;
+		}
+		&.gradient {
+			background: rgb(238,238,238); /* Old browsers */
+			background: -moz-linear-gradient(top,  lighten(@grey-regular, 20%) 0%, lighten(@grey-regular, 40%) 100%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,lighten(@grey-regular, 20%)), color-stop(100%,lighten(@grey-regular, 40%))); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top,  lighten(@grey-regular, 20%) 0%,rlighten(@grey-regular, 40%) 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top,  lighten(@grey-regular, 20%) 0%,lighten(@grey-regular, 40%) 100%); /* Opera 11.10+ */
+			background: -ms-linear-gradient(top,  lighten(@grey-regular, 20%) 0%,lighten(@grey-regular, 40%) 100%); /* IE10+ */
+			background: linear-gradient(to bottom,  lighten(@grey-regular, 20%) 0%,lighten(@grey-regular, 40%) 100%); /* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
+		}
+	}
 }
 
 .campaign-video-list {
@@ -2841,6 +2880,40 @@ div.testimonials-slider-quotecontainer {
 			margin-top: 7px;
 		}
 			
+		}
+	}
+}
+
+.campaign-goal-list {
+	.goals {
+		list-style: none;
+		margin: 1em;
+		padding: 0;
+		counter-reset: goal-counter;
+		li {
+			float: left;
+			width: 30%;
+			margin: 0 1% 1em;
+			.title {
+				text-transform: uppercase;
+				border-bottom: 1px dotted @grey-regular;
+				font-size: 1.3em;
+				color: darken(@grey-regular, 20%);
+				padding: 0 0 0.5em;
+				&:before {
+					content: counter(goal-counter);
+					counter-increment: goal-counter;
+					font-size: 3em;
+					color: lighten(@grey-regular, 10%);
+					font-weight: bold;
+					margin-right: 5px;
+				}
+			}
+			.desc {
+				margin: 0.5em 0 0;
+				color: darken(@grey-regular, 10%);
+				font-size: 0.8em;
+			}
 		}
 	}
 }
@@ -2945,6 +3018,204 @@ padding-bottom: 9px;
 		}
 	}
 }
+}
+
+#grid{
+	width: 100%;
+	position: relative;
+}
+.box {
+	background: transparent;
+	float: left;
+	position: relative;
+	.vidthumb {
+		margin: 0;
+	}
+	.videotitle {
+		color: @logo-color;
+		font-weight: bold;
+		padding-bottom: 6px;
+		font-size: 15px;
+		padding: 0.5em;
+	}
+	.videodesc {
+		color: #aaaaaa;
+		margin-top: 7px;
+		padding: 1em;
+		overflow: hidden;
+	}
+}
+#fillers{
+	display: none;
+}
+.fillerBox {
+	background: @logo-color;
+	float: left;
+	position: relative;
+	&.grey {
+		background: @grey-regular;
+	}
+	&.lgrey {
+		background: lighten(@grey-regular, 20%);
+	}
+}
+
+.campaign-videos {
+	h3 {
+		text-align: center;
+		color: darken(@grey-regular, 20%);
+	}
+	h5 {
+		text-align: center;
+		color: darken(@grey-regular, 10%);
+		margin: 0.5em 0 1em;
+	}
+}
+
+#campaign-story-stream {
+	margin: 1em 3em 0;
+	.stream-header {
+		margin: 0 0 0.3em;
+		a {
+			font-family: 'Droid Sans', sans-serif !important;
+			font-size: 2em;
+			line-height: 1em;
+			color: @logo-color;
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+	.meta {
+		color: lighten(@grey-regular, 20%);
+		font-size: 0.88em;
+		margin: 0 0 0.2em;
+		font-style: normal !important;
+		time {
+			font-weight: bold;
+		}
+		a {
+			color: @orange;
+		}
+	}
+	.meta-share {
+		padding: 0.3em 0.3em 0;
+		background: lighten(@grey-regular, 45%);
+	}
+	.excerpt {
+		color: @grey-regular;
+		margin: 0.5em 0;
+	}
+	.updates-header {
+		font-family: 'TeXGyreHerosBold' !important;
+		font-size: 2em;
+		color: @orange;
+		margin: 0.3em 0;
+		padding: 0 0 0.2em;
+	}
+	.sub-head {
+		margin: 0.3em 0 1em;
+		color: darken(@grey-regular, 20%);
+	}
+	.updates {
+		counter-reset: li;
+		list-style: none;
+		margin: 1em 0 0;
+		li {
+			position: relative;
+			padding: 0.5em 0.5em 0.5em 2em;
+			margin: 0 0 0.3em;
+			border-bottom: 1px solid lighten(@grey-regular, 40%);
+			&:before {
+				content: counter(li);
+				counter-increment: li;
+				padding: 1em 1.3em;
+				position: absolute;
+				left: -1.5em;
+				background: @orange;
+				color: #fff;
+				.border-radius(100%);
+				font-family: 'TeXGyreHerosBold' !important;
+				font-size: 1.2em;
+				display: none;
+			}
+			.meta {
+				padding: 0.5em 0 1em !important;
+				text-align: center;
+				color: @orange;
+				font-size: 0.88em !important;
+				span {
+					color: @orange;
+					font-weight: bold;
+					font-size: 2em;
+					display: block;
+				}
+			}
+			h3 {
+				margin: 0 0 0.5em;
+				font-size: 1.3em;
+				a {
+					color: darken(@grey-regular, 30%);
+					&:hover {
+						color: @logo-color;
+					}
+				}
+				small {
+					color: @grey-regular;
+					font-size: 0.66em;
+				}
+			}
+			.excerpt {
+				font-size: 0.92em !important;
+			}
+			&:hover {
+				background: #fafafa;
+			}
+			&:last-child {
+				border-bottom: 0;
+			}
+		}
+	}
+}
+
+.social-actions {
+	padding: 1em;
+	h3 {
+		text-align: center;
+		color: @orange;
+	}
+	h5 {
+		text-align: center;
+		color: darken(@grey-regular, 10%);
+		margin: 0.5em 0 1em;
+	}
+	.soc-head {
+		text-align: center;
+		color: lighten(@grey-regular, 30%);
+	}
+	.socialcount {
+		text-align: center;
+		.count {
+			color: @orange;
+			font-size: 3em;
+			font-weight: bold;
+			padding: 0.5em;
+			border-bottom: 2px solid darken(@grey-regular, 20%);
+		}
+		span {
+			display: block;
+			padding: 0.5em;
+			color: @grey-regular;
+		}
+	}
+	.soc-action {
+		padding: 0.5em;
+		text-align: center;
+	}
+	.addthis_toolbox {
+		width: 36px;
+		margin: 0 auto 1em;
+	}
 }
 
 /****All Campaigns Page Styles****/

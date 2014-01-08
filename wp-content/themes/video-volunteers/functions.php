@@ -25,6 +25,7 @@ function output_css_js() {
 
     echo '<link href="http://fonts.googleapis.com/css?family=Merriweather+Sans:400,700,300,800" rel="stylesheet" type="text/css">';
     echo '<script src="' . get_bloginfo('stylesheet_directory') . '/js/isotope.js"></script>';
+    echo '<script src="' . get_bloginfo('stylesheet_directory') . '/js/mason.js"></script>';
 }
 
 add_action('pagelines_head_last', 'output_css_js', 10);
@@ -1559,13 +1560,14 @@ class Campaign_Widget extends WP_Widget {
 // class Campaign_Widget
 // register Campaign_Widget widget
 add_action('widgets_init', function() {
-            register_widget('Campaign_Widget');
-        });
+    register_widget('Campaign_Widget');
+});
 
+/****Campaign Videos Meta Boxes****/
 function agc_campaign_video_meta_box() {
     add_meta_box(
             'campaign_video_box', // $id
-            'video - For this Campaign', // $title
+            'Video - For this Campaign', // $title
             'show_campaign_video_box', // $callback
             'page', // $page
             'normal', // $context
@@ -1724,6 +1726,139 @@ function agc_video_campaign_box_save($event_id) {
     update_post_meta($event_id, 'agc_video_campaign', $data);
 }
 
+/****Campaign Goals Meta Boxes****/
+function agc_campaign_goals_meta_box() {
+    add_meta_box(
+            'campaign_goals_box', // $id
+            'Goals - For this Campaign', // $title
+            'show_campaign_goals_box', // $callback
+            'page', // $page
+            'normal', // $context
+            'high'); // $priority
+}
+
+add_action('add_meta_boxes', 'agc_campaign_goals_meta_box');
+
+/**
+ * Add video.
+ */
+function show_campaign_goals_box($event) {
+    $nonce = wp_create_nonce('agc_goals_campaign');
+    $goals = get_post_meta($event->ID, 'agc_goals_campaign', true);
+    ?>
+
+    <div class="goals-fields">
+        <?php
+        if ($goals == "") {
+            ?>
+            <input type="hidden" id="agc_goals_campaign_nonce"  name="agc_goals_campaign_nonce" value="<?php echo $nonce; ?>">
+            <table width="100%">
+                <tbody>
+                    <tr>
+                        <td class="agc-time-date-label"><span class="agc-time-date-title"><?php echo "Goal Title"; ?>
+                            </span>
+                        </td>
+                        <td> <input type="text" name="txtgoals[]" size="50" value="<?php echo (isset($val['goals'])) ? $val['goals'] : '' ?>" />
+
+                        </td>
+
+                        <td class="agc-time-date-label"><span class="agc-time-date-title"><?php echo "Type"; ?>
+                            </span>
+                        </td>
+                        <td><input type="text" name="txttype[]" size="50" value="CampaignGoal" readonly=readonly />
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="agc-time-date-label"><span class="agc-time-date-title"><?php echo "Goal Description"; ?>
+                            </span></td>
+                        <td colspan="3" class="agc-time-date-label"><span class="agc-time-date-title">
+                                <textarea name="goals-description[]" rows="4" cols="60"><?php echo (isset($val['goals-description'])) ? $val['goals-description'] : '' ?></textarea>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <?php
+        } else {
+            foreach ($goals as $val) {
+                ?>
+                <input type="hidden" id="agc_goals_campaign_nonce"  name="agc_goals_campaign_nonce" value="<?php echo $nonce; ?>">
+                <table width="100%">
+                    <tbody>
+                        <tr>
+                            <td class="agc-time-date-label"><span class="agc-time-date-title"><?php echo "Goal Title"; ?>
+                                </span>
+                            </td>
+                            <td> <input type="text" name="txtgoals[]" size="50" value="<?php echo (isset($val['goals'])) ? $val['goals'] : '' ?>" />
+
+                            </td>
+
+                            <td class="agc-time-date-label"><span class="agc-time-date-title"><?php echo "Type"; ?>
+                                </span>
+                            </td>
+                            <td><input type="text" name="txttype[]" size="50" value="CampaignGoal" readonly=readonly />
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="agc-time-date-label"><span class="agc-time-date-title"><?php echo "Goal Description"; ?>
+                                </span></td>
+                            <td colspan="3" class="agc-time-date-label"><span class="agc-time-date-title">
+                                    <textarea name="goals-description[]" rows="4" cols="60"><?php echo (isset($val['goals-description'])) ? $val['goals-description'] : '' ?></textarea>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <?php
+            }
+        }
+        ?>
+    </div>
+
+    <input type="button" id="addgoal" value="Add Goal" />
+    <script>
+        jQuery("#addgoal").click(function()
+        {
+        jQuery(".goals-fields").append("<table width='100%'><tbody><tr><td class='agc-time-date-label'><span class='agc-time-date-title'><?php echo 'Goal Title'; ?></span></td><td> <input type='text' name='txtgoals[]' size='50' value='<?php echo (isset($goals['title'])) ? $goals['title'] : '' ?>' /></td><td class='agc-time-date-label'><span class='agc-time-date-title'><?php echo 'Type'; ?></span></td><td><input type='text' name='txttype[]' size='50' value='CampaignGoal' readonly=readonly /></td></tr><tr><td class='agc-time-date-label'><span class='agc-time-date-title'><?php echo 'Goal Description'; ?></span></td><td colspan='3' class='agc-time-date-label'><span class='agc-time-date-title'><textarea name='goals-description[]' rows='4' cols='60'><?php echo (isset($goals['goals-description'])) ? $goals['goals-description'] : '' ?></textarea></span></td></tr></tbody></table>"); });</script>
+
+
+    <?php
+}
+
+add_action('save_post', 'agc_goals_campaign_box_save', 10);
+
+function agc_goals_campaign_box_save($event_id) {
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+        return;
+
+    if (!wp_verify_nonce($_POST['agc_goals_campaign_nonce'], 'agc_goals_campaign'))
+        return;
+
+    // Check permissions
+    if ('page' == $_POST['post_type']) {
+        if (!current_user_can('edit_page', $event_id))
+            return;
+    }
+    else {
+        if (!current_user_can('edit_post', $event_id))
+            return;
+    }
+    $data = array();
+    $i = 0;
+    foreach ($_POST['txtgoals'] as $goalsname) {
+        $items = array();
+        $items["goals"] = $goalsname;
+        $items["type"] = $_POST['txttype'][$i];
+        $items["goals-description"] = $_POST['goals-description'][$i];
+        $data[] = $items;
+        $i++;
+    }
+    update_post_meta($event_id, 'agc_goals_campaign', $data);
+}
+
 // Facebook Open Graph Tags - add to head
 add_action('wp_head', 'add_fb_open_graph_tags');
 
@@ -1800,3 +1935,20 @@ function vv_page_featured_image() {
 }
 
 add_action('pagelines_loop_before_post_content', 'vv_page_featured_image');
+
+/*****Google+ Counter*****/
+function get_plusones($url) {
+ 
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, "https://clients6.google.com/rpc");
+    curl_setopt($curl, CURLOPT_POST, 1);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, '[{"method":"pos.plusones.get","id":"p","params":{"nolog":true,"id":"' . $url . '","source":"widget","userId":"@viewer","groupId":"@self"},"jsonrpc":"2.0","key":"p","apiVersion":"v1"}]');
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+    $curl_results = curl_exec ($curl);
+    curl_close ($curl);
+ 
+    $json = json_decode($curl_results, true);
+ 
+    return intval( $json[0]['result']['metadata']['globalCounts']['count'] );
+}
