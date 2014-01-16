@@ -115,8 +115,8 @@ add_action('get_search_form', 'search_form_icon', 10);
 function output_tag_line() {
     if (is_front_page()) {
         echo '<div class="texture"><div class="content"><div class="content-pad"><div class="tag-line fix">';
-        echo '<h3>We train marginalised communities to produce</h3>';
-        echo '<h1><em>News</em>, <em>Watch It</em>, <em>Take Action</em> &amp; <em>Devise Solutions</em>.</h1>';
+        echo '<h3>We empower <a href="'. get_bloginfo( "url" ) .'/about/indiaunheard/community-correspondent-profiles/">marginalized communities</a> to</h3>';
+        echo '<h1><a href="'. get_bloginfo( "url" ) .'/category/videos/"><em>Produce stories</em></a>, <a href="'. get_bloginfo( "url" ) .'/all-campaigns/"><em>Take Action</em></a> &amp; <a href="'. get_bloginfo( "url" ) .'/category/blog/videovolunteers-impact/"><em>Devise Solutions</em></a>.</h1>';
         echo '</div></div></div></div></div>';
     } else {
         //Do not output Tag Line

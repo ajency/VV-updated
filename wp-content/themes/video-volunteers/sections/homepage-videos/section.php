@@ -106,7 +106,7 @@ class VVHomeVideos extends PageLinesSection {
 							?>
 						</div>
 						<div class="sub-info">
-							<h3>IndiaUnheard is the first ever community news service launched by Video Volunteers.</h3>
+							<h3>New videos are published every day by VV’s IndiaUnheard Community News Service.</h3>
 							<a href="<?php echo home_url('/about/indiaunheard/'); ?>" title="IndiaUnheard">
 								<img src="<?php echo get_stylesheet_directory_uri(); ?>/images/IU.png" />
 							</a>
