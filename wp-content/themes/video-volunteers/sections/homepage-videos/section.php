@@ -42,6 +42,7 @@ class VVHomeVideos extends PageLinesSection {
 								$query->the_post();
 
 								$thumb = get_post_meta(get_the_ID(), 'Thumbnail', true);
+								$excerpt = strip_tags(get_the_excerpt());
 
 								echo '<div class="home-vid-container" style="background: url(http://videovolunteers.org/'. $thumb .') no-repeat;">';
 								echo '<a href="'. get_permalink() .'">';
@@ -49,7 +50,7 @@ class VVHomeVideos extends PageLinesSection {
 								echo '<div class="play"><img src="'. get_stylesheet_directory_uri() .'/images/url.png" /></div>';
 								echo '<div class="caption">';
 								echo '<h4 class="title">'. get_the_title() .'</h4>';
-								echo '<div class="desc">'. get_the_excerpt() .'</div>';
+								echo '<div class="desc">'. $excerpt .'</div>';
 								echo '</div>';
 								echo '</a>';
 								echo '</div>';
@@ -83,6 +84,7 @@ class VVHomeVideos extends PageLinesSection {
 									$query->the_post();
 
 									$thumb = get_post_meta(get_the_ID(), 'Thumbnail', true);
+									$excerpt = strip_tags(get_the_excerpt());
 
 									echo '<div class="home-vid-container" style="background: url(http://videovolunteers.org/'. $thumb .') no-repeat;">';
 									echo '<a href="'. get_permalink() .'">';
@@ -90,7 +92,7 @@ class VVHomeVideos extends PageLinesSection {
 									echo '<div class="play"><img src="'. get_stylesheet_directory_uri() .'/images/url.png" /></div>';
 									echo '<div class="caption">';
 									echo '<h5 class="title">'. get_the_title() .'</h5>';
-									echo '<div class="desc">'. get_the_excerpt() .'</div>';
+									echo '<div class="desc">'. $excerpt .'</div>';
 									echo '</div>';
 									echo '</a>';
 									echo '</div>';
