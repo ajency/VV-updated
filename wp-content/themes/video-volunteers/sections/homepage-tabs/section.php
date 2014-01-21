@@ -34,7 +34,7 @@ class VVHomeTabs extends PageLinesSection {
 			      	<?php
 						// The Query
 						global $wpdb;
-						$sql = "select p.ID as pid, p.post_title as ptitle ,t.name as tname, t.term_id as tid from wp_posts p join wp_term_relationships r on p.ID = r.object_id join wp_terms t on t.term_id = r.term_taxonomy_id where post_type = 'post' and post_status = 'publish'and t.term_id in (select term_id from wp_term_taxonomy where parent = 16 ) order by ID desc";
+						$sql = "select p.ID as pid, p.post_author as author, p.post_title as ptitle ,t.name as tname, t.term_id as tid from wp_posts p join wp_term_relationships r on p.ID = r.object_id join wp_terms t on t.term_id = r.term_taxonomy_id where post_type = 'post' and post_status = 'publish'and t.term_id in (select term_id from wp_term_taxonomy where parent = 16 ) order by ID desc";
 
 						$datas = $wpdb->get_results($sql, ARRAY_A);
 						$check_category = array();
@@ -44,19 +44,23 @@ class VVHomeTabs extends PageLinesSection {
 						
 						// The Loop
 						foreach($datas as $data){
+                                                 
 							if(!in_array($data["tid"], $check_category) && !in_array($data["pid"], $check_post)  && $cnt <6 ) {
 								$check_category[] = $data["tid"];
+                                                                $user_info = get_userdata($data["author"]);
+                                                              
 								$check_post[] = $data["pid"];
 								$thumb = get_post_meta($data["pid"], 'Thumbnail', true);
 
 								echo '<div class="home-tab-vid">';
 								echo '<a href="'. get_permalink($data["pid"]) .'" class="thumb"><img src="http://videovolunteers.org/'. $thumb .'" /></a>';
 								echo '<div class="caption">';
-								echo '<div class="cat">Issue: '. $data["tname"] .'</div>';
+								echo '<div class="cat"><a href="'.get_category_link($data["tid"]).'">Issue: '. $data["tname"] .'</a></div>';
 								echo '<h6 class="title"><a href="'. get_permalink($data["pid"]) .'">'. get_the_title($data["pid"]) .'</a></h6>';
 								echo '<div class="date">Posted on '. get_the_time('F j, Y', $data["pid"]) .'</div>';
-								echo '<div class="desc">'. human_time_diff( get_the_time('U', $data["pid"]), current_time('timestamp') ) . ' ago</div>';
-								echo '</div>';
+								//echo '<div class="desc">'. human_time_diff( get_the_time('U', $data["pid"]), current_time('timestamp') ) . ' ago</div>';
+								echo '<div class="desc">-by '.$user_info->display_name.'</div>';
+                                                                echo '</div>';
 								echo '</div>';
 								$cnt++;
 							}
@@ -68,17 +72,18 @@ class VVHomeTabs extends PageLinesSection {
 						/* Restore original Post Data */
 						wp_reset_postdata();
 					?>
+                                <a href='<?php echo site_url();?>/category/videos' class='alignright'>More...</a>
 			    </div>
 
 			    <div class="tab-pane" id="B">
 			    	<?php
 						// The Query
 						global $wpdb;
-						$sql = "select p.ID as pid, p.post_title as ptitle ,t.name as tname, t.term_id as tid from wp_posts p join wp_term_relationships r on p.ID = r.object_id join wp_terms t on t.term_id = r.term_taxonomy_id where post_type = 'post' and post_status = 'publish'and t.term_id in (select term_id from wp_term_taxonomy where parent in (select term_id from wp_term_taxonomy where parent = 10) ) order by ID desc";
+						$sql = "select p.ID as pid, p.post_author as author, p.post_title as ptitle ,t.name as tname, t.term_id as tid from wp_posts p join wp_term_relationships r on p.ID = r.object_id join wp_terms t on t.term_id = r.term_taxonomy_id where post_type = 'post' and post_status = 'publish'and t.term_id in (select term_id from wp_term_taxonomy where parent in (select term_id from wp_term_taxonomy where parent = 10) ) order by ID desc";
 
 						$datas = $wpdb->get_results($sql, ARRAY_A);
 						$check_category = array();
-
+                                                
 						$check_post = array();
 						$cnt = 0;
 						
@@ -86,17 +91,19 @@ class VVHomeTabs extends PageLinesSection {
 						foreach($datas as $data){
 							if(!in_array($data["tid"], $check_category) && !in_array($data["pid"], $check_post)  && $cnt <6 ) {
 								$check_category[] = $data["tid"];
+                                                                $user_info = get_userdata($data["author"]);
 								$check_post[] = $data["pid"];
 								$thumb = get_post_meta($data["pid"], 'Thumbnail', true);
 
 								echo '<div class="home-tab-vid">';
 								echo '<a href="'. get_permalink($data["pid"]) .'" class="thumb"><img src="http://videovolunteers.org/'. $thumb .'" /></a>';
 								echo '<div class="caption">';
-								echo '<div class="cat">State: '. $data["tname"] .'</div>';
+								echo '<div class="cat"><a href="'.get_category_link($data["tid"]).'">State: '. $data["tname"] .'</a></div>';
 								echo '<h6 class="title"><a href="'. get_permalink($data["pid"]) .'">'. get_the_title($data["pid"]) .'</a></h6>';
 								echo '<div class="date">Posted on '. get_the_time('F j, Y', $data["pid"]) .'</div>';
-								echo '<div class="desc">'. human_time_diff( get_the_time('U', $data["pid"]), current_time('timestamp') ) . ' ago</div>';
-								echo '</div>';
+								//echo '<div class="desc">'. human_time_diff( get_the_time('U', $data["pid"]), current_time('timestamp') ) . ' ago</div>';
+								echo '<div class="desc">-by '.$user_info->display_name.'</div>';
+                                                                echo '</div>';
 								echo '</div>';
 								$cnt++;
 							}
@@ -108,6 +115,7 @@ class VVHomeTabs extends PageLinesSection {
 						/* Restore original Post Data */
 						wp_reset_postdata();
 					?>
+                                <a href='<?php echo site_url();?>/category/states' class='alignright'>More...</a>
 			    </div>
 
 			    <div class="tab-pane" id="C">
@@ -137,6 +145,7 @@ class VVHomeTabs extends PageLinesSection {
 						</div>
 					<?php }
 			    ?>
+                                <a href='<?php echo site_url();?>/about/indiaunheard/community-correspondent-profiles/' class='alignright'>More...</a>
 			    </div>
 			  </div>
 			</div>
