@@ -141,7 +141,7 @@ class VVHomeTabs extends PageLinesSection {
 			  </div>
 			</div>
 			<script type="text/javascript">
-				jQuery('.tabbable a').click(function (e) {
+				jQuery('.tabbable .nav-tabs li a').click(function (e) {
 				  e.preventDefault();
 				  jQuery(this).tab('show');
 				})
