@@ -69,7 +69,7 @@ function output_header_bar() {
     echo '<a href="' . get_bloginfo('url') . '" class="logo-link"><img src="' . get_bloginfo('stylesheet_directory') . '/images/site-logo.png" alt="Video Volunteers" /></a>';
     echo '<div class="impact fix">';
     echo '<div class="impact-image">';
-    echo '<a href="' . get_bloginfo('url') . '/category/blog/videovolunteers-impact/"><img src="' . get_bloginfo('stylesheet_directory') . '/images/impact.png" alt="Video Volunteers" /></a>';
+    echo '<a href="' . get_bloginfo('url') . '/our-impact/"><img src="' . get_bloginfo('stylesheet_directory') . '/images/impact.png" alt="Video Volunteers" /></a>';
     echo '</div>';
     echo '<div class="impact-desc">';
 
@@ -943,7 +943,7 @@ function is_tree($pid) {
 /* * **Display Sticky Post on Blog Page*** */
 
 function display_blog_sticky() {
-    if ( is_front_page() || is_single() || is_category('videos') || ( in_category('videos') || post_is_in_descendant_category(16) ) || is_tree('8333') || is_tree('8743') || is_search() || is_page_template('page.allcampaigns.php') || is_page('contact') ) {
+    if ( is_front_page() || is_single() || is_category('videos') || ( in_category('videos') || post_is_in_descendant_category(16) ) || is_tree('8333') || is_tree('8743') || is_search() || is_page_template('page.allcampaigns.php') || is_page( array('contact', 'our-impact') ) ) {
         //Do Nothing
     } else {
         $sticky = get_option('sticky_posts');
