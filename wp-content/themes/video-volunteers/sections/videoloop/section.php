@@ -22,7 +22,7 @@ class PageLinesVideoLoop extends PageLinesSection {
 	*/
    function section_template() {
 		
-		if ( is_category( array('blog', 'videovolunteers-impact') ) ) { 
+		if ( is_category( array('blog', 'videovolunteers-impact', 'in-depth') ) ) { 
 			//Run Regular Post Loop
 			$theposts = new PageLinesPosts();
 			$theposts->load_loop();

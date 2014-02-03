@@ -879,43 +879,43 @@ function output_category_info() {
    
     if (is_author() || is_category('blog')) {
         //Do Nothing!
-    } elseif (post_is_in_descendant_category(16)) { ?>
-            <div class="issue-section">
-                <?php if (is_category('videos')) { ?>
-                    <h1><?php echo $cat_name; ?></h1>
-                    <?php
-                } else {
-                    $image_src = s8_get_taxonomy_image(get_term($cat, 'category'), 'thumbnail');
-                    ?>
-                    <h1>
-
-                        <?php
-                            if ( is_category( array(11, 44, 45, 46, 47, 48, 12, 58, 54, 55, 3085, 56, 53, 57, 13, 38, 39, 40, 41, 42 , 43, 14, 59, 60, 61, 15, 49, 50, 51, 52) ) ) {  ?>
-                                   
-                                   <span>State: </span>
-
-                            <?php } else { ?>
-                                
-                                <span>Issue: </span>
-
-                            <?php }
-                        ?>
-                        <?php echo $cat_name; ?>
-                    </h1>
-                    <p>
-                        <?php
-                            echo $image_src;
-                            echo $cat_desc;
-                        ?>
-                    </p>
-                <?php } ?>
-            </div>
-            <?php
-        
-    } else { ?>
+    } elseif ( is_category(array('in-depth', 'videovolunteers-impact', 'from-the-field', 'vv-campaigns')) ) { ?>
         <div class="issue-section">
             <h1><span>Read: </span><?php echo $cat_name; ?></h1>
             <p><?php echo $cat_desc; ?></p>
+        </div>   
+    <?php  
+    } else { ?>
+        
+        <div class="issue-section">
+            <?php if (is_category('videos')) { ?>
+                <h1><?php echo $cat_name; ?></h1>
+                <?php
+            } else {
+                $image_src = s8_get_taxonomy_image(get_term($cat, 'category'), 'thumbnail');
+                ?>
+                <h1>
+
+                    <?php
+                        if ( is_category( array(11, 44, 45, 46, 47, 48, 12, 58, 54, 55, 3085, 56, 53, 57, 13, 38, 39, 40, 41, 42 , 43, 14, 59, 60, 61, 15, 49, 50, 51, 52) ) ) {  ?>
+                               
+                               <span>State: </span>
+
+                        <?php } else { ?>
+                            
+                            <span>Issue: </span>
+
+                        <?php }
+                    ?>
+                    <?php echo $cat_name; ?>
+                </h1>
+                <p>
+                    <?php
+                        echo $image_src;
+                        echo $cat_desc;
+                    ?>
+                </p>
+            <?php } ?>
         </div>
     <?php
     }
