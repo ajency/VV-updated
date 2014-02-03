@@ -22,12 +22,12 @@ class PageLinesVideoLoop extends PageLinesSection {
 	*/
    function section_template() {
 		
-		if ( is_category( 'blog' ) ) { 
+		if ( is_category( array('blog', 'videovolunteers-impact') ) ) { 
 			//Run Regular Post Loop
 			$theposts = new PageLinesPosts();
 			$theposts->load_loop();
 		}
-		if ( is_category( 'videos-ajax' ) ) { //CHANGED TO IMPLEMENT NO AJAX DEFAULT
+		/*if ( is_category( 'videos-ajax' ) ) { //CHANGED TO IMPLEMENT NO AJAX DEFAULT
 			
 			$filter = array(
 				'hide_empty' => 0, 
@@ -82,7 +82,7 @@ class PageLinesVideoLoop extends PageLinesSection {
 				});
 			</script>
 			<?php
-		}
+		}*/
 		elseif ( ( is_author() ) || ( in_category( 'videos' ) || post_is_in_descendant_category( 16 ) ) ) {
 			
 			if ( is_author() )

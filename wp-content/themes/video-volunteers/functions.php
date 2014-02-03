@@ -877,13 +877,9 @@ function output_category_info() {
     $cat_name = $cat->name;
     $cat_desc = $cat->description;
    
-    if (is_author()) {
+    if (is_author() || is_category('blog')) {
         //Do Nothing!
-    } else {
-        if (is_category('videos') || post_is_in_descendant_category(16)) {
-            
-           
-            ?>
+    } elseif (post_is_in_descendant_category(16)) { ?>
             <div class="issue-section">
                 <?php if (is_category('videos')) { ?>
                     <h1><?php echo $cat_name; ?></h1>
@@ -894,46 +890,34 @@ function output_category_info() {
                     <h1>
 
                         <?php
-                        if (post_is_in_descendant_category(16)) {
-                            if (post_is_in_descendant_category(11)) {                             
-                               if (is_category('blog')) { ?>
-                                    <span>Read: </span> 
-                                  
-                               <?php   } else {                              
-                                ?>
-                                <span>State: </span>
-                                 <?php }
-                            } else {
-                                ?>
-                                <span>Issue: </span>
-                                <?php
-                            }
-                        } else {
+                            if ( is_category( array(11, 44, 45, 46, 47, 48, 12, 58, 54, 55, 3085, 56, 53, 57, 13, 38, 39, 40, 41, 42 , 43, 14, 59, 60, 61, 15, 49, 50, 51, 52) ) ) {  ?>
+                                   
+                                   <span>State: </span>
 
-                            //Do Nothing!
-                        }
+                            <?php } else { ?>
+                                
+                                <span>Issue: </span>
+
+                            <?php }
                         ?>
                         <?php echo $cat_name; ?>
                     </h1>
-                    <p><?php
-                        echo $image_src;
-                        echo $cat_desc;
-                        ?></p>
+                    <p>
+                        <?php
+                            echo $image_src;
+                            echo $cat_desc;
+                        ?>
+                    </p>
                 <?php } ?>
             </div>
             <?php
-        } else {
-            if (is_category('blog')) {
-                // Do Nothing
-            } else {
-                ?>
-                <div class="issue-section">
-                    <h1><span>Read: </span><?php echo $cat_name; ?></h1>
-                    <p><?php echo $cat_desc; ?></p>
-                </div>
-                <?php
-            }
-        }
+        
+    } else { ?>
+        <div class="issue-section">
+            <h1><span>Read: </span><?php echo $cat_name; ?></h1>
+            <p><?php echo $cat_desc; ?></p>
+        </div>
+    <?php
     }
 }
 
@@ -1038,9 +1022,7 @@ function save_featured_auth_field($user_id) {
 /* * **Function to output Blog Sub-categories*** */
 
 function output_blog_cats() {
-    if (is_category('videos') || ( in_category('videos') || post_is_in_descendant_category(16) ) || is_author()) {
-        //Do Nothing
-    } else {
+    if (is_category('blog')) {
         $cat = get_category(get_query_var('cat'));
         $args = array(
             'parent' => $cat->cat_ID,
@@ -1056,6 +1038,8 @@ function output_blog_cats() {
         }
 
         echo '</div>';
+    } else {
+        //Do Nothing
     }
 }
 
