@@ -3,8 +3,8 @@ Contributors: TheSteelRat
 Donate link: https://flattr.com/thing/646464
 Tags: recent, post, posts, widget, template, flexible, universal
 Requires at least: 3.0
-Tested up to: 3.7.1
-Stable tag: 1.0.2
+Tested up to: 3.8
+Stable tag: 1.0.3
 License: GPLv2 or later
 
 Displays recent posts using flexible template system. Define template for each post entry, set needed taxonomy and much more.
@@ -106,6 +106,9 @@ Displays the number of comments. Set `no_text` parameter to 1 if you want to dis
 *Examples*: `[frp_comments]`, `[frp_comments no_text="1"]`, `[frp_comments no_text="0"]`
 
 == Changelog ==
+
+= 1.0.3 =
+* Fixed problem with CSS stylesheet in page content and not in the head section.
 
 = 1.0.2 =
 * Fixed problem with missing compressed JS file.

@@ -1,14 +1,30 @@
-jQuery(function(){
+jQuery(function($){
   // Add enctype to form with JavaScript as backup
-  jQuery('#your-profile').attr('enctype', 'multipart/form-data');
+  $('#your-profile').attr('enctype', 'multipart/form-data');
+  // Store WP User Avatar ID
+  var wpuaID = $('#wp-user-avatar').val();
+  // Store WP User Avatar src
+  var wpuaSrc = $('#wpua-preview').find('img').attr('src');
   // Remove WP User Avatar
-  jQuery('body').on('click', '#wpua-remove', function(e){
+  $('body').on('click', '#wpua-remove', function(e){
     e.preventDefault();
-    jQuery(this).hide();
-    jQuery('#wpua-edit, #wpua-thumbnail').hide();
-    jQuery('#wpua-preview').find('img').attr('src', wpua_custom.avatar_thumb).removeAttr('width', "").removeAttr('height', "");
-    jQuery('#wp-user-avatar').val("");
-    jQuery('#wpua-message').show();
-    jQuery('#wp_user_avatar_radio').trigger('click');
+    $('#wpua-original').remove();
+    $('#wpua-remove-button, #wpua-thumbnail').hide();
+    $('#wpua-preview').find('img:first').hide();
+    $('#wpua-preview').prepend('<img id="wpua-original" height="98" />');
+    $('#wpua-original').attr('src', wpua_custom.avatar_thumb);
+    $('#wp-user-avatar').val("");
+    $('#wpua-message, #wpua-original, #wpua-undo-button').show();
+    $('#wp_user_avatar_radio').trigger('click');
+  });
+  // Undo WP User Avatar
+  $('body').on('click', '#wpua-undo', function(e){
+    e.preventDefault();
+    $('#wpua-original').remove();
+    $('#wpua-message, #wpua-undo-button').hide();
+    $('#wpua-remove-button, #wpua-thumbnail').show();
+    $('#wpua-preview').find('img:first').attr('src', wpuaSrc).show();
+    $('#wp-user-avatar').val(wpuaID);
+    $('#wp_user_avatar_radio').trigger('click');
   });
 });

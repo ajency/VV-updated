@@ -3,8 +3,8 @@ Contributors: mpntod
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9XCNM4QSVHYT8
 Tags: shortcode,widget,twitter,rotating,rotate,rotator,tweet,tweets,animation,jquery,jquery cycle,cycle,multilingual,responsive
 Requires at least: 2.6
-Tested up to: 3.7
-Stable tag: 1.6.4
+Tested up to: 3.8
+Stable tag: 1.6.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,7 @@ Currently the following languages are available:
 * Italian *(basic tweet display only)*
 * Dutch *(public facing translation complete - many thanks to Natasja Weijer for her help on this)*
 * French *(almost complete - many thanks to [Alexandre Trudel](http://wordpress.org/support/profile/alexandretrudel) for his help on this)*
+* Serbian *(complete - many thanks to Borisa Djuraskovic at [Web Hosting Hub](http://www.webhostinghub.com/) for his help on this)*
 
 If you have made the plug-in work in your language, please send the translations you'd like to see or, even better, the relevant [gettext PO and MO files](http://codex.wordpress.org/I18n_for_WordPress_Developers) to [me](http://www.martintod.org.uk/contact-martin/) and I will then share them with everyone else. You can download [the latest POT file](http://plugins.svn.wordpress.org/rotatingtweets/trunk/languages/rotatingtweets.pot), and [PO files in each language](http://plugins.svn.wordpress.org/rotatingtweets/trunk/languages/) from this site. You may find [Poedit](http://www.poedit.net/) rather useful for translation and creation of PO and MO files - although the PO files themselves are quite simple text files and can be edited in Notepad or [Notepad++](http://notepad-plus-plus.org/).
 
@@ -61,7 +62,7 @@ Possible variables for the shortcode include:
 * **Required settings** - at least one of the following three settings is required for the short-code to function:
 	* `screen_name` = Twitter user name
 	* `url` = Twitter user URL. If `screen_name` is empty and this link is valid, `screen_name` will be set to the user name included in `url`
-	* `search` = a term to search for
+	* `search` = a term to search for. There's a useful guide to using Twitter's search function at https://support.twitter.com/articles/71577-using-advanced-search
 * **Twitter options**
 	* `include_rts` = `'0'` or `'1'` - include retweets - optional - default is `'0'`
 	* `exclude_replies` = `'0'` or `'1'` - exclude replies - optional - default is `'0'`
@@ -83,7 +84,7 @@ Possible variables for the shortcode include:
 		* `prev` = content for the prev button (default `'prev'`)
 		* `next` = content for the next button (default `'next'`)
 		* `middot` = content for the space between the buttons (default `' &amp;middot; '`)
-		* `np_pos` = position for 'next' and 'prev' buttons - `'top'` or `'bottom'` (default `'top'`)
+		* `np_pos` = position for 'next' and 'prev' buttons - `'top'`, `'bottom'` or `'tweets'` (default `'top'`)
 * **Twitter follow button**
 	* `show_follow` = `'0'` or `'1'` - show follow button - optional - default is `'0'`
 	* `no_show_count` = `'0'` or `'1'` - remove the follower count from the Twitter follow button - optional - default is `'0'`
@@ -108,7 +109,7 @@ Try something like:
 `<?php echo do_shortcode( "[rotatingtweets screen_name='your_twitter']" ) ?>`
 
 = How can I pull information from two accounts into one widget =
-The easiest way is to use a search term like `'from:account1 OR from:account2'`.  There's a list of advanced Twitter search options at https://support.twitter.com/articles/71577-using-advanced-search
+The easiest way is to list more than one account in the 'Twitter name' box in the widget or use something like `screen_name = 'account1 account2'` in the shortcode.
 
 = How often does the plug-in call Twitter =
 In most cases, each use (or "instance") of this plug-in gets data from Twitter every 2 minutes. The exception is when two or more instances share the same settings (screen name etc.), in which case they share the same data rather than each calling it separately.
@@ -162,10 +163,29 @@ into your CSS - changing `123px;` to the width you're aiming at - either via put
 You can do this by going to the `rotatingtweets/css` directory and renaming `rotatingtweets-sample.css` to `rotatingtweets.css` and putting it in the `wp-content/uploads/` directory.  This displays a Twitter bird to the left of your tweets.  Any CSS you put into `rotatingtweets.css` won't be overwritten when the plug-in is upgraded to the latest version.
 
 == Upgrade notice ==
-= 1.6.4 =
-* Add option to shorten default link length to 20 characters. Language update including new German translation. Bug fix.
+= 1.6.9 =
+* Bug fix for error introduced in 1.6.8.
 
 == Changelog ==
+= 1.6.9 =
+* Bug fix.
+
+= 1.6.8 =
+* Shrinking cache size to reduce memory problems.
+* Improved diagnostics.
+* Clarified instructions.
+
+= 1.6.7 =
+* Fix next/prev buttons for v. 2 of Javascript.
+* Add next/prev `np_pos='tweets'` option to documentation.  
+* Fix bug on admin page when `WP_DEBUG` is set.
+
+= 1.6.6 =
+* Corrected the 16x16 icon to the latest Twitter logo.
+
+= 1.6.5 =
+* Language update including new Serbian translation. Solved an unusual styling problem.
+
 = 1.6.4 =
 * Bug fix when user name not recognised.
 

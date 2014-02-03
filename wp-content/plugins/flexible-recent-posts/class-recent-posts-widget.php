@@ -11,7 +11,7 @@ class RecentPostsWidget extends WP_Widget
 		);
 
 		if ( is_active_widget( false, false, $this->id_base ) ) {
-			add_action( 'wp_head', array( &$this, 'enqueue_styles' ) );
+			add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_styles' ) );
 		}
 	}
 

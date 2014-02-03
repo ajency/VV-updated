@@ -3,7 +3,7 @@
 Plugin Name: Flexible Recent Posts
 Plugin URI: http://steelrat.info/
 Description: Displays recent posts using flexible template system.
-Version: 1.0.2
+Version: 1.0.3
 Author: SteelRat
 Author URI: http://steelrat.info/
 License: GPLv2 or later
@@ -44,7 +44,7 @@ add_filter( 'plugin_row_meta', 'frp_plugin_row_meta', 10, 2 );
 
 $frp_global = array(
 	'options' => array(
-		'version' => '1.0.2',
+		'version' => '1.0.3',
 		'faq_page' => 'http://wordpress.org/extend/plugins/flexible-recent-posts/faq/',
 		'feature_request_page' => 'http://frp.idea.informer.com/',
 		'themes_url' => plugin_dir_url( __FILE__ ) . 'themes/',

@@ -201,7 +201,7 @@ if(!class_exists('rotatingtweets_TwitterOauth')):
 	   */
 	  function http($url, $method, $postfields = NULL) {
 
-		if(WP_DEBUG) echo "<!-- wp_remote_request() variables in lib/wp_twitteroauth.php: \n\n\$url = ".esc_url($url)."\n";
+		if(WP_DEBUG && ! is_admin()) echo "<!-- wp_remote_request() variables in lib/wp_twitteroauth.php: \n"; // $url = ".esc_url($url)."\n";
 		if(!empty($method)):
 			$args['method']=$method;
 		endif;
@@ -210,7 +210,8 @@ if(!class_exists('rotatingtweets_TwitterOauth')):
 		endif;
 		$args['timeout'] = $this->timeout;
 		$args['sslverify'] = $this->ssl_verifypeer;
-		if(WP_DEBUG):
+
+		if(WP_DEBUG && ! is_admin()):
 			echo "\n\$args = ";
 			if(isset($args)):
 				print_r($args);
@@ -219,12 +220,13 @@ if(!class_exists('rotatingtweets_TwitterOauth')):
 			endif;
 			echo "\n-->\n";
 		endif;
+		$startwrrtime = microtime(true);
 		$response = wp_remote_request($url,$args);
-		if(WP_DEBUG) echo "<!-- wp_remote_request() in lib/wp_twitteroauth.php successfully completed -->\n";
+		if(WP_DEBUG && ! is_admin()) echo "<!-- wp_remote_request() in lib/wp_twitteroauth.php successfully completed in ".number_format(microtime(true)-$startwrrtime,4)." seconds -->\n";
 		return($response);
 
 	/*
-		if(WP_DEBUG) echo "<!-- Using curl API to access data directly -->";
+		if(WP_DEBUG && ! is_admin()) echo "<!-- Using curl API to access data directly -->";
 		$this->http_info = array();
 		$ci = curl_init();
 		# Curl settings 
