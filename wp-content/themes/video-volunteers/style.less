@@ -4055,12 +4055,29 @@ body .content img { /* width: auto; */}
 		.accordion-heading {
 			background: lighten(@grey-regular, 40%);
 			margin: 0;
+			position: relative;
 			.accordion-toggle {
 				font-size: 1.4em;
 				color: @logo-color;
 				font-weight: bold;
 				br {
 					display: none;
+				}
+				&:before {
+					content: '-';
+					display: block;
+					position: absolute;
+					top: 0px;
+					left: -30px;
+					background: @orange;
+					color: #fff;
+					padding: 5px 10px;
+				}
+				&.collapsed {
+					&:before {
+						content: '+';
+						background: @logo-color;
+					}
 				}
 			}
 		}
