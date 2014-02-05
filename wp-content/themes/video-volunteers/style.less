@@ -3035,10 +3035,11 @@ padding-bottom: 9px;
 	position: relative;
 }
 .box {
-	background: transparent;
+	background: #000;
 	float: left;
 	position: relative;
-	.vidthumb {
+	overflow: hidden;
+	.vid-thumb {
 		margin: 0;
 	}
 	.videotitle {
@@ -3062,11 +3063,28 @@ padding-bottom: 9px;
 	background: @logo-color;
 	float: left;
 	position: relative;
+	.center {
+		text-align: center;
+		a {
+			display: block;
+			position: absolute;
+			color: #fff;
+			font-size: 1.2em;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+		}
+	}
 	&.grey {
 		background: @grey-regular;
 	}
 	&.lgrey {
 		background: lighten(@grey-regular, 20%);
+	}
+	&:hover {
+		background: @orange;
+		text-shadow: 0 0 3px #fff;
 	}
 }
 
@@ -4060,6 +4078,7 @@ body .content img { /* width: auto; */}
 				font-size: 1.4em;
 				color: @logo-color;
 				font-weight: bold;
+				padding-left: 40px;
 				br {
 					display: none;
 				}
@@ -4068,7 +4087,7 @@ body .content img { /* width: auto; */}
 					display: block;
 					position: absolute;
 					top: 0px;
-					left: -31px;
+					left: 0px;
 					background: @orange;
 					color: #fff;
 					padding: 5px 10px;

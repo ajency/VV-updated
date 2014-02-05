@@ -1,10 +1,10 @@
 <?php
 /*
-	Section: Campaign Page
+	Section: New Campaign Page
 	Author: Ajency
 	Author URI: http://www.ajency.in
 	Description: The Video Campaign Section. Includes videos & campaign information.
-	Class Name: VVCampaign	
+	Class Name: VVNewCampaign	
 	Workswith: templates, main, header, morefoot
 	Failswith: 404_page
 */
@@ -15,7 +15,7 @@
  * @package PageLines Framework
  * @author PageLines
  */
-class VVCampaign extends PageLinesSection {
+class VVNewCampaign extends PageLinesSection {
 
 	/**
 	* Section template.
@@ -24,6 +24,14 @@ class VVCampaign extends PageLinesSection {
 		global $post;		
 		?>
 		<div class="campaign-container">
+			<div id="fb-root"></div>
+			<script>(function(d, s, id) {
+			  var js, fjs = d.getElementsByTagName(s)[0];
+			  if (d.getElementById(id)) return;
+			  js = d.createElement(s); js.id = id;
+			  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=379592158829471";
+			  fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));</script>
 			<div class="row-fluid">
 				<div class="span12">
 					<div id="campaign-page">
@@ -149,6 +157,156 @@ class VVCampaign extends PageLinesSection {
 													<span>Likes and Shares</span>
 												</div>
 												<div class="soc-action">
+													<div class="fb-share-button" data-href="<?php echo $source_url; ?>" data-type="button"></div>
+												</div>
+											</div>
+											<div class="span4">
+												<h6 class="soc-head">Twitter</h6>
+												<div class="socialcount">
+													<div class="count"><?php echo $tweet_count; ?></div>
+													<span>Tweets</span>
+												</div>
+												<div class="soc-action">
+													<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-count="none" data-size="medium">Tweet</a>
+													<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+												</div>
+											</div>
+											<div class="span4">
+												<h6 class="soc-head">Google+</h6>
+												<div class="socialcount">
+													<div class="count"><?php echo get_plusones($source_url); ?></div>
+													<span>PlusOnes</span>
+												</div>
+												<div class="soc-action">
+													<!-- Place this tag where you want the +1 button to render. -->
+													<div class="g-plusone" data-size="medium" data-annotation="none"></div>
+
+													<!-- Place this tag after the last +1 button tag. -->
+													<script type="text/javascript">
+													  (function() {
+													    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+													    po.src = 'https://apis.google.com/js/platform.js';
+													    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+													  })();
+													</script>
+												</div>
+											</div>
+										</div>
+										<div class="ormail">
+											<h5>OR<br>share via email</h5>
+											<!-- AddThis Button BEGIN -->
+											<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+											<a class="addthis_button_email"></a>
+											</div>
+											<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=xa-52ccfe38091ce4f2"></script>
+											<!-- AddThis Button END -->
+										</div>
+							<?php
+								if (!empty($change_id)) { ?>
+									</div>
+									<div class="span4">
+										<div id="change-widget">
+											<div id="change_BottomBar">
+												<span id="change_Powered"><a href="http://www.change.org" target="_blank">Petitions</a> by Change.org</span>
+												<a>|</a>
+												<span id="change_Start">Start a <a href="http://www.change.org/petition" target="_blank">Petition</a> &raquo;</span>
+											</div>
+											<?php //var_dump($petition_id); ?>
+											<!--<script type="text/javascript" src="http://e.change.org/flash_petitions_widget.js?width=300&color=F26B26&petition_id=<?php echo $petition_id; ?>"></script>-->
+										</div>
+									</div>
+								</div>
+								<?php } ?>
+						</div>
+
+						<div class="grey-bg gradient">
+							<div class="arrow"></div>
+							<div class="campaign-videos">
+								<h3>Voices of <?php the_title(); ?></h3>
+								<h5>Help Spread the word, Share a Story</h5>
+								<?php
+									$nonce = wp_create_nonce('agc_video_campaign');
+									$campaign_vids 	= get_post_meta($post->ID, 'agc_video_campaign', true);
+								?>
+								<div id="grid" class="clearfix">
+									<?php if($campaign_vids!='')
+									{
+										foreach ( $campaign_vids as $c_vid ) { 
+										
+										 $videoID = youtube_id_from_url($c_vid['videolink']);
+										 if($c_vid['name']!='') {
+											?>
+											<div class="box">
+												<div class="vid-thumb">
+													<?php echo do_shortcode('[pl_video type="youtube" id="'.$videoID.'"]'); ?>
+												</div>
+											</div>
+											<?php } 
+										}
+									}?>
+								</div>
+								<div id="fillers">
+									<div class="fillerBox"><div class="center"><a href="http://www.youtube.com/user/VideoVolunteers" target="_blank"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/IU.png"></a></div></div>
+									<div class="fillerBox grey"><div class="center"><a href="<?php echo get_bloginfo('url'); ?>/all-campaigns/">Our Campaigns</a></div></div>
+									<div class="fillerBox lgrey"><div class="center"><a href="<?php echo get_bloginfo('url'); ?>/our-impact/">Our Impact</a></div></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="widget_stream" id="campaign-story-stream">
+						<?php 
+							$stream_id = get_post_meta($post->ID, 'vv_belongs_to_display', true);
+							$updates = check_for_updates($stream_id);
+							if($updates) {
+							?>
+							<h2 class="updates-header">
+								<span><?php echo count($updates); ?> Stories About</span> <?php echo get_the_title($stream_id); ?>
+							</h2>
+							<h5 class="sub-head">Help Spread the word, Share a Story</h5>
+							<ol class="updates">
+								<?php foreach ($updates as $up) { 
+								setup_postdata( $up );
+								?>
+								<li>
+									<div class="row-fluid">
+										<div class="span1">
+											<div class="meta">
+												<?php echo get_the_time( '\<\s\p\a\n\>d\<\/\s\p\a\n\> M Y', $up->ID ); ?> 
+											</div>
+										</div>
+										<div class="span11">
+											<h3><a href="<?php echo get_permalink($up); ?>"><?php echo $up->post_title; ?> </a><small><?php echo human_time_diff( get_the_time('U', $up), current_time('timestamp') ) . ' ago'; ?></small></h3>
+											<div class="excerpt"><?php echo substr(get_the_content($up), 0, 360); ?>...</div>
+										</div>
+									</div>
+								</li>
+								<?php } ?>
+							</ol>
+						<?php } ?>
+
+						<hr>
+
+						<div class="social-actions">
+							
+							<h3>Voices of <?php the_title(); ?></h3>
+							<h5>Help Spread the word, Share a Story</h5>
+							
+							<?php
+								//Get Change.org Petition ID
+								$change_id = get_post_meta($post->ID, 'vv_change_petition', true);
+								if (!empty($change_id)) {?>
+								
+								<div class="row-fluid">
+									<div class="span8">
+							<?php } ?>
+										<div class="row-fluid">
+											<div class="span4">
+												<h6 class="soc-head">Facebook</h6>
+												<div class="socialcount">
+													<div class="count"><?php echo $total; ?></div>
+													<span>Likes and Shares</span>
+												</div>
+												<div class="soc-action">
 													<div class="fb-share-button" data-href="http://developers.facebook.com/docs/plugins/" data-type="button"></div>
 												</div>
 											</div>
@@ -204,77 +362,13 @@ class VVCampaign extends PageLinesSection {
 												<span id="change_Start">Start a <a href="http://www.change.org/petition" target="_blank">Petition</a> &raquo;</span>
 											</div>
 											<?php //var_dump($petition_id); ?>
-											<script type="text/javascript" src="http://e.change.org/flash_petitions_widget.js?width=300&color=F26B26&petition_id=<?php echo $petition_id; ?>"></script>
+											<!--<script type="text/javascript" src="http://e.change.org/flash_petitions_widget.js?width=300&color=F26B26&petition_id=<?php echo $petition_id; ?>"></script>-->
 										</div>
 									</div>
 								</div>
 								<?php } ?>
 						</div>
 
-						<div class="grey-bg gradient">
-							<div class="arrow"></div>
-							<div class="campaign-videos">
-								<h3>Voices of <?php the_title(); ?></h3>
-								<h5>Help Spread the word, Share a Story</h5>
-								<?php
-									$nonce = wp_create_nonce('agc_video_campaign');
-									$campaign_vids 	= get_post_meta($post->ID, 'agc_video_campaign', true);
-								?>
-								<div id="grid" class="clearfix">
-									<?php if($campaign_vids!='')
-									{
-										foreach ( $campaign_vids as $c_vid ) { 
-										
-										 $videoID = youtube_id_from_url($c_vid['videolink']);
-										 if($c_vid['name']!='') {
-											?>
-											<div class="box">
-												<div class="vid-thumb">
-													<?php echo do_shortcode('[pl_video type="youtube" id="'.$videoID.'"]'); ?>
-												</div>
-											</div>
-											<?php } 
-										}
-									}?>
-								</div>
-								<div id="fillers">
-									<div class="fillerBox"></div>
-									<div class="fillerBox grey"></div>
-									<div class="fillerBox lgrey"></div>
-								</div>
-							</div>
-						</div>
-
-						<div class="widget_stream" id="campaign-story-stream">
-						<?php 
-							$stream_id = get_post_meta($post->ID, 'vv_belongs_to_display', true);
-							$updates = check_for_updates($stream_id);
-							if($updates) {
-						?>
-						<h2 class="updates-header">
-							<span><?php echo count($updates); ?> Stories About</span> <?php echo get_the_title($stream_id); ?>
-						</h2>
-						<h5 class="sub-head">Help Spread the word, Share a Story</h5>
-						<ol class="updates">
-							<?php foreach ($updates as $up) { 
-							setup_postdata( $up );
-							?>
-							<li>
-								<div class="row-fluid">
-									<div class="span1">
-										<div class="meta">
-											<?php echo get_the_time( '\<\s\p\a\n\>d\<\/\s\p\a\n\> M Y', $up->ID ); ?> 
-										</div>
-									</div>
-									<div class="span11">
-										<h3><a href="<?php echo get_permalink($up); ?>"><?php echo $up->post_title; ?> </a><small><?php echo human_time_diff( get_the_time('U', $up), current_time('timestamp') ) . ' ago'; ?></small></h3>
-										<div class="excerpt"><?php echo substr(get_the_content($up), 0, 360); ?>...</div>
-									</div>
-								</div>
-							</li>
-							<?php } ?>
-						</ol>
-						<?php } ?>
 					</div>
 					</div>
 				</div>
@@ -302,6 +396,11 @@ class VVCampaign extends PageLinesSection {
 				},
 				layout: 'fluid',
 				gutter: 2
+			}, function(){
+				jQuery(window).load(function() {
+					var h = jQuery('.fillerBox').height();
+					jQuery('.fillerBox .center a').css('line-height', h + 'px');
+				});
 			});
 		});
 		</script>
