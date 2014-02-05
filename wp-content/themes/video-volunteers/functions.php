@@ -1148,7 +1148,8 @@ function show_custom_meta_box() {
 
     echo '<input type="hidden" name="vv_belongs_to_nonce" value="' . wp_create_nonce(basename(__FILE__)) . '" />';
     echo "&nbsp;<select name='vv_belongs_to' id='vv_belongs_to'>";
-    echo "<option value='none'>Parent Story with Updates</option>";
+    echo "<option value='none'>Select</option>";
+    echo "<option value='parent'>Parent Story with Updates</option>";
     foreach ($posts as $ps) {
         if ($meta['vv_belongs_to'][0] == $ps->ID)
             echo"<option value='$ps->ID' selected>$ps->post_title</option>";
@@ -1164,7 +1165,7 @@ function get_main_stories() {
         'meta_query' => array(
             array(
                 'key' => 'vv_belongs_to',
-                'value' => 'none',
+                'value' => 'parent',
             )
         )
     );

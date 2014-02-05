@@ -126,7 +126,32 @@ class VVNewCampaign extends PageLinesSection {
 							<?php
 								//Get Change.org Petition ID
 								$change_id = get_post_meta($post->ID, 'vv_change_petition', true);
-								if (!empty($change_id)) { ?>
+								if (!empty($change_id)) { 
+
+									$API_KEY = '3ac98f5d260b8758b9e19a759f83bef44ab00da2cf16f0d6eb1ab336dae158b8';
+									$REQUEST_URL = 'http://api.change.org/v1/petitions/get_id';
+									$PETITION_URL = $change_id;
+
+									$parameters = array(
+									  'api_key' => $API_KEY,
+									  'petition_url' => $PETITION_URL
+									);
+
+									$query_string = http_build_query($parameters);
+									$final_request_url = "$REQUEST_URL?$query_string";
+									$response = file_get_contents($final_request_url);
+
+									$json_response = json_decode($response, true);
+									$petition_id = $json_response['petition_id'];
+
+									$signatures_url = 'http://api.change.org/v1/petitions/'.$petition_id.'/signatures';
+									$final_sig_url = "$signatures_url?$query_string";
+									$sig_response = file_get_contents($final_sig_url);
+
+									$sig_json_response = json_decode($sig_response, true);
+									$sig_count = $sig_json_response['signature_count'];
+
+								?>
 								
 								<div class="row-fluid">
 									<div class="span8">
@@ -187,6 +212,9 @@ class VVNewCampaign extends PageLinesSection {
 									</div>
 									<div class="span4">
 										<div id="change-widget">
+											<p class="count">
+												<span><?php echo number_format($sig_count, '0', '.', ','); ?></span> signatures on
+											</p>
 											<a href="<?php echo $change_id; ?>" target="_blank"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/Change.org_Logo.png" alt="Change.org" class="img-responsive"></a>
 											<a href="<?php echo $change_id; ?>" target="_blank">Sign The Petition</a>
 										</div>
@@ -242,6 +270,7 @@ class VVNewCampaign extends PageLinesSection {
 							<ol class="updates">
 								<?php foreach ($updates as $up) { 
 								setup_postdata( $up );
+								$content = get_the_content($up); 
 								?>
 								<li>
 									<div class="row-fluid">
@@ -252,7 +281,7 @@ class VVNewCampaign extends PageLinesSection {
 										</div>
 										<div class="span11">
 											<h3><a href="<?php echo get_permalink($up); ?>"><?php echo $up->post_title; ?> </a><small><?php echo human_time_diff( get_the_time('U', $up), current_time('timestamp') ) . ' ago'; ?></small></h3>
-											<div class="excerpt"><?php echo substr(get_the_content($up), 0, 360); ?>...</div>
+											<div class="excerpt"><?php echo substr(wp_filter_nohtml_kses( $content ), 0, 360); ?>...</div>
 										</div>
 									</div>
 								</li>
@@ -332,6 +361,9 @@ class VVNewCampaign extends PageLinesSection {
 									</div>
 									<div class="span4">
 										<div id="change-widget">
+											<p class="count">
+												<span><?php echo number_format($sig_count, '0', '.', ','); ?></span> signatures on
+											</p>
 											<a href="<?php echo $change_id; ?>" target="_blank"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/Change.org_Logo.png" alt="Change.org" class="img-responsive"></a>
 											<a href="<?php echo $change_id; ?>" target="_blank">Sign The Petition</a>
 										</div>
