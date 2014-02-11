@@ -26,7 +26,11 @@ class BlogPageSidebar extends PageLinesSection {
 	* Section template.
 	*/
    function section_template() {
-	 	 pagelines_draw_sidebar($this->id, $this->name);
+   		if(is_category('videovolunteers-impact')) {
+   			// DO Nothing
+   		} else {
+	 		pagelines_draw_sidebar($this->id, $this->name);
+	 	}
 	}
 
 }

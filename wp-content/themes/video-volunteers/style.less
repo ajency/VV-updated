@@ -986,6 +986,34 @@ div.testimonials-slider-quotecontainer {
 					}
 				}
 			}
+			.impact-post {
+				padding: 0.5em;
+				h5 {
+					a {
+						color: @logo-color;
+						&:hover {
+							color: @orange;
+						}
+					}
+				}
+				p {
+					margin: 0;
+				}
+				.date, .poster {
+					color: @grey-regular;
+					font-size: 0.8em;
+				}
+				.excerpt {
+					font-size: 0.92em;
+					margin: 0.3em 0 0;
+					padding: 0.2em 0 0;
+					border-top: 1px solid lighten(@grey-regular, 40%);
+					color: darken(@grey-regular, 10%);
+					a {
+						font-style: italic;
+					}
+				}
+			}
 		}
 	}
 }
@@ -2347,6 +2375,7 @@ div.testimonials-slider-quotecontainer {
 		height: 100px;
 		max-height: 100px;
 		overflow: hidden;
+		background: transparent;
 		h3 {
 			a {
 				font-family: 'TeXGyreHerosBoldItalic' !important;
@@ -3365,6 +3394,9 @@ padding-bottom: 9px;
 		h1, h2, h3, h4, h5, h6 {
 			color: @logo-color;
 		}
+		h1 {
+			margin-bottom: 0.5em;
+		}
 		p, div {
 			margin: 0 0 1.6em;
 			font-size: 1em;
@@ -3574,6 +3606,14 @@ padding-bottom: 9px;
 
 /****Impact Sidebar Styles****/
 .impact-assessment {
+	position: relative;
+	.absolute-more {
+		position: absolute;
+		top: 19px;
+		right: 15px;
+		font-size: 0.88em;
+		color: @orange;
+	}
 	ol {
 		list-style: decimal inside;
 		padding: 0 0 0 0.33em;
