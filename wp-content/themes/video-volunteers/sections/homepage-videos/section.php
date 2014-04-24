@@ -121,7 +121,8 @@ class VVHomeVideos extends PageLinesSection {
 						// The Arguments
 						$args2 = array(
 							'category_name' => 'featured',
-							'posts_per_page' => 8
+							'posts_per_page' => 8,
+							'offset' => 10
 						);
 
 						// The Query

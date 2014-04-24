@@ -44,10 +44,11 @@ class VVHomeTabs extends PageLinesSection {
 						
 						// The Loop
 						foreach($datas as $data){
-                                                 
+                            $do_not_duplicate[] = $data["pid"];
+							                    
 							if(!in_array($data["tid"], $check_category) && !in_array($data["pid"], $check_post)  && $cnt <6 ) {
 								$check_category[] = $data["tid"];
-                                                                $user_info = get_userdata($data["author"]);
+                                $user_info = get_userdata($data["author"]);
                                                               
 								$check_post[] = $data["pid"];
 								$thumb = get_post_meta($data["pid"], 'Thumbnail', true);
@@ -60,7 +61,7 @@ class VVHomeTabs extends PageLinesSection {
 								echo '<div class="date">Posted on '. get_the_time('F j, Y', $data["pid"]) .'</div>';
 								//echo '<div class="desc">'. human_time_diff( get_the_time('U', $data["pid"]), current_time('timestamp') ) . ' ago</div>';
 								echo '<div class="desc">-by '.$user_info->display_name.'</div>';
-                                                                echo '</div>';
+                                echo '</div>';
 								echo '</div>';
 								$cnt++;
 							}
@@ -72,7 +73,7 @@ class VVHomeTabs extends PageLinesSection {
 						/* Restore original Post Data */
 						wp_reset_postdata();
 					?>
-                                <a href='<?php echo site_url();?>/category/videos' class='alignright'>More...</a>
+                    <a href='<?php echo site_url();?>/category/videos' class='alignright'>More...</a>
 			    </div>
 
 			    <div class="tab-pane" id="B">
@@ -89,9 +90,10 @@ class VVHomeTabs extends PageLinesSection {
 						
 						// The Loop
 						foreach($datas as $data){
-							if(!in_array($data["tid"], $check_category) && !in_array($data["pid"], $check_post)  && $cnt <6 ) {
+
+							if(!in_array($data["tid"], $check_category) && !in_array($data["pid"], $check_post)  && $cnt <6 && !in_array($data["pid"], $do_not_duplicate) ) {
 								$check_category[] = $data["tid"];
-                                                                $user_info = get_userdata($data["author"]);
+                                $user_info = get_userdata($data["author"]);
 								$check_post[] = $data["pid"];
 								$thumb = get_post_meta($data["pid"], 'Thumbnail', true);
 
@@ -103,7 +105,7 @@ class VVHomeTabs extends PageLinesSection {
 								echo '<div class="date">Posted on '. get_the_time('F j, Y', $data["pid"]) .'</div>';
 								//echo '<div class="desc">'. human_time_diff( get_the_time('U', $data["pid"]), current_time('timestamp') ) . ' ago</div>';
 								echo '<div class="desc">-by '.$user_info->display_name.'</div>';
-                                                                echo '</div>';
+                                echo '</div>';
 								echo '</div>';
 								$cnt++;
 							}
@@ -115,7 +117,7 @@ class VVHomeTabs extends PageLinesSection {
 						/* Restore original Post Data */
 						wp_reset_postdata();
 					?>
-                                <a href='<?php echo site_url();?>/category/states' class='alignright'>More...</a>
+                    <a href='<?php echo site_url();?>/category/states' class='alignright'>More...</a>
 			    </div>
 
 			    <div class="tab-pane" id="C">
